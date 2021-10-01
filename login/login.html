@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- Bootstrap core CSS -->
+    <link href="../libs/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../libs/bootstrap-light.min.css" />
+    <link rel="stylesheet" href="../libs/bootstrap-prefers-dark.min.css" />
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <title>Login</title>
+
+    <!-- Custom styles for this template -->
+
+    <link href="signin.css" rel="stylesheet">
+
+
+
+</head>
+
+<body class="text-center">
+
+    <main class="form-signin">
+        <form id="login" name="loginForm" class="needs-validation" accept-charset=utf-8>
+            <img class="mb-4" src="./logo.png" alt="HMBHS School Loop" width="100" height="57">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+            <div class="form-floating">
+                <input type="username" class="form-control" id="floatingUsername" placeholder="jnazar" name="user">
+                <label for="floatingInput">Username</label>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter a username
+                </div>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="pass">
+                <label for="floatingPassword">Password</label>
+                <div class="valid-feedback">
+                    Looks good!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter a password
+                </div>
+            </div>
+
+
+            <div id="loginAlert"></div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">2021</p>
+        </form>
+
+    </main>
+    <div id="error">
+        <div class="modal" id="roleError" aria-hidden="false">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Error</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>This site <b>only</b> allows users with a <code> student </code> role at this time <br><br>Your role of <code id="badRole"></code> is not supported</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="position-absolute bottom-0 start-50 translate-middle-x">
+        <small id="runas"></small>
+    </footer>
+    <script type="module " src="/browser-polyfill.js "></script>
+    <script src="../libs/bootstrap.bundle.min.js "></script>
+    <script src="../libs/jquery-3.6.0.min.js "></script>
+    <script src="login.js "></script>
+
+</body>
+
+
+
+
+</html>
