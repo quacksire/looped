@@ -198,7 +198,7 @@ async function main() {
     }
 }
 
-document.getElementById('runas').innerHTML = `${chrome.runtime.id}`
+document.getElementById('runas').innerHTML = `Web`
 main()
 
 
