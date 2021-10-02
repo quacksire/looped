@@ -32,6 +32,11 @@ function getCookie(cname) {
     return null;
 }
 
+//https://blog.logrocket.com/javascript-developer-guide-browser-cookies/
+
+
+//Remove all chrome.* references -> cookies now
+
 function login(p = null) {
 
     if (p) document.location.href = document.location.origin + `/schoolloop/redesign/dashboard/dashboard.html?user=${p}`
@@ -88,7 +93,7 @@ try {
 */
 async function checkUser(user, pass) {
     console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
-            let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI(chrome.runtime.id)}&devOS=${encodeURI(chrome.runtime.getManifest().version)}&year=${new Date().getFullYear()}`, {
+            let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI(chrome.runtime.id)}&devOS=${encodeURI(navigator.)}&year=${new Date().getFullYear()}`, {
                 headers: {
                     authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
                 }
@@ -105,11 +110,15 @@ async function checkUser(user, pass) {
                 //response.role = 'admin'
                 if (response.role == 'student') {
                     response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
+                    
+                    
+                    
+                    /*
                     await chrome.storage.local.set({ response }, function () {
                         console.log("Data was saved.");
                         login()
                     });
-                    
+                    */
                     
                     
                     
