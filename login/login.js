@@ -77,6 +77,16 @@ const QueryString = window.location.search;
 const urlParams = new URLSearchParams(QueryString);
 //chrome.storage.local.clear()
 
+let welcome = `
+ __          __  _                          _ \n
+ \ \        / / | |                        | |\n
+  \ \  /\  / /__| | ___ ___  _ __ ___   ___| |\n
+   \ \/  \/ / _ \ |/ __/ _ \| '_ \` _ \ / _ \ |\n
+    \  /\  /  __/ | (_| (_) | | | | | |  __/_|\n
+     \/  \/ \___|_|\___\___/|_| |_| |_|\___(_)\n
+`
+
+
 //Cookie checker
 /*
 try {
@@ -181,7 +191,8 @@ async function main() {
             
         } catch {
 
-            console.log('No URI Params')
+            console.log('[LEGACY] No URI Params')
+            console.info('hi')
 
         }
 
@@ -200,7 +211,7 @@ async function main() {
             //loggedOutToast
     } else {
 
-        console.log('No URI Params')
+        console.log('[LEGACY] No URI Params')
 
     }
 }
@@ -220,6 +231,8 @@ $(document).ready(function() {
 
 $('#login').bind('submit', function(e) {
             e.preventDefault();
-            console.log('jquery booom!');
+    console.log('Welcome!');
+                console.info('hi')
+
             checkUser($('#floatingUsername').val(), $('#floatingPassword').val());
 });

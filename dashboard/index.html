@@ -12,9 +12,9 @@
 
 
     <!-- Bootstrap core CSS -->
-    <link href="../libs/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../libs/bootstrap-light.min.css" />
-    <link rel="stylesheet" href="../libs/bootstrap-prefers-dark.min.css" />
+    <link href="../libs/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../libs/css/bootstrap-light.min.css" />
+    <link rel="stylesheet" href="../libs/css/bootstrap-prefers-dark.min.css" />
 
     <style>
         .bd-placeholder-img {
@@ -100,8 +100,8 @@
 
     <main>
 
-        <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
-            <a href="#" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+        <div class="flex-shrink-0 p-3" style="width: 280px;">
+            <a href="#" class="d-flex align-items-center pb-3 mb-3 link text-decoration-none border-bottom">
                 <span class="fs-5 fw-semibold"><i data-feather="rotate-ccw"></i> Looped</span>
             </a>
             <ul class="list-unstyled ps-0">
@@ -121,20 +121,20 @@
         </button>
                     <div class="collapse" id="mail-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="link-dark rounded" id="inbox"><i data-feather="inbox"></i>Inbox</a></li>
-                            <li><a href="#" class="link-dark rounded" id="outbox"><i data-feather="send"></i>Sent</a></li>
+                            <li><a href="#" class="link rounded" id="inbox"><i data-feather="inbox"></i>Inbox</a></li>
+                            <li><a href="#" class="link rounded" id="outbox"><i data-feather="send"></i>Sent</a></li>
                         </ul>
                     </div>
                 </li>
                 <li class="border-top my-3"></li>
                 <li class="mb-1">
-                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                    <button class="btn btn-toggle align-items-center rounded collapsed link" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
           Account
         </button>
                     <div class="collapse" id="account-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="#" class="link-dark rounded" id="username">Error</a></li>
-                            <li><a href="#" class="link-dark rounded" id="logout">Sign out</a></li>
+                            <li><a href="#" class="link rounded" id="username">Error</a></li>
+                            <li><a href="#" class="link rounded" id="logout">Sign out</a></li>
                         </ul>
                     </div>
                 </li>
@@ -146,7 +146,7 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2"><i data-feather="paperclip"></i> Assignments</h1>
             </div>
-            <ul class="list-group" id="assignments"></ul>
+            <ul class="list-group overflow-auto" id="assignments"></ul>
         </div>
 
         <div class="modal" id="userInfo" aria-hidden="false">
@@ -176,11 +176,11 @@
     </main>
 
 
-    <script src="../libs/bootstrap.bundle.min.js"></script>
-    <script src="../libs/jquery-3.6.0.min.js"></script>
-    <script src="../libs/feather.min.js"></script>
-    <script src="../libs/Chart.min.js"></script>
-    <script src="../libs/js.cookie.min.js"></script>
+    <script src="../libs/js/bootstrap.bundle.min.js"></script>
+    <script src="../libs/js/jquery-3.6.0.min.js"></script>
+    <script src="../libs/js/feather.min.js"></script>
+    <script src="../libs/js/Chart.min.js"></script>
+    <script src="../libs/js/js.cookie.min.js"></script>
     <script src="dashboard.js"></script>
     <script src="logout.js"></script>
     <script>
