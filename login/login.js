@@ -39,15 +39,17 @@ function getCookie(cname) {
 
 function login(p = null) {
 
-    if (p) document.location.href = document.location.origin + `/schoolloop/redesign/dashboard/dashboard.html?user=${p}`
-    document.location.href = document.location.origin + "/schoolloop/redesign/dashboard/dashboard.html"
 
+    //Debug ENV
+    if (document.location.port) document.location.href = document.location.origin + "/dashboard/index.html"
+    if (p) document.location.href = document.location.origin + `/looped/dashboard/?user=${p}`
+    document.location.href = document.location.origin + "/dashboard/"
 
 }
 
 function error() {
 
-    document.location.href = document.location.origin + `/schoolloop/redesign/login/login.html?failed=true`
+    document.location.href = document.location.origin + `/looped/login/?failed=true`
 
 
 
@@ -93,7 +95,7 @@ try {
 */
 async function checkUser(user, pass) {
     console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
-            let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI(chrome.runtime.id)}&devOS=${encodeURI(navigator.)}&year=${new Date().getFullYear()}`, {
+            let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI('Looped')}&devOS=${encodeURI(navigator.userAgent)}&year=${new Date().getFullYear()}`, {
                 headers: {
                     authorization: `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`
                 }
@@ -109,16 +111,12 @@ async function checkUser(user, pass) {
                 response = await response.json()
                 //response.role = 'admin'
                 if (response.role == 'student') {
-                    response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //SAve Auth header for future use
+                    response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //Save Auth header for future use
                     
                     
+                    setCookie('slUser', encodeURI(JSON.stringify(response)), 7)
+                    login()
                     
-                    /*
-                    await chrome.storage.local.set({ response }, function () {
-                        console.log("Data was saved.");
-                        login()
-                    });
-                    */
                     
                     
                     

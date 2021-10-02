@@ -34,46 +34,46 @@ function getBrowserName() {
 
             })
         */
-    await chrome.storage.local.get(function(user) {
-        user = user.user || user.response
-        var first = String(user.fullName).split(', ')[1]
-        var last = String(user.fullName).split(', ')[0]
-        user.fullName = `${first} ${last}`
 
-        //Name
-        let name = document.getElementsByClassName('SLname')
-        name[0].innerHTML = `${user.fullName}`
+    let user = JSON.parse(decodeURI(Cookies.get('slUser')))
+    var first = String(user.fullName).split(', ')[1]
+    var last = String(user.fullName).split(', ')[0]
+    user.fullName = `${first} ${last}`
+
+    //Name
+    let name = document.getElementsByClassName('SLname')
+    name[0].innerHTML = `${user.fullName}`
 
 
-        //Email
-        let email = document.getElementsByClassName('SLemail')
-        email[0].innerHTML = `${user.email}`
+    //Email
+    let email = document.getElementsByClassName('SLemail')
+    email[0].innerHTML = `${user.email}`
 
-        //Role
-        let role = document.getElementsByClassName('SLrole')
-        role[0].innerHTML = `${user.role}`
+    //Role
+    let role = document.getElementsByClassName('SLrole')
+    role[0].innerHTML = `${user.role}`
 
-        //userID
-        let userID = document.getElementsByClassName('SLuserID')
-        userID[0].innerHTML = `${user.userID}`
+    //userID
+    let userID = document.getElementsByClassName('SLuserID')
+    userID[0].innerHTML = `${user.userID}`
 
-        //schoolDomain
-        let schoolDomain = document.getElementsByClassName('SLschoolDomain')
-        schoolDomain[0].innerHTML = `${user.students[0].school.domainName}`
+    //schoolDomain
+    let schoolDomain = document.getElementsByClassName('SLschoolDomain')
+    schoolDomain[0].innerHTML = `${user.students[0].school.domainName}`
 
-        //schoolName
-        let schoolName = document.getElementsByClassName('SLschoolName')
-        schoolName[0].innerHTML = `${user.students[0].school.name}`
+    //schoolName
+    let schoolName = document.getElementsByClassName('SLschoolName')
+    schoolName[0].innerHTML = `${user.students[0].school.name}`
 
-        //schoolName
-        let schoolDistrict = document.getElementsByClassName('SLschoolDistrict')
-        schoolDistrict[0].innerHTML = `${user.students[0].school.districtName}`
+    //schoolName
+    let schoolDistrict = document.getElementsByClassName('SLschoolDistrict')
+    schoolDistrict[0].innerHTML = `${user.students[0].school.districtName}`
 
-        //schoolName
-        let extVersion = document.getElementsByClassName('ext-version')
-        extVersion[0].innerHTML = `${getBrowserName()}: <br> Version ${chrome.runtime.getManifest().version}<br> Manifest Version ${chrome.runtime.getManifest().manifest_version}`
+    //schoolName
 
-    }); //SLrole
+    //let extVersion = document.getElementsByClassName('ext-version')
+    //extVersion[0].innerHTML = `${getBrowserName()}: <br> Version ${chrome.runtime.getManifest().version}<br> Manifest Version ${chrome.runtime.getManifest().manifest_version}`
+    //SLrole
 
 
 })() //ext-version

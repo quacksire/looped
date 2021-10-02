@@ -2,6 +2,8 @@
 
 
 
+
+
 async function getEverything(user) {
     console.log(user)
     if (user.role != 'student') logout({ 'role': user.role })
@@ -27,13 +29,16 @@ async function getEverything(user) {
     console.log(assignments)
     assignments.forEach(assignment => {
             if (assignment.description === 'null') assignment.description = ''
+            if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date().toLocaleDateString()) var badge = '<span class="badge bg-danger">Due Today</span>'
+            if (new Date(parseInt(String(assignment.dueDate))).getTime() === new Date().toLocaleDateString() + (addDays * 24 * 60 * 60 * 1000)) var badge = '<span class="badge bg-danger">Due Today</span>'
+            var badge = badge || 'Due:' + new Date(parseInt(String(assignment.dueDate))).toLocaleDateString()
             assignment.description = String(assignment.description).replace("\\n", '').replace('  ', '')
             let listItem = document.createElement('a')
             listItem.className = 'list-group-item list-group-item-action'
             listItem.innerHTML = `
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1"> ${assignment.title}</h5>
-            <small>Due: ${new Date(parseInt(String(assignment.dueDate))).toLocaleDateString()}</small>
+            <small>${badge}</small>
         </div>
         <p class="mb-1">${assignment.description}</p>
         <small> ${assignment.courseName} - ${assignment.teacherName}</small>`
@@ -43,16 +48,18 @@ async function getEverything(user) {
 }
 (async function() {
     'use strict'
-    await chrome.storage.local.get(function(user) {
-        user = user.user || user.response
-        var first = String(user.fullName).split(', ')[1]
-        var last = String(user.fullName).split(', ')[0]
-        document.getElementById('username').innerHTML = `<i data-feather="user"></i> ${String(user.fullName).split(', ')[1]} ${String(user.fullName).split(', ')[0]}`
-        getEverything(user)
-    });
+
+    let user = JSON.parse(decodeURI(Cookies.get('slUser')))
+    document.getElementById('username').innerHTML = `<i data-feather="user"></i> ${String(user.fullName).split(', ')[1]} ${String(user.fullName).split(', ')[0]}`
+    getEverything(user)
     setTimeout(() => {
         if (document.getElementById('username').innerHTML === 'Error') {
             logout()
         }
     }, 2000)
 })()
+
+
+document.addEventListener('load', () => {
+    console.log(Cookies.get('slUser'))
+})
