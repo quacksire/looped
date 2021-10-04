@@ -32,9 +32,8 @@ function getCookie(cname) {
     return null;
 }
 
+
 //https://blog.logrocket.com/javascript-developer-guide-browser-cookies/
-
-
 //Remove all chrome.* references -> cookies now
 
 function login(p = null) {
@@ -43,7 +42,7 @@ function login(p = null) {
     //Debug ENV
     if (document.location.port) document.location.href = document.location.origin + "/dashboard/index.html"
     if (p) document.location.href = document.location.origin + `/looped/dashboard/?user=${p}`
-    document.location.href = document.location.origin + "/dashboard/"
+    document.location.href = document.location.origin + "/looped/dashboard/"
 
 }
 
