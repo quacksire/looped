@@ -20,23 +20,23 @@ function hoverColorize(ctx) {
 (async function() {
 
 
-    await chrome.storage.local.get(async function(user) {
 
-        const QueryString = window.location.search;
-        const urlParams = new URLSearchParams(QueryString);
-        user = user.user || user.response
-        let auth = {
-            headers: {
-                'Authorization': `${user.auth}`,
-            }
+    const QueryString = window.location.search;
+    const urlParams = new URLSearchParams(QueryString);
+    let user = JSON.parse(decodeURI(Cookies.get('slUser')))
+
+    let auth = {
+        headers: {
+            'Authorization': `${user.auth}`,
         }
-        let courseInfo = await fetch(`https://hmbhs.schoolloop.com/mapi/progress_report?studentID=${user.students[0].studentID}&periodID=${urlParams.get('id')}`, auth).then((response) => { return response })
-        console.log(courseInfo)
-        courseInfo = await courseInfo.json()
-        courseInfo = courseInfo[0]
-        console.log(courseInfo)
+    }
+    let courseInfo = await fetch(`https://hmbhs.schoolloop.com/mapi/progress_report?studentID=${user.students[0].studentID}&periodID=${urlParams.get('id')}`, auth).then((response) => { return response })
+    console.log(courseInfo)
+    courseInfo = await courseInfo.json()
+    courseInfo = courseInfo[0]
+    console.log(courseInfo)
 
-        document.getElementById('courseInfo').innerHTML = `
+    document.getElementById('courseInfo').innerHTML = `
             
 
 
@@ -47,23 +47,23 @@ function hoverColorize(ctx) {
 
 
 
-        courseInfo.grades.forEach(grade => {
-                try {
-                    document.getElementById('noItems').remove()
-                } catch (e) {
-                    console.log('')
-                }
-                let listItem = document.createElement('li')
-                listItem.className = 'list-group-item d-flex justify-content-between align-items-start'
-                listItem.innerHTML = `
+    courseInfo.grades.forEach(grade => {
+            try {
+                document.getElementById('noItems').remove()
+            } catch (e) {
+                console.log('')
+            }
+            let listItem = document.createElement('li')
+            listItem.className = 'list-group-item d-flex justify-content-between align-items-start'
+            listItem.innerHTML = `
                     <div class="ms-2 me-auto">
                     <div class="fw-bold">${grade.assignment.categoryName}</div>
                     ${grade.assignment.title}
                     </div>
                     <span class="badge bg-primary rounded-pill">${String(grade.percentScore).split('.')[0]}%</span>`
-                document.getElementById('assignmentList').appendChild(listItem)
-            })
-            /*
+            document.getElementById('assignmentList').appendChild(listItem)
+        })
+        /*
          {
       "scoreBase64": "MjAuMDA=",
       "score": "20.00",
@@ -89,7 +89,6 @@ function hoverColorize(ctx) {
             */
 
 
-    })
 })()
 
 

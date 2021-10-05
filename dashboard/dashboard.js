@@ -16,7 +16,7 @@ async function getEverything(user) {
         //console.log(courseList)
     var count = 0
     courseList.forEach(course => {
-        let link = document.location.origin + `/schoolloop/redesign/dashboard/class.html?id=${course.periodID}`
+        let link = document.location.origin + `/looped/dashboard/class?id=${course.periodID}`
         let card = document.createElement('li')
         if (course.grade === 'null') course.grade = 'N/A'
         card.innerHTML = `
