@@ -36,12 +36,7 @@ function hoverColorize(ctx) {
     courseInfo = courseInfo[0]
     console.log(courseInfo)
 
-    document.getElementById('courseInfo').innerHTML = `
-            
-
-
-
-        `
+    //document.getElementById('courseInfo').innerHTML = ``
 
 
 
