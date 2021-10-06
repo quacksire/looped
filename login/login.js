@@ -204,7 +204,7 @@ async function main() {
 
     } else if (urlParams.get('r') === 'null' && String(window.location.href).includes('?')) {
         console.log('Logged Out')
-        document.getElementById('error').outerHTML = `<div class="toast position-absoulute bottom-0 end-0 text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true" id='loggedOutToast'>
+        document.getElementById('error').outerHTML = `<div class="toast position-absoulute bottom-0 end-0 text-white bg-primary border-0 position-absolute" role="alert" aria-live="assertive" aria-atomic="true" id='loggedOutToast'>
             <div class="d-flex">
                 <div class="toast-body">
                     You have been logged out.
@@ -234,9 +234,8 @@ $(document).ready(function() {
 });
 
 $('#login').bind('submit', function(e) {
-            e.preventDefault();
+    e.preventDefault();
     console.log('Welcome!');
-                console.info('hi')
-
-            checkUser($('#floatingUsername').val(), $('#floatingPassword').val());
+    console.info('hi')
+    checkUser($('#floatingUsername').val(), $('#floatingPassword').val());
 });
