@@ -15,27 +15,21 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../libs/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../libs/css/bootstrap-light.min.css" />
+    <link rel="stylesheet" href="../libs/css/bootstrap-prefers-dark.min.css" />
 
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
 </head>
 
 <body>
-
-    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="../dashboard/"><i data-feather="rotate-ccw"></i> Looped</span></a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-        <div class="navbar-nav">
-            <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="" id="user"></a>
-            </div>
-        </div>
-    </header>
-
     <div class="container-fluid">
         <div>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"><i data-feather="paperclip"></i>
+                    <div id="className"></div>
+                </h1>
+            </div>
             <div id="classInfo"></div>
             <ol class="list-group list-group-numbered" id="assignmentList">
                 <p id="noItems">No Assignments For This Class <br><br> If you think this is a mistake, please ask you teacher or <a href="mailto:duck+hmbhs@duckling.pw?cc=70532@cabrillo.k12.ca.us&subject=%5BHMBHS%20-%20Looped%5D%20Class%20Page%20Error">email me</a></p>

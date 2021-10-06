@@ -30,13 +30,14 @@ function hoverColorize(ctx) {
             'Authorization': `${user.auth}`,
         }
     }
+    console.log(document.location.href.split('?')[1])
     let courseInfo = await fetch(`https://hmbhs.schoolloop.com/mapi/progress_report?studentID=${user.students[0].studentID}&periodID=${urlParams.get('id')}`, auth).then((response) => { return response })
     console.log(courseInfo)
     courseInfo = await courseInfo.json()
     courseInfo = courseInfo[0]
     console.log(courseInfo)
 
-    //document.getElementById('courseInfo').innerHTML = ``
+    document.getElementById('className').innerHTML = `${courseInfo.course.name}`
 
 
 
