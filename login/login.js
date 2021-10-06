@@ -124,7 +124,12 @@ async function checkUser(user, pass) {
                     
                     
                     setCookie('slUser', encodeURI(JSON.stringify(response)), 7)
-                    login()
+                    alert(`<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Please Wait, Signing you in</span></div> Signing you in...`, 'success')
+                    setTimeout(() => {
+                    
+                        login()
+                    
+                    }, 1000)//2500
                     
                     
                     
