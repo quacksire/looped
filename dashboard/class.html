@@ -2,24 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' http://www.google.com">
-    <title>Dashboard</title>
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/dashboard/">
-
-
-
     <!-- Bootstrap core CSS -->
     <link href="../libs/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../libs/css/bootstrap-light.min.css" />
     <link rel="stylesheet" href="../libs/css/bootstrap-prefers-dark.min.css" />
 
     <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
+    <link href="class.css" rel="stylesheet">
 </head>
 
 <body>
@@ -29,6 +18,7 @@
                 <h1 class="h2"><i data-feather="paperclip"></i>
                     <div id="className"></div>
                 </h1>
+                <sub><div id="teacherName"></div></sub>
             </div>
             <div id="classInfo"></div>
             <ol class="list-group list-group-numbered" id="assignmentList">
@@ -41,7 +31,6 @@
         <script src="../libs/js/feather.min.js"></script>
         <script src="../libs/js/Chart.min.js"></script>
         <script src="../libs/js/js.cookie.min.js"></script>
-        <script src="logout.js"></script>
         <script src="class.js"></script>
 </body>
 

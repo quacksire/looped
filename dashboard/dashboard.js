@@ -4,22 +4,16 @@
 
 
 function toggleClass(id = null) {
-    let frames = document.getElementsByClassName('classFrames')
-    frames.forEach(element => {
-        element.hidded = true
-    });
-
-    if (id) {
+    $('.classFrames').attr("hidden", true)
+    console.log(id)
+    if (id != null) {
         document.getElementById('home').hidden = true
-        document.getElementById(String(id)).hidden = false
+        $('#home').attr("hidden", true);
+        $(`#${id}`).removeAttr('hidden');
     } else {
-
-        document.getElementById('home').hidden = false
-
+        document.location.reload()
     }
-
 }
-
 
 
 
@@ -57,19 +51,25 @@ async function getEverything(user) {
 
     var count = 0
     courseList.forEach(course => {
-        let link = document.location.origin + `/looped/dashboard/class?id=${course.periodID}`
+        let link = '#'
         let card = document.createElement('li')
         card.id = 'classSelector'
-        card.slclass = `${course.periodID}`
+        card.onclick = `toggleClass(${course.periodID})`
         if (course.grade === 'null') course.grade = 'N/A'
         card.innerHTML = `
-        <a class="rounded">${course.grade || 'N/A'} - ${course.courseName}</a>`
+        <a href="#" onclick="toggleClass(${course.periodID})" class="rounded">${course.grade || 'N/A'} - ${course.courseName}</a>`
+        card.addEventListener('click', () => {
+
+            toggleClass(`${course.periodID}`)
+
+        })
         document.getElementById('classlist').appendChild(card)
 
 
         let iframe = document.createElement('iframe')
         iframe.src = `class.html?id=${course.periodID}`
         iframe.hidden = true
+            //iframe.style.display = 'none'
         iframe.width = '100%'
         iframe.height = '100%'
         iframe.frameBorder = '0'
@@ -78,7 +78,11 @@ async function getEverything(user) {
 
         document.getElementById('mainView').appendChild(iframe)
     })
+    document.getElementById('homeClick').addEventListener('click', () => {
 
+        toggleClass()
+
+    })
 
     assignments = JSON.parse(localStorage.getItem('sl-assignments'))
         //console.log(assignments)
@@ -140,10 +144,3 @@ async function getEverything(user) {
         }
     }, 2000)
 })()
-
-
-$('.classSelector').click(function(e) {
-    e.preventDefault();
-    console.log(e)
-
-});
