@@ -7,12 +7,12 @@
             'Authorization': `${user.auth}`,
         }
     }
-    console.log(urlParams.get('id'))
+    //console.log(urlParams.get('id'))
     let courseInfo = await fetch(`https://hmbhs.schoolloop.com/mapi/progress_report?studentID=${user.students[0].studentID}&periodID=${urlParams.get('id')}`, auth).then((response) => { return response })
         //console.log(courseInfo)
     courseInfo = await courseInfo.json()
     courseInfo = courseInfo[0]
-    console.log(courseInfo)
+    //console.log(courseInfo)
         ////////////////////////////////
     document.getElementById('className').innerHTML = `${courseInfo.course.name}`
     document.getElementById('teacherName').innerHTML = `${courseInfo.teacher.name}`
@@ -20,8 +20,11 @@
         try {
             document.getElementById('noItems').remove()
         } catch (e) {
-            //console.log('')
+            console.info(`Loading ${courseInfo.course.name} page`)
         }
+        
+        //Want to do more here, like a pi chart or something
+        
         let listItem = document.createElement('li')
         listItem.className = 'list-group-item d-flex justify-content-between align-items-start'
         listItem.innerHTML = `
