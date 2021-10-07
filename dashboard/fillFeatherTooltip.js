@@ -119,6 +119,6 @@ $('#username').click(function(e) {
       }
     }
   ],
-  "auth": "Basic c2plZmZzMjQ6amVmMjI4c2M="
+  "auth": "Basic ..token.."
 }
 */
