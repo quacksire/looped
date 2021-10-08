@@ -129,9 +129,7 @@ async function getEverything(user) {
     if (Cookies.get('slUser')) {
         console.info('School Loop User Cookie Found!')
     } else {
-
         logout()
-
     }
 
     let user = JSON.parse(decodeURI(Cookies.get('slUser')))
