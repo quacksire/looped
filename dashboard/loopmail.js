@@ -42,7 +42,7 @@
         })
         let message = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}&ID=${mail.ID}`, auth).then((response) => { return response })
         message = await message.json()
-            //console.log(message)
+        console.log(message)
 
         let messageWindow = document.createElement('div')
         messageWindow.className = `modal`
