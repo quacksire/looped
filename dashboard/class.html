@@ -2,10 +2,6 @@
 <html lang="en">
 
 <head>
-    <meta name="description" content="A web-based interface for School Loop Interfaces">
-    <meta name="author" content="child-duckling">
-    <title>Class Viewer</title>
-
     <!-- Bootstrap core CSS -->
     <link href="../libs/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../libs/css/bootstrap-light.min.css" />
@@ -19,23 +15,25 @@
     <div class="container-fluid">
         <div>
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2"><i data-feather="paperclip"></i>
-                    <div id="className"></div>
+                <h1 class="h2"><i data-feather="inbox"></i> Loopmail
                 </h1>
-                <sub><div id="teacherName"></div></sub>
+                <sub></sub>
             </div>
-            <div id="classInfo"></div>
-            <ol class="list-group list-group-numbered" id="assignmentList">
-                <p id="noItems">No Assignments For This Class <br><br> If you think this is a mistake, please ask you teacher or <a href="mailto:duck+hmbhs@duckling.pw?cc=70532@cabrillo.k12.ca.us&subject=%5BHMBHS%20-%20Looped%5D%20Class%20Page%20Error">email me</a></p>
+            <ol class="list-group list-group-numbered" id="mail">
+                <p id="noItems">No Loopmails<br><br> If you think this is a mistake, please ask you teacher or <a href="mailto:duck+hmbhs@duckling.pw?cc=70532@cabrillo.k12.ca.us&subject=%5BHMBHS%20-%20Looped%5D%20Class%20Page%20Error">email me</a></p>
             </ol>
         </div>
+        <div id="viewers"></div>
+    </div>
 
-        <script src="../libs/js/jquery-3.6.0.min.js"></script>
-        <script src="../libs/js/bootstrap.bundle.min.js"></script>
-        <script src="../libs/js/feather.min.js"></script>
-        <script src="../libs/js/Chart.min.js"></script>
-        <script src="../libs/js/js.cookie.min.js"></script>
-        <script src="class.js"></script>
+    <script src="../libs/js/jquery-3.6.0.min.js"></script>
+    <script src="../libs/js/bootstrap.bundle.min.js"></script>
+    <script src="../libs/js/feather.min.js"></script>
+    <script src="../libs/js/Chart.min.js"></script>
+    <script src="../libs/js/js.cookie.min.js"></script>
+    <script src="loopmail.js"></script>
 </body>
+
+</html>
 
 </html>
