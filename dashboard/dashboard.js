@@ -11,7 +11,8 @@ function togglePage(page = null) {
         $('#home').attr("hidden", true);
         $(`#${page}`).removeAttr('hidden');
     } else {
-        document.location.reload()
+        if (document.location.port == '5500') document.location.pathname = '/dashboard/'
+        document.location.href = document.location.origin + `/looped/dashboard/`
     }
 }
 
