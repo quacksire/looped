@@ -132,7 +132,11 @@ async function getEverything(user) {
         e.preventDefault();
         this.hidden = true
     });
-    //1632121200.000 -> remove last three zeros
+    const QueryString = window.location.search;
+    const urlParams = new URLSearchParams(QueryString);
+
+    if (urlParams.get('page')) togglePage(urlParams.get('page'))
+        //1632121200.000 -> remove last three zeros
 }
 (async function() {
     'use strict'
