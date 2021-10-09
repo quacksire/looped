@@ -3,13 +3,13 @@
 
 
 
-function toggleClass(id = null) {
-    $('.classFrames').attr("hidden", true)
-    console.log(id)
-    if (id != null) {
+function togglePage(page = null) {
+    $('.page').attr("hidden", true)
+    console.log(page)
+    if (page != null) {
         document.getElementById('home').hidden = true
         $('#home').attr("hidden", true);
-        $(`#${id}`).removeAttr('hidden');
+        $(`#${page}`).removeAttr('hidden');
     } else {
         document.location.reload()
     }
@@ -48,19 +48,19 @@ async function getEverything(user) {
 
     let courseList = JSON.parse(localStorage.getItem('sl-courses'))
         //console.log(courseList)
-
+        //console.log(JSON.parse(localStorage.getItem('sl-loopmail')))
     var count = 0
     courseList.forEach(course => {
         let link = '#'
         let card = document.createElement('li')
         card.id = 'classSelector'
-        card.onclick = `toggleClass(${course.periodID})`
+        card.onclick = `togglePage(${course.periodID})`
         if (course.grade === 'null') course.grade = 'N/A'
         card.innerHTML = `
-        <a href="#" onclick="toggleClass(${course.periodID})" class="rounded">${course.grade || 'N/A'} - ${course.courseName}</a>`
+        <a href="#" onclick="togglePage(${course.periodID})" class="rounded">${course.grade || 'N/A'} - ${course.courseName}</a>`
         card.addEventListener('click', () => {
 
-            toggleClass(`${course.periodID}`)
+            togglePage(`${course.periodID}`)
 
         })
         document.getElementById('classlist').appendChild(card)
@@ -74,13 +74,30 @@ async function getEverything(user) {
         iframe.height = '100%'
         iframe.frameBorder = '0'
         iframe.id = `${course.periodID}`
-        iframe.className = 'classFrames'
+        iframe.className = 'page'
 
         document.getElementById('mainView').appendChild(iframe)
     })
+
+
+    let mailPage = document.createElement('iframe')
+    mailPage.src = `loopmail.html`
+    mailPage.hidden = true
+        //iframe.style.display = 'none'
+    mailPage.width = '100%'
+    mailPage.height = '100%'
+    mailPage.frameBorder = '0'
+    mailPage.id = `mail`
+    mailPage.className = 'page'
+    document.getElementById('mainView').appendChild(mailPage)
     document.getElementById('homeClick').addEventListener('click', () => {
 
-        toggleClass()
+        togglePage()
+
+    })
+    document.getElementById('inbox').addEventListener('click', () => {
+
+        togglePage('mail')
 
     })
 
@@ -101,8 +118,7 @@ async function getEverything(user) {
         var badge = badge || 'Due:' + new Date(parseInt(String(assignment.dueDate))).toLocaleDateString()
         assignment.description = String(assignment.description).replace("\\n", '').replace('  ', '')
         let listItem = document.createElement('a')
-        listItem.className = 'list-group-item list-group-item-action'
-        listItem.id = 'assignment'
+        listItem.className = 'list-group-item list-group-item-action assignment'
         listItem.innerHTML = `
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1"> ${assignment.title}</h5>
@@ -112,17 +128,11 @@ async function getEverything(user) {
         <small> ${assignment.courseName} - ${assignment.teacherName}</small>`
         document.getElementById('assignments').appendChild(listItem)
     })
-
-    var triggerTabList = [].slice.call(document.querySelectorAll('#assignment'))
-    triggerTabList.forEach(function(triggerEl) {
-            var tabTrigger = new bootstrap.Tab(triggerEl)
-
-            triggerEl.addEventListener('click', function(event) {
-                event.preventDefault()
-                tabTrigger.dispose()
-            })
-        })
-        //1632121200.000 -> remove last three zeros
+    $('.assignment').click(function(e) {
+        e.preventDefault();
+        this.hidden = true
+    });
+    //1632121200.000 -> remove last three zeros
 }
 (async function() {
     'use strict'
