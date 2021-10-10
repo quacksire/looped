@@ -43,6 +43,7 @@
                     <span class="badge bg-primary rounded-pill">${String(grade.percentScore).split('.')[0]}%</span>`
             document.getElementById('assignmentList').appendChild(listItem)
         })
+        feather.replace({ 'aria-hidden': 'true' })
     } catch {
         console.warn(`${courseInfo.course.name} has no grades`)
     }

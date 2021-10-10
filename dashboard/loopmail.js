@@ -40,10 +40,31 @@
             var myModal = new bootstrap.Modal(document.getElementById(mail.ID))
             myModal.show()
         })
-        let message = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}&ID=${mail.ID}`, auth).then((response) => { return response })
-        message = await message.json()
-        console.log(message)
+        let message = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}&ID=${mail.ID}`, auth).catch(() => {
 
+            let error = {
+                ID: 'error',
+                subject: 'Unable To Get Message',
+                message: `This is most likely caused by Too Many Requests (429)`
+            }
+            return error
+
+
+        }).then((response) => { return response })
+        message = await message.json()
+            //console.log(message)
+
+
+        if (message.links != null) {
+            //console.log(`There are ${message.links.length} links`)
+            let buttons = ''
+            message.links.forEach(link => {
+                //console.log(link)
+                buttons += `<button type="button" class="btn btn-primary" href="${link.URL}"><i data-feather="link2"></i><a href="${link.URL}" target="_blank">${link.Title}</a></button>`
+            });
+
+            message.message += `<br>${buttons}`
+        }
         let messageWindow = document.createElement('div')
         messageWindow.className = `modal`
         messageWindow.id = `${mail.ID}`
@@ -61,6 +82,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                
             
             </div>
         </div>
@@ -68,8 +90,7 @@
     `
             //< button type = "button" class="btn btn-primary" > Save changes</ >
         document.getElementById('viewers').appendChild(messageWindow)
-
     })
     console.info(`Loaded Loopmail Page (${loopmails.length} messages)`)
-
+    feather.replace({ 'aria-hidden': 'true' })
 })()

@@ -90,6 +90,18 @@ async function getEverything(user) {
     mailPage.id = `mail`
     mailPage.className = 'page'
     document.getElementById('mainView').appendChild(mailPage)
+
+    let newsPage = document.createElement('iframe')
+    newsPage.src = `news.html`
+    newsPage.hidden = true
+        //iframe.style.display = 'none'
+    newsPage.width = '100%'
+    newsPage.height = '100%'
+    newsPage.frameBorder = '0'
+    newsPage.id = `news`
+    newsPage.className = 'page'
+    document.getElementById('mainView').appendChild(newsPage)
+
     document.getElementById('homeClick').addEventListener('click', () => {
 
         togglePage()
@@ -100,7 +112,22 @@ async function getEverything(user) {
         togglePage('mail')
 
     })
+    document.getElementById('layout').addEventListener('click', () => {
 
+        togglePage('news')
+
+    })
+    const QueryString = window.location.search;
+    const urlParams = new URLSearchParams(QueryString);
+    if (urlParams.get('page')) togglePage(urlParams.get('page'))
+
+
+
+
+
+
+
+    //------------------------Page Content------------------------
     assignments = JSON.parse(localStorage.getItem('sl-assignments'))
         //console.log(assignments)
     assignments.forEach(assignment => {
@@ -132,11 +159,10 @@ async function getEverything(user) {
         e.preventDefault();
         this.hidden = true
     });
-    const QueryString = window.location.search;
-    const urlParams = new URLSearchParams(QueryString);
 
-    if (urlParams.get('page')) togglePage(urlParams.get('page'))
-        //1632121200.000 -> remove last three zeros
+
+
+    //1632121200.000 -> remove last three zeros
 }
 (async function() {
     'use strict'
