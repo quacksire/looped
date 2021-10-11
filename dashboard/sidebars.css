@@ -97,4 +97,16 @@ main {
     .classListItem {
         color: white;
     }
+    .logo {
+        color: white;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .logo {
+        color: black;
+    }
+    .rounded {
+        color: black;
+    }
 }

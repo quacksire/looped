@@ -232,7 +232,6 @@ $(document).ready(function() {
         $('.toast').toast('hide');
     }, 2500)
 });
-
 $('#login').bind('submit', function(e) {
     e.preventDefault();
     console.log('Welcome!');
