@@ -69,13 +69,17 @@ function getBrowserName() {
     let schoolDistrict = document.getElementsByClassName('SLschoolDistrict')
     schoolDistrict[0].innerHTML = `${user.students[0].school.districtName}`
 
-    //schoolName
+
+    let lastCommit = await fetch(`https://api.github.com/repos/child-duckling/looped/commits/main`).then(response => { return response })
+    lastCommit = await lastCommit.json()
+    document.getElementById('lastCommit').innerHTML = `Commit <a href="${lastCommit.html_url}" target="_blank"><code> ${String(lastCommit.sha).slice(0, 7)}</code></a>`
+        //schoolName
 
     //let extVersion = document.getElementsByClassName('ext-version')
     //extVersion[0].innerHTML = `${getBrowserName()}: <br> Version ${chrome.runtime.getManifest().version}<br> Manifest Version ${chrome.runtime.getManifest().manifest_version}`
     //SLrole
 
-
+    //lastCommit
 })() //ext-version
 
 
