@@ -26,7 +26,7 @@ async function getEverything(user) {
             PWA Mode
             */
     }
-    if (user.role != 'student') logout({ 'role': user.role })
+    if (user.role != 'student') logout(user.role)
     if (parseInt(localStorage.getItem('sl-lastUpdated')) >= 10 * 60) Cookies.remove('sl') //
     if (!Cookies.get('sl')) {
         console.warn('Refreshing Data')

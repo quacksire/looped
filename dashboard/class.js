@@ -48,4 +48,5 @@
         console.warn(`${courseInfo.course.name} has no grades`)
     }
 
+
 })()

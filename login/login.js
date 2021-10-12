@@ -1,3 +1,8 @@
+const QueryString = window.location.search;
+const urlParams = new URLSearchParams(QueryString);
+
+
+
 function validate(e) {
     e.preventDefault();
 
@@ -36,13 +41,17 @@ function getCookie(cname) {
 //https://blog.logrocket.com/javascript-developer-guide-browser-cookies/
 //Remove all chrome.* references -> cookies now
 
-function login(p = null) {
+function login() {
 
 
     //Debug ENV
     if (document.location.port) document.location.href = document.location.origin + "/dashboard/index.html"
-    if (p) document.location.href = document.location.origin + `/looped/dashboard/?user=${p}`
-    document.location.href = document.location.origin + "/looped/dashboard/"
+    if (urlParams.has('p')) {
+        document.location.href = document.location.origin + `/looped/dashboard/?page=${urlParams.get('p')}`
+    } else {
+        document.location.href = document.location.origin + "/looped/dashboard/"
+    }
+
 
 }
 
@@ -72,8 +81,7 @@ function incorrectRole(role) {
 
 
 //document.getElementById("submit").addEventListener("click", validate);
-const QueryString = window.location.search;
-const urlParams = new URLSearchParams(QueryString);
+
 //chrome.storage.local.clear()
 
 let welcome = `
@@ -121,12 +129,12 @@ async function checkUser(user, pass) {
                 //response.role = 'admin'
                 if (response.role == 'student') {
                     response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //Save Auth header for future use
-                    
+                    //response.role = 'admin'
                     
                     setCookie('slUser', encodeURI(JSON.stringify(response)), 7)
                     alert(`<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Please Wait, Signing you in</span></div> Signing you in...`, 'success')
                     setTimeout(() => {
-                    
+
                         login()
                     
                     }, 1000)//2500
@@ -157,52 +165,12 @@ async function checkUser(user, pass) {
 }
 
 
+
+
+// vvv OLD vvv
 async function main() {
-    try {
-        await chrome.storage.local.get((user) => {
-            try {
-                user = user.user || user.response
-                if (Object.entries(user).length != 0) {
-                
-                    alert(`<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Please Wait, Signing you in</span></div> Signing you in...`, 'success')
-                    setTimeout(() => {
-                    
-                        login()
-                    
-                    }, 50)//2500
-                }
-            } catch (error) {
-                return
-            }
-            console.log(user)
-        })
-    } catch (error) {
-        console.log('No User Found!')
-    }
     
-    if (urlParams.get('failed')) {
-        var loginAlert = document.getElementById('loginAlert')
-        
-    } else if (urlParams.get('user') === '' && urlParams.get('pass') != '' || urlParams.get('pass') === '' && urlParams.get('user') != '') {
-        //error()
-    } else if (urlParams.get('r') != "null") {
-        try {
-            JSON.parse(decodeURI(urlParams.get('r'))).role
-            console.log('Wrong Role')
-            document.getElementById('error').innerHTML = `
-            
-        `
-            
-        } catch {
-
-            console.log('[LEGACY] No URI Params')
-            console.info('hi')
-
-        }
-
-
-
-    } else if (urlParams.get('r') === 'null' && String(window.location.href).includes('?')) {
+    if (urlParams.get('r') === 'null' && String(window.location.href).includes('?')) {
         console.log('Logged Out')
         document.getElementById('error').outerHTML = `<div class="toast position-absoulute bottom-0 end-0 text-white bg-primary border-0 position-absolute" role="alert" aria-live="assertive" aria-atomic="true" id='loggedOutToast'>
             <div class="d-flex">
@@ -221,6 +189,8 @@ async function main() {
 }
 
 document.getElementById('runas').innerHTML = `Web`
+
+if (urlParams.has('r')) incorrectRole(urlParams.get('r'))
 main()
 
 

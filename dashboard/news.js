@@ -1,3 +1,12 @@
+function inIframe() {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+}
+
+
 (async function() {
     const QueryString = window.location.search;
     const urlParams = new URLSearchParams(QueryString);
@@ -71,4 +80,20 @@
 
     console.info(`Loaded LoopNews Page (${news.length} messages)`)
     feather.replace({ 'aria-hidden': 'true' })
+
+    if (inIframe()) {
+        let action = document.createElement('a')
+        action.href = document.location.href.split('.html')[0]
+        action.target = '_parent'
+        action.innerHTML = 'Hide Sidebar'
+        document.getElementById('embeddedAction').appendChild(action)
+    } else {
+        let action = document.createElement('a')
+        action.href = document.location.origin + '/looped/dashboard/?page=' + document.location.href.split('.html')[0].split('/')[4]
+            //action.target = '_blank'
+        action.innerHTML = 'Show Sidebar'
+        document.getElementById('embeddedAction').appendChild(action)
+    }
+
+
 })()
