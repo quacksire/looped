@@ -34,7 +34,7 @@ async function getEverything(user) {
         let assignments = await fetch(`https://hmbhs.schoolloop.com/mapi/assignments?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
         let news = await fetch(`https://hmbhs.schoolloop.com/mapi/news?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response.data })
         let loopmails = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
-        if (courses.statusText != 'OK') console.warn(`School Loop API Response: ${courses.status} ${courses.statusText}`)
+        console.info(`School Loop API Response: ${courses.status} ${courses.statusText}`)
         let slLoopmail = await loopmails.json().then((data) => { return data })
         let slAssignments = await assignments.json().then((data) => { return data })
         let slCourses = await courses.json().then((data) => { return data })
