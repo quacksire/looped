@@ -118,7 +118,7 @@ async function checkUser(user, pass) {
                 }
             })
             console.log(response)
-
+             document.getElementById('runas').innerHTML = response
     
     
     
@@ -127,6 +127,7 @@ async function checkUser(user, pass) {
             if (response.statusText == 'OK' || response.statusText == '') {
                 response = await response.json()
                 //response.role = 'admin'
+                document.getElementById('runas').innerHTML = response
                 if (response.role == 'student') {
                     response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //Save Auth header for future use
                     //response.role = 'admin'
@@ -206,5 +207,11 @@ $('#login').bind('submit', function(e) {
     e.preventDefault();
     console.log('Welcome!');
     console.info('hi')
+    checkUser($('#floatingUsername').val(), $('#floatingPassword').val());
+});
+$('#login').bind('click', function(e) {
+    e.preventDefault();
+    console.log('Welcome!');
+    document.getElementById('runas').innerHTML = `Hi`
     checkUser($('#floatingUsername').val(), $('#floatingPassword').val());
 });
