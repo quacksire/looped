@@ -8,7 +8,7 @@
         }
     }
     let id = urlParams.get('id')
-    if (localStorage.getItem(`${id}-lastUpdated`) >= 10 * 60 || !localStorage.getItem(`${id}-lastUpdated`)) {
+    if (!localStorage.getItem(`${id}-lastUpdated`) >= Date.now() + 10 * 60 || !localStorage.getItem(`${id}-lastUpdated`)) {
         let courseInfo = await fetch(`https://hmbhs.schoolloop.com/mapi/progress_report?studentID=${user.students[0].studentID}&periodID=${id}`, auth).then((response) => { return response })
         courseInfo = await courseInfo.json()
         courseInfo = courseInfo[0]

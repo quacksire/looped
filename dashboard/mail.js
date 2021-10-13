@@ -15,7 +15,7 @@ function inIframe() {
         }
     }
     let id = urlParams.get('id')
-    if (localStorage.getItem(`mail-lastUpdated`) >= 10 * 60 || !localStorage.getItem(`mail-lastUpdated`)) {
+    if (!localStorage.getItem(`mail-lastUpdated`) >= Date.now() + 10 * 60 || !localStorage.getItem(`mail-lastUpdated`)) {
         let loopmails = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}`, auth).then((response) => { return response })
         loopmails = await loopmails.json()
         localStorage.setItem('mail', JSON.stringify(loopmails))

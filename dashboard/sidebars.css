@@ -100,9 +100,15 @@ main {
     .logo {
         color: white;
     }
+     :root {
+        background-color: black
+    }
 }
 
 @media (prefers-color-scheme: light) {
+     :root {
+        background-color: white;
+    }
     .logo {
         color: black;
     }

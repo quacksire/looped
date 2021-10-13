@@ -27,7 +27,7 @@ async function getEverything(user) {
             */
     }
     if (user.role != 'student') logout(user.role)
-    if (parseInt(localStorage.getItem('sl-lastUpdated')) >= 10 * 60) Cookies.remove('sl') //
+    if (parseInt(localStorage.getItem('sl-lastUpdated')) >= Date.now() + 10 * 60) Cookies.remove('sl') //
     if (!Cookies.get('sl')) {
         console.warn('Refreshing Data')
         let courses = await fetch(`https://hmbhs.schoolloop.com/mapi/report_card?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
@@ -81,7 +81,7 @@ async function getEverything(user) {
 
 
     let mailPage = document.createElement('iframe')
-    mailPage.src = `loopmail.html`
+    mailPage.src = `mail.html`
     mailPage.hidden = true
         //iframe.style.display = 'none'
     mailPage.width = '100%'
