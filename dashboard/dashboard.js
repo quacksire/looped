@@ -9,9 +9,11 @@ function togglePage(page = null) {
     if (page != null) {
         document.getElementById('home').hidden = true
         $('#home').attr("hidden", true);
+        $('#mainView').css({ 'overflow': 'hidden' });
         $(`#${page}`).removeAttr('hidden');
     } else {
-        document.location.reload()
+        $('#mainView').css({ 'overflow': 'scroll' });
+        document.location.href = '/looped/dashboard' //Fixes Cache
     }
 }
 
@@ -132,16 +134,14 @@ async function getEverything(user) {
         //console.log(assignments)
     assignments.forEach(assignment => {
         if (assignment.description === 'null') assignment.description = ''
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date().toLocaleDateString()) var badge = '<span class="badge bg-danger">Due Today</span>'
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-warning">Due Tomorrow</span>'
+        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date().toLocaleDateString()) var badge = '<span class="badge bg-danger">Due today</span>'
+        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-warning">Due tomorrow</span>'
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-warning">Due in two days</span>'
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-success">Due in three days</span>'
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-success">Due in four days</span>'
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-primary">Due in five days</span>'
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 6 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-primary">Due in six days</span>'
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() >= new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = `<span class="badge bg-secondary">Due ${new Date(parseInt(String(assignment.dueDate))).toLocaleDateString()}</span>`
-
-
         var badge = badge || 'Due:' + new Date(parseInt(String(assignment.dueDate))).toLocaleDateString()
         assignment.description = String(assignment.description).replace("\\n", '').replace('  ', '')
         let listItem = document.createElement('a')
