@@ -81,7 +81,6 @@ async function getEverything(user) {
         document.getElementById('mainView').appendChild(iframe)
     })
 
-
     let mailPage = document.createElement('iframe')
     mailPage.src = `mail.html`
     mailPage.hidden = true
