@@ -18,7 +18,7 @@
     }
     let courseInfo = JSON.parse(localStorage.getItem(id))
 
-    console.log(courseInfo)
+    //console.log(courseInfo)
 
     ////////////////////////////////
     document.getElementById('className').innerHTML = `${courseInfo.course.name}`
@@ -43,41 +43,29 @@
                     </div>
                     <span class="badge bg-primary rounded-pill">${String(grade.percentScore).split('.')[0]}%</span>`
             document.getElementById('assignmentList').appendChild(listItem)
-
         })
 
-        const labels = []
-        let dayData = []
-        courseInfo.trendScores.forEach(trend => {
-            if (parseInt(trend.score) * 100 != dayData[dayData.length]) {
-                let assignDate = new Date(parseInt(String(trend.dayID))).toLocaleDateString()
-                let score = parseInt(trend.score) * 100
-                console.log(dayData[dayData.length])
-                dayData.push([score])
-                labels.push([assignDate])
+        let data = courseInfo.trendScores
 
-            }
+        new slChart({
+            canvasId: 'myChart',
+            id: user.students[0].studentID,
+            period_id: id,
+            isLongBeachScaledScore: false,
         })
-        console.log(labels)
+
+
+
 
         feather.replace({ 'aria-hidden': 'true' })
-        const data = {
-            labels: labels,
-            datasets: [{
-                label: 'My First dataset',
-                borderColor: 'rgb(255, 99, 132)',
-                data: dayData,
-            }]
-        }
-        const config = {
-            type: 'line',
-            data: data,
-            options: {}
-        }
-        var myChart = new Chart(
-            document.getElementById('myChart'),
-            config
-        );
+
+
+
+
+
+
+
+
 
     } catch {
         console.warn(`${courseInfo.course.name} has no grades`)
@@ -85,7 +73,59 @@
 
 
 })()
+/*
+var yLabel = this.isLongBeachScaledScore ? "Score" : "Percent";
+        var config = {
+            type: 'line',
+            data: {
+                labels: dates, // Hours
 
+                datasets: [{
+                    label: "Grade Trend",
+                    data: percentages,
+                    fill: false
+                }]
+            },
+
+            options: {
+                bezierCurve : false,
+                responsive: true,
+                scales: {
+                    xAxes: [
+                        {
+                            type: "time",
+                            display: true,
+                            time: {
+                                format: 'MM/DD/YY',
+                                displayFormat: 'MM/DD/YY'
+                            },
+                            ticks: {
+                                userCallback: function (dataLabel, index, data) {
+                                    return index % (data.length - 1) === 0 ? dataLabel : ''; //only first and last dates
+                                }
+                            }
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            display: true,
+                            scaleLabel: {
+                                show: true,
+                                labelString: yLabel
+                            },
+                            ticks: {
+                                userCallback: function (dataLabel, index, data) {
+                                    return parseFloat(dataLabel.toFixed(2));
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        };
+        var myLineChart = new Chart(this.context,config);
+    }
+    */
 /*
 ID: "1629184296239"
 ​​​

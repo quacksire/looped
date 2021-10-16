@@ -27,11 +27,26 @@ function inIframe() {
 
 
     loopmails.forEach(async mail => {
-        try {
-            document.getElementById('noItems').remove()
-        } catch (e) {
-            //nada
+
+        if (!localStorage.getItem(`mail-message-${mail.ID}`)) {
+            var message = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}&ID=${mail.ID}`, auth).then((response) => { return response })
+
+            message = await message.json()
+                //console.log(courseInfo)
+
+            localStorage.setItem(`mail-message-${mail.ID}`, JSON.stringify(message)) //reduce waiting time in same session
+
         }
+
+        try {
+            var message = JSON.parse(localStorage.getItem(`mail-message-${mail.ID}`))
+            document.getElementById('noItems').remove()
+        } catch (error) {
+            document.getElementById('reason').innerText = 'Please try agin later '
+            return
+        }
+
+
         //Want to do more here, like a pi chart or something
         let listItem = document.createElement('li')
         listItem.className = 'list-group-item d-flex justify-content-between align-items-start list-group-item-action'
@@ -41,25 +56,14 @@ function inIframe() {
                     ${String(mail.sender.name).split(', ')[1]} ${String(mail.sender.name).split(', ')[0]}
                     </div>
                     <span class="badge">${new Date(parseInt(String(mail.date))).toLocaleDateString()}</span>`
-        document.getElementById('mail').appendChild(listItem)
-        listItem.addEventListener('click', () => {
+        document.getElementById('mail').appendChild(listItem) listItem.addEventListener('click', () => {
 
             var myModal = new bootstrap.Modal(document.getElementById(mail.ID))
             myModal.show()
         })
-        let message = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}&ID=${mail.ID}`, auth).catch(() => {
-
-            let error = {
-                ID: 'error',
-                subject: 'Unable To Get Message',
-                message: `This is most likely caused by Too Many Requests (429)`
-            }
-            return error
 
 
-        }).then((response) => { return response })
-        message = await message.json()
-            //console.log(message)
+        //console.log(message)
 
 
         if (message.links != null) {
@@ -97,9 +101,7 @@ function inIframe() {
     `
             //< button type = "button" class="btn btn-primary" > Save changes</ >
         document.getElementById('viewers').appendChild(messageWindow)
-    })
-    console.info(`Loaded Loopmail Page (${loopmails.length} messages)`)
-    feather.replace({ 'aria-hidden': 'true' })
+    }) console.info(`Loaded Loopmail Page (${loopmails.length} messages)`) feather.replace({ 'aria-hidden': 'true' })
 
 
     if (inIframe()) {
