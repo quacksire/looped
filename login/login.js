@@ -118,7 +118,7 @@ async function checkUser(user, pass) {
                 }
             })
             console.log(response)
-             document.getElementById('runas').innerHTML = response
+             //document.getElementById('runas').innerHTML = response
     
     
     
@@ -209,9 +209,11 @@ $('#login').bind('submit', function(e) {
     console.info('hi')
     checkUser($('#floatingUsername').val(), $('#floatingPassword').val());
 });
+/*
 $('#login').bind('click', function(e) {
     e.preventDefault();
     console.log('Welcome!');
     document.getElementById('runas').innerHTML = `Hi`
     checkUser($('#floatingUsername').val(), $('#floatingPassword').val());
 });
+*/

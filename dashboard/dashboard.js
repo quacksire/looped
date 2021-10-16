@@ -79,6 +79,7 @@ async function getEverything(user) {
         iframe.className = 'page'
 
         document.getElementById('mainView').appendChild(iframe)
+            //console.log(course)
     })
 
     let mailPage = document.createElement('iframe')
