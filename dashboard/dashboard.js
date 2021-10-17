@@ -20,10 +20,9 @@ function togglePage(page = null) {
 
 
 
-
 async function getEverything(user) {
-    if (!navigator.onLine) {
-        console.info('Offline!')
+    if (!navigator.onLine || Cookies.get('sl') === 'offline') {
+        offline()
             /*
             PWA Mode
             */
@@ -36,20 +35,27 @@ async function getEverything(user) {
     if (user.role != 'student') logout(user.role)
     if (parseInt(localStorage.getItem('sl-lastUpdated')) >= Date.now() + 10 * 60) Cookies.remove('sl') //
     if (!Cookies.get('sl')) {
-        console.warn('Refreshing Data')
+        console.warn('Attempting to Refresh Data...')
         let courses = await fetch(`https://hmbhs.schoolloop.com/mapi/report_card?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
         let assignments = await fetch(`https://hmbhs.schoolloop.com/mapi/assignments?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
         let news = await fetch(`https://hmbhs.schoolloop.com/mapi/news?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response.data })
         let loopmails = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
         console.info(`School Loop API Response: ${courses.status} ${courses.statusText}`)
-        let slLoopmail = await loopmails.json().then((data) => { return data })
-        let slAssignments = await assignments.json().then((data) => { return data })
-        let slCourses = await courses.json().then((data) => { return data })
-        Cookies.set('sl', 'true')
-        localStorage.setItem('sl-lastUpdated', encodeURI(new Date().getTime()))
-        localStorage.setItem('sl-loopmail', JSON.stringify(slLoopmail))
-        localStorage.setItem('sl-assignments', JSON.stringify(slAssignments))
-        localStorage.setItem('sl-courses', JSON.stringify(slCourses))
+        try {
+            let slLoopmail = await loopmails.json().then((data) => { return data })
+            let slAssignments = await assignments.json().then((data) => { return data })
+            let slCourses = await courses.json().then((data) => { return data })
+            Cookies.set('sl', 'true')
+            localStorage.setItem('sl-lastUpdated', encodeURI(new Date().getTime()))
+            localStorage.setItem('sl-loopmail', JSON.stringify(slLoopmail))
+            localStorage.setItem('sl-assignments', JSON.stringify(slAssignments))
+            localStorage.setItem('sl-courses', JSON.stringify(slCourses))
+        } catch (error) {
+            console.warn('Attempt to Refresh Data Failed')
+            Cookies.set('sl', 'offline')
+            offline()
+        }
+
     }
 
 

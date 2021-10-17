@@ -5,7 +5,7 @@ function logout(r = null) {
 
 
     if (Cookies.get('slUser')) {
-        Cookies.remove('slUser')
+        if (Cookies.get('sl') != 'offline') Cookies.remove('slUser')
         console.log('Logged Out!')
     } else {
 
@@ -38,3 +38,7 @@ document.getElementById('logout').addEventListener('click', () => {
 })
 
 feather.replace({ 'aria-hidden': 'true' })
+
+function offline() {
+    console.error('----------------------- OFFLINE MODE ENABLED -----------------------', '\nNo or an invalid response from School Loop', '\nAssumed Offline', '\n-----------------------------------------------------------')
+}
