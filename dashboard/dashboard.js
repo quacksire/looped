@@ -95,17 +95,19 @@ async function getEverything(user) {
         }
     })
 
+
+    //------------------------ GPA ------------------------//
     gpa = gpa / trueClassCount
     gpa = gpa.toFixed(2)
     let simplified = ((gpa - 50) / 10).toFixed(1)
     if (urlParams.has('gpa')) simplified = parseFloat(urlParams.get('gpa'))
     let color = 'text-primary'
-    if (simplified >= 3.0) { color = 'text-success' } else if (simplified <= 2.0) { color = 'text-danger' } else if (simplified >= 4.5) { color = 'text-danger'
-        text - info } else { color = 'text-warning' }
+        //add some ✨spice✨
+    if (simplified >= 3.0) { color = 'text-success' } else if (simplified <= 2.0) { color = 'text-danger' } else if (simplified >= 4.5) { color = 'text-info' } else { color = 'text-warning' }
     document.getElementById('gpa').innerHTML = `<strong class="${color} center" data-bs-toggle="tooltip" data-bs-placement="right" title="${gpa}">${simplified}</strong>`
     console.log(`GPA: ${gpa}`)
 
-
+    //------------------------ Static Pages ------------------------//
     let mailPage = document.createElement('iframe')
     mailPage.src = `mail.html`
     mailPage.hidden = true
@@ -128,6 +130,9 @@ async function getEverything(user) {
     newsPage.className = 'page'
     document.getElementById('mainView').appendChild(newsPage)
 
+
+
+    //------------------------ Click Events ------------------------//
     document.getElementById('homeClick').addEventListener('click', () => {
 
         togglePage()
