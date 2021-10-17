@@ -93,7 +93,9 @@ async function getEverything(user) {
     gpa = gpa / trueClassCount
     gpa = gpa.toFixed(2)
     let simplified = ((gpa - 50) / 10).toFixed(1)
-    document.getElementById('gpa').innerHTML = `<strong data-bs-toggle="tooltip" data-bs-placement="right" title="${simplified}">${gpa}%</strong>`
+    let color = 'text-'
+    if (simplified >= 3.0) { color = 'text-success' } else if (simplified <= 2.0) { color = 'text-danger' } else { color = 'text-warning' }
+    document.getElementById('gpa').innerHTML = `<strong class="${color} center" data-bs-toggle="tooltip" data-bs-placement="right" title="${gpa}">${simplified}</strong>`
     console.log(`GPA: ${gpa}`)
 
 
