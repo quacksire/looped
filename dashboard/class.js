@@ -25,51 +25,52 @@
     document.getElementById('teacherName').innerHTML = `${courseInfo.teacher.name}`
     console.info(`Loaded ${courseInfo.course.name} page (${id})`)
 
-    try {
+    //try {
 
-        courseInfo.grades.forEach(grade => {
-            try {
-                document.getElementById('noItems').remove()
-            } catch (e) {
-                //nada
-            }
-            //Want to do more here, like a pi chart or something
-            let listItem = document.createElement('li')
-            listItem.className = 'list-group-item d-flex justify-content-between align-items-start'
-            listItem.innerHTML = `
+    courseInfo.grades.forEach(grade => {
+        try {
+            document.getElementById('noItems').remove()
+        } catch (e) {
+            //nada
+        }
+        //Want to do more here, like a pi chart or something
+        let listItem = document.createElement('li')
+        listItem.className = 'list-group-item d-flex justify-content-between align-items-start'
+        listItem.innerHTML = `
                     <div class="ms-2 me-auto">
                     <div class="fw-bold">${grade.assignment.categoryName}</div>
                     ${grade.assignment.title}
                     </div>
                     <span class="badge bg-primary rounded-pill">${String(grade.percentScore).split('.')[0]}%</span>`
-            document.getElementById('assignmentList').appendChild(listItem)
-        })
+        document.getElementById('assignmentList').appendChild(listItem)
+    })
 
-        let data = courseInfo.trendScores
+    let data = courseInfo.trendScores
 
-        new slChart({
-            canvasId: 'myChart',
-            id: user.students[0].studentID,
-            period_id: id,
-            isLongBeachScaledScore: false,
-        })
-
-
-
-
-        feather.replace({ 'aria-hidden': 'true' })
+    //let chart = new slChart({
+    //    canvasId: 'myChart',
+    //    id: user.students[0].studentID,
+    //    period_id: id,
+    //    isLongBeachScaledScore: false,
+    //    progress_report_data: courseInfo
+    //})
 
 
 
+
+    feather.replace({ 'aria-hidden': 'true' })
 
 
 
 
 
 
-    } catch {
-        console.warn(`${courseInfo.course.name} has no grades`)
-    }
+
+
+
+    //} catch {
+    //console.warn(`${courseInfo.course.name} has no grades`)
+    //}
 
 
 })()

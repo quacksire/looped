@@ -52,6 +52,8 @@ async function getEverything(user) {
         //console.log(courseList)
         //console.log(JSON.parse(localStorage.getItem('sl-loopmail')))
     var count = 0
+    let gpa = 0
+    let trueClassCount = 0
     courseList.forEach(course => {
         let link = '#'
         let card = document.createElement('li')
@@ -80,7 +82,20 @@ async function getEverything(user) {
 
         document.getElementById('mainView').appendChild(iframe)
             //console.log(course)
+
+        if (course.score != 'null') {
+            //console.log(parseFloat(String(course.score).slice(0, String(course.score).length - 1)))
+            gpa = gpa + parseFloat(String(course.score).slice(0, String(course.score).length - 1))
+            trueClassCount++
+        }
     })
+
+    gpa = gpa / trueClassCount
+    gpa = gpa.toFixed(2)
+    let simplified = ((gpa - 50) / 10).toFixed(1)
+    document.getElementById('gpa').innerHTML = `<strong data-bs-toggle="tooltip" data-bs-placement="right" title="${simplified}">${gpa}%</strong>`
+    console.log(`GPA: ${gpa}`)
+
 
     let mailPage = document.createElement('iframe')
     mailPage.src = `mail.html`
@@ -182,3 +197,98 @@ async function getEverything(user) {
         }
     }, 2000)
 })()
+/*
+[
+  {
+    "teacherName": "Hees, Gerhardt",
+    "teacherRegistered": "true",
+    "periodID": "1593846839423",
+    "period": "1",
+    "courseName": "Advisory 9th",
+    "teacherID": "1486205533181",
+    "grade": "N/A",
+    "score": "null",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "null"
+  },
+  {
+    "teacherName": "Olson, Pat",
+    "teacherRegistered": "true",
+    "periodID": "1593846839236",
+    "period": "2",
+    "courseName": "Broadcasting",
+    "teacherID": "1102472042704",
+    "grade": "A-",
+    "score": "90%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/15/21 6:02 PM"
+  },
+  {
+    "teacherName": "Centoni, Joseph",
+    "teacherRegistered": "true",
+    "periodID": "1593846839225",
+    "period": "3",
+    "courseName": "Biology",
+    "teacherID": "1102472042650",
+    "grade": "B+",
+    "score": "88%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/15/21 9:38 AM"
+  },
+  {
+    "teacherName": "Galvin, Thomas",
+    "teacherRegistered": "true",
+    "periodID": "1593847208539",
+    "period": "4",
+    "courseName": "World History",
+    "teacherID": "1593846837961",
+    "grade": "A+",
+    "score": "97.75%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/13/21 11:24 AM"
+  },
+  {
+    "teacherName": "Toner, James",
+    "teacherRegistered": "true",
+    "periodID": "1629184066249",
+    "period": "5",
+    "courseName": "Adv English II",
+    "teacherID": "1563866882363",
+    "grade": "B",
+    "score": "83.58%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/14/21 7:23 PM"
+  },
+  {
+    "teacherName": "Taylor, Dustin",
+    "teacherRegistered": "true",
+    "periodID": "1593846838898",
+    "period": "6",
+    "courseName": "Core PE 10th gr",
+    "teacherID": "1470120028673",
+    "grade": "A-",
+    "score": "92.93%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/13/21 9:52 AM"
+  },
+  {
+    "teacherName": "Jones, David",
+    "teacherRegistered": "true",
+    "periodID": "1633162354743",
+    "period": "7",
+    "courseName": "Geometry",
+    "teacherID": "1249846191673",
+    "grade": "A+",
+    "score": "98.11%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/15/21 10:34 AM"
+  }
+]
+*/

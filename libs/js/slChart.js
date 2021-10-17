@@ -8,46 +8,39 @@ class slChart {
     constructor(options) {
 
         this.canvasId = options.canvasId;
+
         this.id = options.id;
         this.period_id = options.period_id;
-        this.url = options.url;
+        this.url = 'https://' + JSON.parse(decodeURI(Cookies.get('slUser'))).students[0].school.domainName;
+        this.data = options.progress_report_data
+
         this.mark_id = options.mark_id;
         this.isLongBeachScaledScore = options.isLongBeachScaledScore;
-        sl.log("slChart options::", options);
+        //sl.log("slChart options::", options);
         this.context = jQuery("#" + this.canvasId).get(0).getContext("2d");
         this.paintGraph()
     }
 
-    getData() {
-
-
-        var url = this.url + "?id=" + this.id + "&period_id=" + this.period_id;
-        if (this.mark_id != null) {
-            url += "&mark_id=" + this.mark_id;
-        }
-        var data = jQuery.ajax({
-            url: url,
-            dataType: "json"
-        })
-        return data;
+    async getData() {
+        return this.data;
     }
-    processData(data, textStatus, jqXHR) {
-        sl.log("data to process", data);
+    processData(data) {
+        //console.log("data to process", data);
         var percentages = [];
         var dates = [];
         for (var i = 0; i < data.length; i++) {
             percentages.push(data[i].percentage);
             dates.push(data[i].date)
         }
-        sl.log("percentages", percentages)
-        sl.log("dates", dates)
+        //sl.log("percentages", percentages)
+        //sl.log("dates", dates)
 
         this.paint(percentages, dates)
 
     }
 
     paint(percentages, dates) {
-        sl.log("paint", percentages, dates)
+        //sl.log("paint", percentages, dates)
         var yLabel = this.isLongBeachScaledScore ? "Score" : "Percent";
         var config = {
             type: 'line',
@@ -62,16 +55,11 @@ class slChart {
             },
 
             options: {
-                bezierCurve: false,
+                bezierCurve: true,
                 responsive: true,
                 scales: {
                     xAxes: [{
-                        type: "time",
                         display: true,
-                        time: {
-                            format: 'MM/DD/YY',
-                            displayFormat: 'MM/DD/YY'
-                        },
                         ticks: {
                             userCallback: function(dataLabel, index, data) {
                                 return index % (data.length - 1) === 0 ? dataLabel : ''; //only first and last dates

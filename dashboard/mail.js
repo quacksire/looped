@@ -24,8 +24,7 @@ function inIframe() {
     }
     let loopmails = JSON.parse(localStorage.getItem('mail'))
         //console.log(loopmails)
-
-
+    if (loopmails.length >= 1) document.getElementById('noItems').remove()
     loopmails.forEach(async mail => {
 
         if (!localStorage.getItem(`mail-message-${mail.ID}`)) {
@@ -37,17 +36,17 @@ function inIframe() {
             localStorage.setItem(`mail-message-${mail.ID}`, JSON.stringify(message)) //reduce waiting time in same session
 
         }
-
-        try {
-            var message = JSON.parse(localStorage.getItem(`mail-message-${mail.ID}`))
-            document.getElementById('noItems').remove()
-        } catch (error) {
-            document.getElementById('reason').innerText = 'Please try agin later '
-            return
-        }
-
-
-        //Want to do more here, like a pi chart or something
+        /*
+                try {
+                    
+                    document.getElementById('noItems').remove()
+                } catch (error) {
+                    document.getElementById('reason').innerText = 'Please try agin later '
+                    return
+                }
+        */
+        var message = JSON.parse(localStorage.getItem(`mail-message-${mail.ID}`))
+            //Want to do more here, like a pi chart or something
         let listItem = document.createElement('li')
         listItem.className = 'list-group-item d-flex justify-content-between align-items-start list-group-item-action'
         listItem.innerHTML = `
@@ -56,7 +55,9 @@ function inIframe() {
                     ${String(mail.sender.name).split(', ')[1]} ${String(mail.sender.name).split(', ')[0]}
                     </div>
                     <span class="badge">${new Date(parseInt(String(mail.date))).toLocaleDateString()}</span>`
-        document.getElementById('mail').appendChild(listItem) listItem.addEventListener('click', () => {
+        document.getElementById('mail').appendChild(listItem)
+        listItem.addEventListener('click', () => {
+
 
             var myModal = new bootstrap.Modal(document.getElementById(mail.ID))
             myModal.show()
@@ -101,7 +102,9 @@ function inIframe() {
     `
             //< button type = "button" class="btn btn-primary" > Save changes</ >
         document.getElementById('viewers').appendChild(messageWindow)
-    }) console.info(`Loaded Loopmail Page (${loopmails.length} messages)`) feather.replace({ 'aria-hidden': 'true' })
+    })
+    console.info(`Loaded Loopmail Page (${loopmails.length} messages)`)
+    feather.replace({ 'aria-hidden': 'true' })
 
 
     if (inIframe()) {
