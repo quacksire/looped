@@ -28,6 +28,11 @@ async function getEverything(user) {
             PWA Mode
             */
     }
+
+
+    const QueryString = window.location.search;
+    const urlParams = new URLSearchParams(QueryString);
+
     if (user.role != 'student') logout(user.role)
     if (parseInt(localStorage.getItem('sl-lastUpdated')) >= Date.now() + 10 * 60) Cookies.remove('sl') //
     if (!Cookies.get('sl')) {
@@ -93,8 +98,10 @@ async function getEverything(user) {
     gpa = gpa / trueClassCount
     gpa = gpa.toFixed(2)
     let simplified = ((gpa - 50) / 10).toFixed(1)
-    let color = 'text-'
-    if (simplified >= 3.0) { color = 'text-success' } else if (simplified <= 2.0) { color = 'text-danger' } else { color = 'text-warning' }
+    if (urlParams.has('gpa')) simplified = parseFloat(urlParams.get('gpa'))
+    let color = 'text-primary'
+    if (simplified >= 3.0) { color = 'text-success' } else if (simplified <= 2.0) { color = 'text-danger' } else if (simplified >= 4.5) { color = 'text-danger'
+        text - info } else { color = 'text-warning' }
     document.getElementById('gpa').innerHTML = `<strong class="${color} center" data-bs-toggle="tooltip" data-bs-placement="right" title="${gpa}">${simplified}</strong>`
     console.log(`GPA: ${gpa}`)
 
@@ -136,8 +143,7 @@ async function getEverything(user) {
         togglePage('news')
 
     })
-    const QueryString = window.location.search;
-    const urlParams = new URLSearchParams(QueryString);
+
     if (urlParams.get('page')) togglePage(urlParams.get('page'))
 
 
