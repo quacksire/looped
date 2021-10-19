@@ -37,10 +37,6 @@ function getCookie(cname) {
     return null;
 }
 
-
-//https://blog.logrocket.com/javascript-developer-guide-browser-cookies/
-//Remove all chrome.* references -> cookies now
-
 function login() {
 
 
@@ -194,7 +190,7 @@ document.getElementById('runas').innerHTML = `Web`
 if (urlParams.has('r')) incorrectRole(urlParams.get('r'))
 main()
 
-
+if (/\bCrOS\b/.test(navigator.userAgent)) alert('ChromeOS support is not great, things might break', 'warning')
 
 
 $(document).ready(function() {
