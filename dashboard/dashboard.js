@@ -13,8 +13,13 @@ function togglePage(page = null) {
         $(`#${page}`).removeAttr('hidden');
     } else {
         $('#mainView').css({ 'overflow': 'scroll' });
-        if (document.location.href.includes('/looped/') || document.location.href.includes('/looped')) document.location.href = '/looped/dashboard' //Fixes Cache
-        document.location.href = '/dashboard'
+        if (document.location.href.includes('/looped/') || document.location.href.includes('/looped')) {
+            document.location.replace(document.location.origin + '/looped/dashboard')
+        } else {
+            document.location.href = '/dashboard'
+        }
+        //Fixes Cache
+
     }
 }
 
