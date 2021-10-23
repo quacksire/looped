@@ -31,7 +31,6 @@
             } catch (e) {
                 //nada
             }
-            //Want to do more here, like a pi chart or something
             let listItem = document.createElement('li')
             listItem.className = 'list-group-item d-flex justify-content-between align-items-start'
             listItem.innerHTML = `
@@ -42,17 +41,18 @@
                     <span class="badge bg-primary rounded-pill">${String(grade.percentScore).split('.')[0]}%</span>`
             document.getElementById('assignmentList').appendChild(listItem)
         })
-        //console.log("data to process", data);
         //------------------------ Chart ------------------------//
+        /*
+         *   Adapted from https://cdn.schoolloop.com/release_1.0.39.2/static//lib/chartjs/chart_class.js
+         *   * Copyright (c) 2004-2018, School Loop, Inc. All Rights Reserved.
+         *
+         */
     var percentages = [];
     var dates = [];
     for (var i = 0; i < courseInfo.trendScores.length; i++) {
         percentages.push(parseFloat(courseInfo.trendScores[i].score) * 100);
         dates.push(new Date(parseInt(String(courseInfo.trendScores[i].dayID))).toLocaleDateString())
     }
-    //sl.log("percentages", percentages)
-    //sl.log("dates", dates)
-    //sl.log("paint", percentages, dates)
     var yLabel = "Score";
     var config = {
         type: 'line',
