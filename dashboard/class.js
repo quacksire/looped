@@ -108,8 +108,11 @@
             }
         }
     };
-    var myLineChart = new Chart('myChart', config);
+    console.log = function() {};
+    Chart.defaults.responsive = true;
+    Chart.defaults.animation = false;
 
+    var myLineChart = new Chart('myChart', config);
 
 
 

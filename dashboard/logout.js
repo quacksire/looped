@@ -15,18 +15,18 @@ function logout(r = null) {
 
     setTimeout(() => {
         if (urlParams.has('page') && r) {
-            document.location.href = document.location.origin + `/looped/login/?out=true&r=${encodeURI(String(r))}&p=${urlParams.get('page')}`
+            if (document.location.href.includes('/looped/')) document.location.href = `/looped/login/?out=true&r=${encodeURI(String(r))}&p=${urlParams.get('page')}` //Fixes Cache
+            document.location.href = `/login/?out=true&r=${encodeURI(String(r))}&p=${urlParams.get('page')}`
         } else if (r) {
-            document.location.href = document.location.origin + `/looped/login/?out=true&r=${encodeURI(String(r))}`
+            if (document.location.href.includes('/looped/')) document.location.href = `/looped/login/?out=true&r=${encodeURI(String(r))}` //Fixes Cache
+            document.location.href = `/login/?out=true&r=${encodeURI(String(r))}`
         } else if (urlParams.has('page')) {
-            document.location.href = document.location.origin + `/looped/login/?out=true&p=${urlParams.get('page')}`
+            if (document.location.href.includes('/looped/')) document.location.href = `/looped/login/?out=true&p=${urlParams.get('page')}` //Fixes Cache
+            document.location.href = `/login/?out=true&p=${urlParams.get('page')}`
         } else {
-            document.location.href = document.location.origin + `/looped/login/?out=true`
+            if (document.location.href.includes('/looped/')) document.location.href = `/looped/login/?out=true` //Fixes Cache
+            document.location.href = `/login/?out=true`
         }
-
-
-
-
     }, 500)
 
 }

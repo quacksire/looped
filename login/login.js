@@ -38,15 +38,14 @@ function getCookie(cname) {
 }
 
 function login() {
-
-
-    //Debug ENV
-    if (document.location.port) document.location.href = document.location.origin + "/dashboard/index.html"
     if (urlParams.has('p')) {
-        document.location.href = document.location.origin + `/looped/dashboard/?page=${urlParams.get('p')}`
+        if (document.location.href.includes('/looped/')) document.location.href = `/looped/dashboard/?page=${urlParams.get('p')}`
+        document.location.href = `/dashboard/?page=${urlParams.get('p')}`
     } else {
-        document.location.href = document.location.origin + "/looped/dashboard/"
+        if (document.location.href.includes('/looped/')) document.location.href = `/looped/dashboard/`
+        document.location.href = `/dashboard/`
     }
+
 
 
 }
