@@ -1,0 +1,13 @@
+{
+    "name": "Looped",
+    "short_name": "Looped",
+    "start_url": "/",
+    "display": "minimal-ui",
+    "background_color": "#236e9f",
+    "description": " A Web-Based School Loop Alternative ",
+    "dir": "auto",
+    "lang": "en",
+    "orientation": "any",
+    "scope": "/dashboard",
+    "theme_color": "#236e9f"
+}
