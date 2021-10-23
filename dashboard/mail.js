@@ -24,15 +24,29 @@ function inIframe() {
     }
     let loopmails = JSON.parse(localStorage.getItem('mail'))
         //console.log(loopmails)
-
-
+    if (loopmails.length >= 1) document.getElementById('noItems').remove()
     loopmails.forEach(async mail => {
-        try {
-            document.getElementById('noItems').remove()
-        } catch (e) {
-            //nada
+
+        if (!localStorage.getItem(`mail-message-${mail.ID}`)) {
+            var message = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}&ID=${mail.ID}`, auth).then((response) => { return response })
+
+            message = await message.json()
+                //console.log(courseInfo)
+
+            localStorage.setItem(`mail-message-${mail.ID}`, JSON.stringify(message)) //reduce waiting time in same session
+
         }
-        //Want to do more here, like a pi chart or something
+        /*
+                try {
+                    
+                    document.getElementById('noItems').remove()
+                } catch (error) {
+                    document.getElementById('reason').innerText = 'Please try agin later '
+                    return
+                }
+        */
+        var message = JSON.parse(localStorage.getItem(`mail-message-${mail.ID}`))
+            //Want to do more here, like a pi chart or something
         let listItem = document.createElement('li')
         listItem.className = 'list-group-item d-flex justify-content-between align-items-start list-group-item-action'
         listItem.innerHTML = `
@@ -44,22 +58,13 @@ function inIframe() {
         document.getElementById('mail').appendChild(listItem)
         listItem.addEventListener('click', () => {
 
+
             var myModal = new bootstrap.Modal(document.getElementById(mail.ID))
             myModal.show()
         })
-        let message = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}&ID=${mail.ID}`, auth).catch(() => {
-
-            let error = {
-                ID: 'error',
-                subject: 'Unable To Get Message',
-                message: `This is most likely caused by Too Many Requests (429)`
-            }
-            return error
 
 
-        }).then((response) => { return response })
-        message = await message.json()
-            //console.log(message)
+        //console.log(message)
 
 
         if (message.links != null) {

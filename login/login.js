@@ -37,20 +37,15 @@ function getCookie(cname) {
     return null;
 }
 
-
-//https://blog.logrocket.com/javascript-developer-guide-browser-cookies/
-//Remove all chrome.* references -> cookies now
-
 function login() {
-
-
-    //Debug ENV
-    if (document.location.port) document.location.href = document.location.origin + "/dashboard/index.html"
     if (urlParams.has('p')) {
-        document.location.href = document.location.origin + `/looped/dashboard/?page=${urlParams.get('p')}`
+        if (document.location.href.includes('/looped/')) document.location.replace(document.location.origin + `/looped/dashboard/?page=${urlParams.get('p')}`)
+        document.location.replace(document.location.origin + `/dashboard/?page=${urlParams.get('p')}`)
     } else {
-        document.location.href = document.location.origin + "/looped/dashboard/"
+        if (document.location.href.includes('/looped/')) document.location.replace(document.location.origin + `/looped/dashboard/}`)
+        document.location.replace(document.location.origin + `/dashboard/`)
     }
+
 
 
 }
@@ -194,7 +189,7 @@ document.getElementById('runas').innerHTML = `Web`
 if (urlParams.has('r')) incorrectRole(urlParams.get('r'))
 main()
 
-
+if (/\bCrOS\b/.test(navigator.userAgent)) alert('ChromeOS support is not great, things might break', 'warning')
 
 
 $(document).ready(function() {

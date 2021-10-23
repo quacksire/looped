@@ -13,38 +13,55 @@ function togglePage(page = null) {
         $(`#${page}`).removeAttr('hidden');
     } else {
         $('#mainView').css({ 'overflow': 'scroll' });
-        document.location.href = '/looped/dashboard' //Fixes Cache
+        if (document.location.href.includes('/looped/') || document.location.href.includes('/looped')) {
+            document.location.replace(document.location.origin + '/looped/dashboard')
+        } else {
+            document.location.href = '/dashboard'
+        }
+        //Fixes Cache
+
     }
 }
 
 
 
 
-
 async function getEverything(user) {
-    if (!navigator.onLine) {
-        console.info('Offline!')
+    if (!navigator.onLine || Cookies.get('sl') === 'offline') {
+        offline()
             /*
             PWA Mode
             */
     }
+
+
+    const QueryString = window.location.search;
+    const urlParams = new URLSearchParams(QueryString);
+
     if (user.role != 'student') logout(user.role)
     if (parseInt(localStorage.getItem('sl-lastUpdated')) >= Date.now() + 10 * 60) Cookies.remove('sl') //
     if (!Cookies.get('sl')) {
-        console.warn('Refreshing Data')
+        console.warn('Attempting to Refresh Data...')
         let courses = await fetch(`https://hmbhs.schoolloop.com/mapi/report_card?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
         let assignments = await fetch(`https://hmbhs.schoolloop.com/mapi/assignments?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
         let news = await fetch(`https://hmbhs.schoolloop.com/mapi/news?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response.data })
         let loopmails = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
         console.info(`School Loop API Response: ${courses.status} ${courses.statusText}`)
-        let slLoopmail = await loopmails.json().then((data) => { return data })
-        let slAssignments = await assignments.json().then((data) => { return data })
-        let slCourses = await courses.json().then((data) => { return data })
-        Cookies.set('sl', 'true')
-        localStorage.setItem('sl-lastUpdated', encodeURI(new Date().getTime()))
-        localStorage.setItem('sl-loopmail', JSON.stringify(slLoopmail))
-        localStorage.setItem('sl-assignments', JSON.stringify(slAssignments))
-        localStorage.setItem('sl-courses', JSON.stringify(slCourses))
+        try {
+            let slLoopmail = await loopmails.json().then((data) => { return data })
+            let slAssignments = await assignments.json().then((data) => { return data })
+            let slCourses = await courses.json().then((data) => { return data })
+            Cookies.set('sl', 'true')
+            localStorage.setItem('sl-lastUpdated', encodeURI(new Date().getTime()))
+            localStorage.setItem('sl-loopmail', JSON.stringify(slLoopmail))
+            localStorage.setItem('sl-assignments', JSON.stringify(slAssignments))
+            localStorage.setItem('sl-courses', JSON.stringify(slCourses))
+        } catch (error) {
+            console.warn('Attempt to Refresh Data Failed')
+            Cookies.set('sl', 'offline')
+            offline()
+        }
+
     }
 
 
@@ -52,6 +69,8 @@ async function getEverything(user) {
         //console.log(courseList)
         //console.log(JSON.parse(localStorage.getItem('sl-loopmail')))
     var count = 0
+    let gpa = 0
+    let trueClassCount = 0
     courseList.forEach(course => {
         let link = '#'
         let card = document.createElement('li')
@@ -80,8 +99,27 @@ async function getEverything(user) {
 
         document.getElementById('mainView').appendChild(iframe)
             //console.log(course)
+
+        if (course.score != 'null') {
+            //console.log(parseFloat(String(course.score).slice(0, String(course.score).length - 1)))
+            gpa = gpa + parseFloat(String(course.score).slice(0, String(course.score).length - 1))
+            trueClassCount++
+        }
     })
 
+
+    //------------------------ GPA ------------------------//
+    gpa = gpa / trueClassCount
+    gpa = gpa.toFixed(2)
+    let simplified = ((gpa - 50) / 10).toFixed(1)
+    if (urlParams.has('gpa')) simplified = parseFloat(urlParams.get('gpa'))
+    let color = 'text-primary'
+        //add some ✨spice✨
+    if (simplified >= 3.0 && simplified <= 4.5) { color = 'text-success' } else if (simplified <= 2.0) { color = 'text-danger' } else if (simplified >= 4.5) { color = 'text-info' } else { color = 'text-warning' }
+    document.getElementById('gpa').innerHTML = `<strong class="${color} center" data-bs-toggle="tooltip" data-bs-placement="right" title="${gpa}">${simplified}</strong>`
+    console.log(`GPA: ${gpa}`)
+
+    //------------------------ Static Pages ------------------------//
     let mailPage = document.createElement('iframe')
     mailPage.src = `mail.html`
     mailPage.hidden = true
@@ -104,6 +142,9 @@ async function getEverything(user) {
     newsPage.className = 'page'
     document.getElementById('mainView').appendChild(newsPage)
 
+
+
+    //------------------------ Click Events ------------------------//
     document.getElementById('homeClick').addEventListener('click', () => {
 
         togglePage()
@@ -119,8 +160,7 @@ async function getEverything(user) {
         togglePage('news')
 
     })
-    const QueryString = window.location.search;
-    const urlParams = new URLSearchParams(QueryString);
+
     if (urlParams.get('page')) togglePage(urlParams.get('page'))
 
 
@@ -182,3 +222,98 @@ async function getEverything(user) {
         }
     }, 2000)
 })()
+/*
+[
+  {
+    "teacherName": "Hees, Gerhardt",
+    "teacherRegistered": "true",
+    "periodID": "1593846839423",
+    "period": "1",
+    "courseName": "Advisory 9th",
+    "teacherID": "1486205533181",
+    "grade": "N/A",
+    "score": "null",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "null"
+  },
+  {
+    "teacherName": "Olson, Pat",
+    "teacherRegistered": "true",
+    "periodID": "1593846839236",
+    "period": "2",
+    "courseName": "Broadcasting",
+    "teacherID": "1102472042704",
+    "grade": "A-",
+    "score": "90%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/15/21 6:02 PM"
+  },
+  {
+    "teacherName": "Centoni, Joseph",
+    "teacherRegistered": "true",
+    "periodID": "1593846839225",
+    "period": "3",
+    "courseName": "Biology",
+    "teacherID": "1102472042650",
+    "grade": "B+",
+    "score": "88%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/15/21 9:38 AM"
+  },
+  {
+    "teacherName": "Galvin, Thomas",
+    "teacherRegistered": "true",
+    "periodID": "1593847208539",
+    "period": "4",
+    "courseName": "World History",
+    "teacherID": "1593846837961",
+    "grade": "A+",
+    "score": "97.75%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/13/21 11:24 AM"
+  },
+  {
+    "teacherName": "Toner, James",
+    "teacherRegistered": "true",
+    "periodID": "1629184066249",
+    "period": "5",
+    "courseName": "Adv English II",
+    "teacherID": "1563866882363",
+    "grade": "B",
+    "score": "83.58%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/14/21 7:23 PM"
+  },
+  {
+    "teacherName": "Taylor, Dustin",
+    "teacherRegistered": "true",
+    "periodID": "1593846838898",
+    "period": "6",
+    "courseName": "Core PE 10th gr",
+    "teacherID": "1470120028673",
+    "grade": "A-",
+    "score": "92.93%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/13/21 9:52 AM"
+  },
+  {
+    "teacherName": "Jones, David",
+    "teacherRegistered": "true",
+    "periodID": "1633162354743",
+    "period": "7",
+    "courseName": "Geometry",
+    "teacherID": "1249846191673",
+    "grade": "A+",
+    "score": "98.11%",
+    "coTeacherID": "0",
+    "coTeacherName": "null",
+    "lastUpdated": "10/15/21 10:34 AM"
+  }
+]
+*/

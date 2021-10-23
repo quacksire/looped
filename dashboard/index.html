@@ -44,6 +44,9 @@
 
     <!-- Custom styles for this template -->
     <link href="sidebars.css" rel="stylesheet">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
 </head>
 
 <body>
@@ -156,6 +159,11 @@
         <div class="container-fluid" id="mainView" style="overflow: scroll">
 
             <div id="home" class="page">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"><i data-feather="bar-chart-2"></i> GPA:
+                        <div id="gpa" class="display-1"></div>
+                    </h1>
+                </div>
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2"><i data-feather="paperclip"></i> Assignments</h1>
                 </div>
