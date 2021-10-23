@@ -1,18 +1,12 @@
 function logout(r = null) {
     const QueryString = window.location.search;
     const urlParams = new URLSearchParams(QueryString);
-
-
-
     if (Cookies.get('slUser')) {
         if (Cookies.get('sl') != 'offline') Cookies.remove('slUser')
         console.log('Logged Out!')
     } else {
-
         console.error('User not detected')
-
     }
-
     setTimeout(() => {
         if (urlParams.has('page') && r) {
             if (document.location.href.includes('/looped/')) document.location.href = `/looped/login/?out=true&r=${encodeURI(String(r))}&p=${urlParams.get('page')}` //Fixes Cache
@@ -28,13 +22,10 @@ function logout(r = null) {
             document.location.href = `/login/?out=true`
         }
     }, 500)
-
 }
 
 document.getElementById('logout').addEventListener('click', () => {
-
     logout()
-
 })
 
 feather.replace({ 'aria-hidden': 'true' })
