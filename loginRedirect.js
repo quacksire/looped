@@ -3,14 +3,14 @@
     if (Cookies.get('slUser')) {
         console.info('School Loop User Cookie Found! Sending to Dashboard')
         setTimeout(() => {
-            if (document.location.href.includes('/looped/')) document.location.href = `/looped/dashboard/`
-            document.location.href = `/dashboard/`
+            //if (document.location.href.includes('/looped/')) document.location.href = `/looped/dashboard/`
+            document.location.replace(document.location.origin + `/looped/dashboard/`)
         }, 1500)
     } else {
         console.info('We found someone new! Sending to login page')
         setTimeout(() => {
-            if (document.location.href.includes('/looped/')) document.location.href = `/looped/login/`
-            document.location.href = `/login/`
+            //if (document.location.href.includes('/looped/')) document.location.href = `/looped/login/`
+            document.location.replace(document.location.origin + `/looped/login/`)
         }, 1500)
     }
 })()

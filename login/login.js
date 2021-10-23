@@ -52,8 +52,8 @@ function login() {
 
 function error() {
 
-    document.location.href = document.location.origin + `/looped/login/?failed=true`
-
+    //document.location.href = document.location.origin + `/looped/login/?failed=true`
+    document.location.replace(document.location.origin + `/looped/dashboard/?failed=true`)
 
 
 }
