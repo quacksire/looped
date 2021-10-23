@@ -58,7 +58,7 @@
         data: {
             labels: dates, // Hours
             datasets: [{
-                label: "Grade Trend",
+                label: "Grade",
                 data: percentages,
                 fill: false,
                 borderColor: 'rgba(248, 148, 6, 1)'
