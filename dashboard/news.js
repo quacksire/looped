@@ -89,7 +89,7 @@ function inIframe() {
         document.getElementById('embeddedAction').appendChild(action)
     } else {
         let action = document.createElement('a')
-        action.href = document.location.origin + '/looped/dashboard/?page=' + document.location.href.split('.html')[0].split('/')[4]
+        action.href = document.location.origin + '/dashboard/?page=' + document.location.href.split('.html')[0].split('/')[3]
             //action.target = '_blank'
         action.innerHTML = 'Show Sidebar'
         document.getElementById('embeddedAction').appendChild(action)
