@@ -40,10 +40,10 @@ function getCookie(cname) {
 function login() {
     if (urlParams.has('p')) {
         //if (document.location.href.includes('/looped/')) document.location.replace(document.location.origin + `/looped/dashboard/?page=${urlParams.get('p')}`)
-        document.location.replace(document.location.origin + `/looped/dashboard/?page=${urlParams.get('p')}`)
+        document.location.replace(document.location.origin + `/dashboard/?page=${urlParams.get('p')}`)
     } else {
         //if (document.location.href.includes('/looped/')) document.location.replace(document.location.origin + `/looped/dashboard/}`)
-        document.location.replace(document.location.origin + `/looped/dashboard/`)
+        document.location.replace(document.location.origin + `/dashboard/`)
     }
 
 
@@ -53,7 +53,7 @@ function login() {
 function error() {
 
     //document.location.href = document.location.origin + `/looped/login/?failed=true`
-    document.location.replace(document.location.origin + `/looped/dashboard/?failed=true`)
+    document.location.replace(document.location.origin + `/login/?failed=true`)
 
 
 }
