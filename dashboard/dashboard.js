@@ -14,7 +14,7 @@ function togglePage(page = null) {
     } else {
         $('#mainView').css({ 'overflow': 'scroll' });
         if (document.location.href.includes('/looped/') || document.location.href.includes('/looped')) {
-            document.location.replace(document.location.origin + '/looped/dashboard')
+            document.location.replace(document.location.origin + '/dashboard')
         } else {
             document.location.href = '/dashboard'
         }
