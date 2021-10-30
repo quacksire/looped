@@ -117,3 +117,10 @@ body {
 .list-group-item {
     color: unset !important;
 }
+
+.reason {
+    background-image: url("../libs/img/not_found.png");
+    background-size: 150px;
+    width: 300px;
+    height: 300px;
+}

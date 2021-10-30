@@ -28,7 +28,8 @@ function inIframe() {
 
     news.forEach(async article => {
         try {
-            document.getElementById('noItems').remove()
+            document.getElementById('noItems').remove();
+            document.getElementById('reason').remove()
         } catch (e) {
             //nada
         }

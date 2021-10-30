@@ -26,7 +26,30 @@ function togglePage(page = null) {
 
 
 
-async function getEverything(user) {
+
+(async function() {
+    'use strict'
+    if (Cookies.get('slUser')) {
+        console.info('School Loop User Cookie Found!')
+    } else {
+        logout()
+    }
+
+    let user = JSON.parse(decodeURI(Cookies.get('slUser')))
+
+    document.getElementById('username').innerHTML = `<i data-feather="user"></i> ${String(user.fullName).split(', ')[1]} ${String(user.fullName).split(', ')[0]}`
+    setTimeout(() => {
+        if (document.getElementById('username').innerHTML === 'Error') {
+            logout()
+        }
+    }, 2000)
+
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/serviceWorker.js', {
+            scope: '/'
+        });
+    }
+
     if (!navigator.onLine || Cookies.get('sl') === 'offline') {
         offline()
             /*
@@ -170,7 +193,7 @@ async function getEverything(user) {
 
 
     //------------------------Page Content------------------------
-    assignments = JSON.parse(localStorage.getItem('sl-assignments'))
+    let assignments = JSON.parse(localStorage.getItem('sl-assignments'))
         //console.log(assignments)
     assignments.forEach(assignment => {
         if (assignment.description === 'null') assignment.description = ''
@@ -203,26 +226,26 @@ async function getEverything(user) {
 
 
     //1632121200.000 -> remove last three zeros
-}
-(async function() {
-    'use strict'
-    if (Cookies.get('slUser')) {
-        console.info('School Loop User Cookie Found!')
-    } else {
-        logout()
-    }
 
-    let user = JSON.parse(decodeURI(Cookies.get('slUser')))
 
-    document.getElementById('username').innerHTML = `<i data-feather="user"></i> ${String(user.fullName).split(', ')[1]} ${String(user.fullName).split(', ')[0]}`
-    getEverything(user)
-    setTimeout(() => {
-        if (document.getElementById('username').innerHTML === 'Error') {
-            logout()
-        }
-    }, 2000)
+
+
+
+
 })()
 /*
+
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/serviceWorker.js', {
+    scope: '/'
+  });
+}
+
+
+
+
+
 [
   {
     "teacherName": "Hees, Gerhardt",

@@ -1,13 +1,17 @@
 {
     "name": "Looped",
     "short_name": "Looped",
+    "lang": "en-US",
     "start_url": "/dashboard",
+    "scope": "/",
     "display": "standalone",
-    "background_color": "#236e9f",
-    "description": " A Web-Based School Loop Alternative ",
-    "dir": "auto",
-    "lang": "en",
-    "orientation": "any",
-    "scope": "/*",
-    "theme_color": "#236e9f"
+    "icons": [{
+            "src": "/libs/icons/android/512.png",
+            "sizes": "512x512"
+        },
+        {
+            "src": "/libs/icons/favicons/favicon-192.png",
+            "sizes": "192x192"
+        }
+    ]
 }

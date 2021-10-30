@@ -26,7 +26,9 @@
         //------------------------ Grade List ------------------------//
     courseInfo.grades.forEach(grade => {
             try {
+                document.getElementById('reason').remove()
                 document.getElementById('noItems').remove()
+
             } catch (e) {
                 //nada
             }

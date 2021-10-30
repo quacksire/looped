@@ -24,7 +24,11 @@ function inIframe() {
     }
     let loopmails = JSON.parse(localStorage.getItem('mail'))
         //console.log(loopmails)
-    if (loopmails.length >= 1) document.getElementById('noItems').remove()
+    if (loopmails.length >= 1) {
+        document.getElementById('noItems').remove();
+        document.getElementById('reason').remove()
+    }
+
     loopmails.forEach(async mail => {
 
         if (!localStorage.getItem(`mail-message-${mail.ID}`)) {
