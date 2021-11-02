@@ -17,16 +17,17 @@ self.addEventListener('install', event => {
                     './libs/css/bootstrap-prefers-light.min.css',
                     './libs/css/toggle-bootstrap-dark.min.css',
                     './libs/css/toggle-bootstrap-print.min.css', /////////////
-                    './dashboard',
-                    './dashboard/class',
-                    './dashboard/news',
-                    './dashboard/mail', /////////////
+                    './dashboard/index.html',
+                    './dashboard/class.html',
+                    './dashboard/news.html',
+                    './dashboard/mail.html', /////////////
                     './dashboard/class.js',
                     './dashboard/news.js',
                     './dashboard/mail.js',
                     './dashboard/fillFeatherTooltip.js',
                     './dashboard/frames.css',
-                    './dashboard/sidebars.css',
+                    './dashboard/sidebars.css', /////////////
+                    './libs/img/not_found.png'
                 ])
             );
     }

@@ -15,7 +15,7 @@ function inIframe() {
         }
     }
     let id = urlParams.get('id')
-    if (!localStorage.getItem(`mail-lastUpdated`) >= Date.now() + 10 * 60 || !localStorage.getItem(`mail-lastUpdated`)) {
+    if (!localStorage.getItem(`mail-lastUpdated`) >= Date.now() + 10 * 60 || !localStorage.getItem(`mail-lastUpdated`) && online) {
         let loopmails = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}`, auth).then((response) => { return response })
         loopmails = await loopmails.json()
         localStorage.setItem('mail', JSON.stringify(loopmails))
@@ -31,7 +31,7 @@ function inIframe() {
 
     loopmails.forEach(async mail => {
 
-        if (!localStorage.getItem(`mail-message-${mail.ID}`)) {
+        if (!localStorage.getItem(`mail-message-${mail.ID}`) && online) {
             var message = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}&ID=${mail.ID}`, auth).then((response) => { return response })
 
             message = await message.json()

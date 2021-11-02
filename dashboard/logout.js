@@ -2,7 +2,7 @@ function logout(r = null) {
     const QueryString = window.location.search;
     const urlParams = new URLSearchParams(QueryString);
     if (Cookies.get('slUser')) {
-        if (Cookies.get('sl') != 'offline') Cookies.remove('slUser')
+        if (Cookies.get('sl') != 'offline' || online) Cookies.remove('slUser')
         console.log('Logged Out!')
     } else {
         console.error('User not detected')
@@ -30,6 +30,6 @@ document.getElementById('logout').addEventListener('click', () => {
 
 feather.replace({ 'aria-hidden': 'true' })
 
-function offline() {
-    console.error('----------------------- OFFLINE MODE ENABLED -----------------------', '\nNo or an invalid response from School Loop', '\nAssumed Offline', '\n-----------------------------------------------------------')
-}
+//function offline() {
+//    console.error('----------------------- OFFLINE MODE ENABLED -----------------------', '\nNo or an invalid response from School Loop', '\nAssumed Offline', '\n-----------------------------------------------------------')
+//}
