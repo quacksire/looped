@@ -23,7 +23,30 @@
         }
     </style>
     <title>Login</title>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <!-- Magic Social Embeds -->
+    <meta property="og:title" content="Looped">
+    <meta name="description" content="An alternative School Loop interface">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:description" content="An alternative School Loop interface">
+    <link rel="canonical" href="https://looped.pages.dev/">
+    <meta property="og:url" content="https://looped.pages.dev/">
+    <meta property="og:site_name" content="Looped">
+    <meta name="twitter:card" content="summary">
+    <meta property="twitter:title" content="Looped">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script type="application/ld+json">
+        {
+            "description": "An alternative School Loop interface",
+            "url": "https://looped.pages.dev/",
+            "@type": "WebSite",
+            "headline": "Looped",
+            "name": "Looped",
+            "@context": "https://schema.org"
+        }
+    </script>
+
 
     <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "1a946f8d2d5942a886f6f33a86f1f006"}'></script>
@@ -91,6 +114,16 @@
             </div>
         </div>
     </div>
+
+    <div class="toast position-absoulute bottom-0 end-0 text-white bg-primary border-0 position-absolute" role="alert" aria-live="assertive" aria-atomic="true" id='loggedOutToast'>
+        <div class="d-flex">
+            <div class="toast-body">
+                You have been logged out.
+            </div>
+        </div>
+    </div>
+
+
     <footer class="position-absolute bottom-0 start-50 translate-middle-x">
         <small id="runas"></small>
     </footer>
