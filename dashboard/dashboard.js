@@ -51,7 +51,7 @@ function togglePage(page = null) {
     const urlParams = new URLSearchParams(QueryString);
 
     if (user.role != 'student') logout(user.role)
-    if (parseInt(localStorage.getItem('sl-lastUpdated')) >= Date.now() + 10 * 60 && online) Cookies.remove('sl') //
+    if (parseInt(localStorage.getItem('sl-lastUpdated')) >= Date.now() + 10 * 60 && online || urlParams.has('f')) Cookies.remove('sl') //
     if (!Cookies.get('sl') && online) {
         console.warn('Attempting to Refresh Data...')
         let courses = await fetch(`https://hmbhs.schoolloop.com/mapi/report_card?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
