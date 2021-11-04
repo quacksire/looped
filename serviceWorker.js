@@ -24,6 +24,7 @@ self.addEventListener('install', event => {
                     './dashboard/class.js',
                     './dashboard/news.js',
                     './dashboard/mail.js',
+                    './dashboard/dashboard.js',
                     './dashboard/fillFeatherTooltip.js',
                     './dashboard/frames.css',
                     './dashboard/sidebars.css', /////////////
@@ -38,6 +39,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
 
 });
+/*
 self.addEventListener('fetch', function(event) {
     event.respondWith(async function() {
         try {
@@ -50,3 +52,4 @@ self.addEventListener('fetch', function(event) {
         }
     }());
 });
+*/

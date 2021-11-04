@@ -5,24 +5,30 @@
 
 function togglePage(page = null) {
     $('.page').attr("hidden", true)
+    $('.page').attr("visibility", 'hidden')
     console.log(page)
     if (page != null) {
         document.getElementById('home').hidden = true
         $('#home').attr("hidden", true);
         $('#mainView').css({ 'overflow': 'hidden' });
         $(`#${page}`).removeAttr('hidden');
+        $(`#${page}`).removeAttr('visibility');
     } else {
         $('#mainView').css({ 'overflow': 'scroll' });
-        if (document.location.href.includes('/looped/') || document.location.href.includes('/looped')) {
-            document.location.replace(document.location.origin + '/dashboard')
-        } else {
-            document.location.href = '/dashboard'
-        }
-        //Fixes Cache
+        document.location.href = '/dashboard'
+            //Fixes Cache
 
     }
 }
 
+function visibility(iframe) {
+    if (getBrowserName() != "Firefox") {
+        iframe.style.visibility = 'hidden'
+    } else {
+        iframe.hidden = true
+    }
+    return iframe
+}
 
 
 
@@ -50,6 +56,9 @@ function togglePage(page = null) {
     const QueryString = window.location.search;
     const urlParams = new URLSearchParams(QueryString);
 
+
+
+    if (urlParams.has('f')) console.warn('FORCE CLEAR param')
     if (user.role != 'student') logout(user.role)
     if (parseInt(localStorage.getItem('sl-lastUpdated')) >= Date.now() + 10 * 60 && online || urlParams.has('f')) Cookies.remove('sl') //
     if (!Cookies.get('sl') && online) {
@@ -60,10 +69,13 @@ function togglePage(page = null) {
         let loopmails = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
         console.info(`School Loop API Response: ${courses.status} ${courses.statusText}`)
         try {
+            localStorage.clear()
             let slLoopmail = await loopmails.json().then((data) => { return data })
             let slAssignments = await assignments.json().then((data) => { return data })
             let slCourses = await courses.json().then((data) => { return data })
+            console.log(slLoopmail)
             Cookies.set('sl', 'true')
+
             localStorage.setItem('sl-lastUpdated', encodeURI(new Date().getTime()))
             localStorage.setItem('sl-loopmail', JSON.stringify(slLoopmail))
             localStorage.setItem('sl-assignments', JSON.stringify(slAssignments))
@@ -101,8 +113,7 @@ function togglePage(page = null) {
 
         let iframe = document.createElement('iframe')
         iframe.src = `class.html?id=${course.periodID}`
-        iframe.hidden = true
-            //iframe.style.display = 'none'
+        iframe = visibility(iframe)
         iframe.width = '100%'
         iframe.height = '100%'
         iframe.frameBorder = '0'
@@ -134,8 +145,7 @@ function togglePage(page = null) {
     //------------------------ Static Pages ------------------------//
     let mailPage = document.createElement('iframe')
     mailPage.src = `mail.html`
-    mailPage.hidden = true
-        //iframe.style.display = 'none'
+    mailPage = visibility(mailPage)
     mailPage.width = '100%'
     mailPage.height = '100%'
     mailPage.frameBorder = '0'
@@ -145,8 +155,7 @@ function togglePage(page = null) {
 
     let newsPage = document.createElement('iframe')
     newsPage.src = `news.html`
-    newsPage.hidden = true
-        //iframe.style.display = 'none'
+    newsPage = visibility(newsPage)
     newsPage.width = '100%'
     newsPage.height = '100%'
     newsPage.frameBorder = '0'
