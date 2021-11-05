@@ -5,14 +5,14 @@
 
 function togglePage(page = null) {
     $('.page').attr("hidden", true)
-    $('.page').attr("visibility", 'hidden')
+        //$('.page').attr("visibility", 'hidden')
     console.log(page)
     if (page != null) {
         document.getElementById('home').hidden = true
         $('#home').attr("hidden", true);
         $('#mainView').css({ 'overflow': 'hidden' });
         $(`#${page}`).removeAttr('hidden');
-        $(`#${page}`).removeAttr('visibility');
+        //$(`#${page}`).removeAttr('visibility');
     } else {
         $('#mainView').css({ 'overflow': 'scroll' });
         document.location.href = '/dashboard'
@@ -20,17 +20,20 @@ function togglePage(page = null) {
 
     }
 }
-
+//if (isFirefox()) 
 function visibility(iframe) {
-    if (getBrowserName() != "Firefox") {
-        iframe.style.visibility = 'hidden'
-    } else {
-        iframe.hidden = true
-    }
+    //if (getBrowserName() != "Firefox") {
+    //iframe.style.visibility = 'hidden'
+    //} else {
+    iframe.hidden = true
+        //}
     return iframe
 }
 
-
+function isFirefox() {
+    if (getBrowserName() != "Firefox") return false
+    return true
+}
 
 
 (async function() {

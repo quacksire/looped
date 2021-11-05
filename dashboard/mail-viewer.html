@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta name="description" content="A web-based interface for School Loop Interfaces">
+    <meta name="author" content="child-duckling">
+    <title></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../libs/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../libs/css/bootstrap-light.min.css" />
+    <link rel="stylesheet" href="../libs/css/bootstrap-prefers-dark.min.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="frames.css" rel="stylesheet">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="../manifest.json">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <button type="button" id="back" class="btn btn-primary btn-lg"><i data-feather="arrow-left"></i> Back</button>
+                <h1 class="h2">
+                    <div id="subject"></div>
+                </h1>
+            </div>
+            <div id="message">
+                <p id="noItems">
+                    <div id="reason" class="text-center"><img src="../libs/img/not_found.png" style="object-fit:contain;max-width: 30%;max-height: 20%;"><br>Email Not Found</div>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../libs/js/jquery-3.6.0.min.js"></script>
+    <script src="../libs/js/bootstrap.bundle.min.js"></script>
+    <script src="../libs/js/feather.min.js"></script>
+    <script src="../libs/js/Chart.min.js"></script>
+    <script src="../libs/js/js.cookie.min.js"></script>
+    <script src="pwaCheck.js"></script>
+    <script src="mail-viewer.js"></script>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "1a946f8d2d5942a886f6f33a86f1f006"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+</body>
+
+</html>
