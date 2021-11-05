@@ -76,7 +76,7 @@ function isFirefox() {
             let slLoopmail = await loopmails.json().then((data) => { return data })
             let slAssignments = await assignments.json().then((data) => { return data })
             let slCourses = await courses.json().then((data) => { return data })
-            console.log(slLoopmail)
+                //console.log(slLoopmail)
             Cookies.set('sl', 'true')
 
             localStorage.setItem('sl-lastUpdated', encodeURI(new Date().getTime()))
@@ -88,7 +88,6 @@ function isFirefox() {
             Cookies.set('sl', 'offline')
             offline()
         }
-
     }
 
 
