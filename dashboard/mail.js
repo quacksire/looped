@@ -65,7 +65,10 @@ function inIframe() {
         document.getElementById('mail').appendChild(listItem)
         listItem.addEventListener('click', () => {
 
-            new WinBox(`${mail.subject}`, { url: `mail-viewer.html?msg=${mail.ID}`, class: 'navbar-themed' })
+            new WinBox(`${mail.subject}`, {
+                url: `mail-viewer.html?msg=${mail.ID}`,
+                class: 'navbar-themed'
+            })
 
 
         })

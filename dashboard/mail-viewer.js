@@ -30,7 +30,13 @@
 
     message.message = String(message.message).replace('&nbsp;', '')
     document.getElementById('message').innerHTML = message.message
+    document.getElementById('from').innerHTML = `${String(message.sender.name).split(', ')[1]} ${String(message.sender.name).split(', ')[0]}`
+    document.getElementById('sent-at').innerHTML = `${new Date(parseInt(message.date)).toLocaleString()}`
 
-
-
+    //if (message.recipientsString != 'null') {
+    //    document.getElementById('to').innerHTML = `${String(message.recipientsString[0].name).split(', ')[1]} ${String(message.recipientsString[0].name).split(', ')[0]}`
+    //} else {
+    document.getElementById('to').innerHTML = `${String(user.fullName).split(', ')[1]} ${String(user.fullName).split(', ')[0]}`
+        //}
+        //
 })()
