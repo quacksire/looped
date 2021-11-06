@@ -1,10 +1,4 @@
 (async function() {
-    document.getElementById('back').addEventListener('click', () => {
-        window.history.back()
-    })
-
-
-
     const QueryString = window.location.search;
     const urlParams = new URLSearchParams(QueryString);
     let user = JSON.parse(decodeURI(Cookies.get('slUser')))
@@ -15,6 +9,7 @@
     }
     if (!localStorage.getItem(`mail-message-${urlParams.get('msg')}`) && online) {
         var message = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}&ID=${urlParams.get('msg')}`, auth).then((response) => { return response })
+
         message = await message.json()
             //console.log(message)
         localStorage.setItem(`mail-message-${urlParams.get('msg')}`, JSON.stringify(message)) //reduce waiting time in same session
@@ -34,7 +29,6 @@
 
 
     message.message = String(message.message).replace('&nbsp;', '')
-    document.getElementById('subject').innerHTML = message.subject
     document.getElementById('message').innerHTML = message.message
 
 

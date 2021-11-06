@@ -65,53 +65,16 @@ function inIframe() {
         document.getElementById('mail').appendChild(listItem)
         listItem.addEventListener('click', () => {
 
+            new WinBox(`${mail.subject}`, { url: `mail-viewer.html?msg=${mail.ID}`, class: 'navbar-themed' })
 
-            var myModal = new bootstrap.Modal(document.getElementById(mail.ID))
-            myModal.show()
-            myModal.handleUpdate()
+
         })
 
 
         //console.log(message)
 
 
-        if (message.links != null) {
-            //console.log(`There are ${message.links.length} links`)
-            let buttons = ''
-            message.links.forEach(link => {
-                //console.log(link)
-                buttons += `<button type="button" class="btn btn-primary" href="${link.URL}"><i data-feather="link2"></i><a href="${link.URL}" class="link-light" target="_blank">${link.Title}</a></button>`
-            });
 
-            message.message += `<br>${buttons}`
-        }
-
-
-        let messageWindow = document.createElement('div')
-        messageWindow.className = `modal`
-        messageWindow.id = `${mail.ID}`
-        messageWindow.tabIndex = '-1'
-        messageWindow.ariaHidden = 'true'
-        messageWindow.innerHTML = `
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title">${message.subject}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ${message.message}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                
-            
-            </div>
-        </div>
-    </div>
-    `
-            //< button type = "button" class="btn btn-primary" > Save changes</ >
-        document.getElementById('viewers').appendChild(messageWindow)
 
     }
     feather.replace({ 'aria-hidden': 'true' })

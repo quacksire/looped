@@ -19,14 +19,32 @@
 </head>
 
 <body>
+
     <div class="container-fluid">
         <div>
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <button type="button" id="back" class="btn btn-primary btn-lg"><i data-feather="arrow-left"></i> Back</button>
-                <h1 class="h2">
-                    <div id="subject"></div>
-                </h1>
-            </div>
+            <nav class="navbar navbar-expand-lg" style="background-color: rgba(255, 255, 255, 0);">
+
+                <a class="navbar-brand"></a>
+                <button class="navbar-toggler navbar-themed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link">Sent At <div id="sent-at"></div></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">From <div id="from"></div></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">To <div id="to"></div></a>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </nav>
+
             <div id="message">
                 <p id="noItems">
                     <div id="reason" class="text-center"><img src="../libs/img/not_found.png" style="object-fit:contain;max-width: 30%;max-height: 20%;"><br>Email Not Found</div>
