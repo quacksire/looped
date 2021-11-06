@@ -39,4 +39,6 @@
     document.getElementById('to').innerHTML = `${String(user.fullName).split(', ')[1]} ${String(user.fullName).split(', ')[0]}`
         //}
         //
+    feather.replace({ 'aria-hidden': 'true' })
+
 })()
