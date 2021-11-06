@@ -124,3 +124,24 @@ body {
     width: 300px;
     height: 300px;
 }
+
+@media (prefers-color-scheme: dark) {
+    .ck-editor {
+        color: var(--dark);
+    }
+    .ck {
+        color: var(--dark);
+    }
+    .wb-icon {
+        background-color: #343a40 !important;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .wb-title {
+        color: black;
+    }
+    .wb-icon {
+        background-color: slategray !important;
+    }
+}
