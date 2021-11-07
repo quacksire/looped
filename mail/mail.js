@@ -28,31 +28,16 @@ function inIframe() {
         document.getElementById('reason').remove()
     }
     //console.log(loopmails)
-
     let loop;
     for (let loop = 0; loop < loopmails.length; loop++) {
         const mail = loopmails[loop];
-
         if (!localStorage.getItem(`mail-message-${mail.ID}`) && online) {
             var message = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}&ID=${mail.ID}`, auth).then((response) => { return response })
-
             message = await message.json()
                 //console.log(message)
-
             localStorage.setItem(`mail-message-${mail.ID}`, JSON.stringify(message)) //reduce waiting time in same session
-
         }
-        /*
-                try {
-                    
-                    document.getElementById('noItems').remove()
-                } catch (error) {
-                    document.getElementById('reason').innerText = 'Please try agin later '
-                    return
-                }
-        */
         var message = JSON.parse(localStorage.getItem(`mail-message-${mail.ID}`))
-
         let listItem = document.createElement('li')
         listItem.className = 'list-group-item d-flex justify-content-between align-items-start list-group-item-action'
         if (!message.read) listItem.className = 'list-group-item d-flex justify-content-between align-items-start list-group-item-action list-group-item-warning'
@@ -64,27 +49,15 @@ function inIframe() {
                     <span class="badge">${new Date(parseInt(String(mail.date))).toLocaleDateString()}</span>`
         document.getElementById('mail').appendChild(listItem)
         listItem.addEventListener('click', () => {
-
-            new WinBox(`${mail.subject}`, {
-                url: `mail-viewer.html?msg=${mail.ID}`,
-                class: 'navbar-themed'
+                new WinBox(`${mail.subject}`, {
+                    url: `mail-view.html?msg=${mail.ID}`,
+                    class: 'navbar-themed'
+                })
             })
-
-
-        })
-
-
-        //console.log(message)
-
-
-
-
+            //console.log(message)
     }
     feather.replace({ 'aria-hidden': 'true' })
     console.info(`Loaded Loopmail Page (${loopmails.length} messages)`)
-
-
-
     if (inIframe()) {
         let action = document.createElement('a')
         action.href = document.location.href.split('.html')[0]
@@ -93,7 +66,7 @@ function inIframe() {
         document.getElementById('embeddedAction').appendChild(action)
     } else {
         let action = document.createElement('a')
-        action.href = document.location.origin + '/looped/dashboard/?page=' + document.location.href.split('.html')[0].split('/')[4]
+        action.href = document.location.origin + '/dashboard/?page=mail'
             //action.target = '_blank'
         action.innerHTML = 'Show Sidebar'
         document.getElementById('embeddedAction').appendChild(action)

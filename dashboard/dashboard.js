@@ -104,7 +104,11 @@ function isFirefox() {
         card.onclick = `togglePage(${course.periodID})`
         if (course.grade === 'null') course.grade = 'N/A'
         card.innerHTML = `
-        <a href="#" onclick="togglePage(${course.periodID})" class="rounded">${course.grade || 'N/A'} - ${course.courseName}</a>`
+        <li class="nav-item" id="page-button-${course.periodID}">
+            <a class="nav-link" href="#${course.periodID}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>                                ${course.grade || 'N/A'} - ${course.courseName}
+            </a>
+        </li>`
         card.addEventListener('click', () => {
 
             togglePage(`${course.periodID}`)
@@ -146,7 +150,7 @@ function isFirefox() {
 
     //------------------------ Static Pages ------------------------//
     let mailPage = document.createElement('iframe')
-    mailPage.src = `mail.html`
+    mailPage.src = `/mail`
     mailPage = visibility(mailPage)
     mailPage.width = '100%'
     mailPage.height = '100%'
