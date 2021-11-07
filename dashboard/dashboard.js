@@ -5,13 +5,16 @@
 
 function togglePage(page = null) {
     $('.page').attr("hidden", true)
-        //$('.page').attr("visibility", 'hidden')
+    $('.active').removeClass('active');
+    //$('.page').attr("visibility", 'hidden')
     console.log(page)
     if (page != null) {
         document.getElementById('home').hidden = true
         $('#home').attr("hidden", true);
         $('#mainView').css({ 'overflow': 'hidden' });
+        $('body').css({ 'overflow': 'hidden' });
         $(`#${page}`).removeAttr('hidden');
+        $(`#page-button-${page}`).addClass('active');
         //$(`#${page}`).removeAttr('visibility');
     } else {
         $('#mainView').css({ 'overflow': 'scroll' });
@@ -104,8 +107,8 @@ function isFirefox() {
         card.onclick = `togglePage(${course.periodID})`
         if (course.grade === 'null') course.grade = 'N/A'
         card.innerHTML = `
-        <li class="nav-item" id="page-button-${course.periodID}">
-            <a class="nav-link" href="#${course.periodID}">
+        <li class="nav-item" >
+            <a class="nav-link"  id="page-button-${course.periodID}" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>                                ${course.grade || 'N/A'} - ${course.courseName}
             </a>
         </li>`
@@ -124,7 +127,7 @@ function isFirefox() {
         iframe.height = '100%'
         iframe.frameBorder = '0'
         iframe.id = `${course.periodID}`
-        iframe.className = 'page'
+        iframe.className = 'page min-vh-100'
 
         document.getElementById('mainView').appendChild(iframe)
             //console.log(course)
@@ -156,7 +159,7 @@ function isFirefox() {
     mailPage.height = '100%'
     mailPage.frameBorder = '0'
     mailPage.id = `mail`
-    mailPage.className = 'page'
+    mailPage.className = 'page min-vh-100'
     document.getElementById('mainView').appendChild(mailPage)
 
     let newsPage = document.createElement('iframe')
@@ -166,7 +169,7 @@ function isFirefox() {
     newsPage.height = '100%'
     newsPage.frameBorder = '0'
     newsPage.id = `news`
-    newsPage.className = 'page'
+    newsPage.className = 'page min-vh-100'
     document.getElementById('mainView').appendChild(newsPage)
 
 
