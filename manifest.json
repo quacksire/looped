@@ -2,7 +2,7 @@
     "name": "Looped",
     "short_name": "Looped",
     "lang": "en-US",
-    "start_url": "/dashboard",
+    "start_url": "/dashboard?utm_source=app&utm_medium=pwa",
     "scope": "/",
     "display": "standalone",
     "icons": [{
