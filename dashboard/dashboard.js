@@ -25,7 +25,7 @@ function togglePage(page = null) {
         //$(`#${page}`).removeAttr('visibility');
     } else {
         $('#mainView').css({ 'overflow': 'scroll' });
-        document.location.href = '/dashboard'
+        document.location.reload()
             //Fixes Cache
 
     }
