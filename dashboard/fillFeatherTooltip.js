@@ -82,8 +82,15 @@ function getBrowserName() {
     //lastCommit
 })() //ext-version
 
-
+/*
 $('#username').click(function(e) {
+    e.preventDefault();
+    var myModal = new bootstrap.Modal(document.getElementById('userInfo'), {})
+    myModal.toggle()
+});
+*/
+
+$('#info').click(function(e) {
     e.preventDefault();
     var myModal = new bootstrap.Modal(document.getElementById('userInfo'), {})
     myModal.toggle()
