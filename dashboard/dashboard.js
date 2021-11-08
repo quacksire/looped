@@ -115,7 +115,7 @@ function isFirefox() {
         if (course.grade === 'null') course.grade = 'N/A'
         card.innerHTML = `
         <li class="nav-item" >
-            <a class="nav-link"  id="page-button-${course.periodID}" href="#" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false">
+            <a class="nav-link"  id="page-button-${course.periodID}" href="#" ${mobileCollapse() || ''}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>                                ${course.grade || 'N/A'} - ${course.courseName}
             </a>
         </li>`
@@ -184,20 +184,23 @@ function isFirefox() {
     //------------------------ Click Events ------------------------//
     document.getElementById('homeClick').addEventListener('click', () => {
 
-        togglePage()
+            togglePage()
 
-    })
+        })
+        //
+    if (mobileCollapse(true)) $('#page-button-mail').attr("data-bs-toggle", "collapse").attr("data-bs-target", "#sidebarMenu").attr("aria-controls", "sidebarMenu").attr("aria-expanded", false)
     document.getElementById('page-button-mail').addEventListener('click', () => {
 
-        togglePage('mail')
+            togglePage('mail')
 
-    })
+        })
+        //
+    if (mobileCollapse(true)) $('#page-button-news').attr("data-bs-toggle", "collapse").attr("data-bs-target", "#sidebarMenu").attr("aria-controls", "sidebarMenu").attr("aria-expanded", false)
     document.getElementById('page-button-news').addEventListener('click', () => {
 
         togglePage('news')
 
     })
-
     if (urlParams.get('page')) togglePage(urlParams.get('page'))
 
 

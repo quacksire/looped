@@ -22,6 +22,20 @@ window.addEventListener('offline', () => {
 })
 
 window.addEventListener('online', () => {
-    online = true
-    location.reload() //Will refresh cache if offline for more than 10 minutes
+        online = true
+        location.reload() //Will refresh cache if offline for more than 10 minutes
+    })
+    //768
+
+function mobileCollapse(p = null) {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent) || $(window).width() < 800 || p) {
+        return `data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"`
+    } else {
+        return ''
+    }
+
+}
+let loadedSize = window.innerWidth
+window.addEventListener("resize", () => {
+    if (loadedSize >= 800 && loadedSize > window.innerWidth || loadedSize <= 800 && loadedSize < window.innerWidth) window.location.reload()
 })
