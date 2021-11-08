@@ -36,6 +36,9 @@ function mobileCollapse(p = null) {
 
 }
 let loadedSize = window.innerWidth
+document.addEventListener("resize", () => {
+    if (loadedSize >= 800 && loadedSize >= window.innerWidth || loadedSize <= 800 && loadedSize <= window.innerWidth) window.location.reload()
+})
 window.addEventListener("resize", () => {
-    if (loadedSize >= 800 && loadedSize > window.innerWidth || loadedSize <= 800 && loadedSize < window.innerWidth) window.location.reload()
+    if (loadedSize >= 800 && loadedSize >= window.innerWidth || loadedSize <= 800 && loadedSize <= window.innerWidth) window.location.reload()
 })
