@@ -142,6 +142,12 @@ body {
         color: initial;
     }
     .feather {
-        color: initial;
+        color: var(--white);
+    }
+    .collapsing {
+        background-color: var(--white);
+    }
+    .show {
+        background-color: var(--white);
     }
 }
