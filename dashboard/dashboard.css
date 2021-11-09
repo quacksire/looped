@@ -47,7 +47,6 @@ body {
 
 .sidebar .nav-link {
     font-weight: 500;
-    color: #333;
 }
 
 .sidebar .nav-link .feather {
@@ -115,6 +114,18 @@ body {
     .logo {
         color: white;
     }
+    .sidebar {
+        background-color: var(--dark);
+    }
+    .nav-link {
+        color: #d3d3d3;
+    }
+    .feather {
+        color: var(--white);
+    }
+    .link-dark {
+        color: #d3d3d3;
+    }
 }
 
 @media (prefers-color-scheme: light) {
@@ -123,5 +134,14 @@ body {
     }
     .rounded {
         color: black;
+    }
+    .sidebar {
+        background-color: initial;
+    }
+    .nav-link {
+        color: initial;
+    }
+    .feather {
+        color: initial;
     }
 }
