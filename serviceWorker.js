@@ -1,39 +1,29 @@
-'use strict';
+// This is the "Offline copy of assets" service worker
 
-self.addEventListener('install', event => {
-    function onInstall() {
-        return caches.open('static')
-            .then(cache =>
-                cache.addAll([
-                    './libs/js/bootstrap.bundle.min.js',
-                    './libs/js/feather.min.js',
-                    './libs/js/js.cookie.min.js',
-                    './libs/js/jquery-3.6.0.min.js',
-                    './libs/js/Chart.min.js', /////////////
-                    './libs/css/bootstrap.min.css',
-                    './libs/css/bootstrap-dark.min.css',
-                    './libs/css/bootstrap-light.min.css',
-                    './libs/css/bootstrap-prefers-dark.min.css',
-                    './libs/css/bootstrap-prefers-light.min.css',
-                    './libs/css/toggle-bootstrap-dark.min.css',
-                    './libs/css/toggle-bootstrap-print.min.css', /////////////
-                    './dashboard/index.html',
-                    './dashboard/class.html',
-                    './dashboard/news.html',
-                    './dashboard/mail.html', /////////////
-                    './dashboard/class.js',
-                    './dashboard/news.js',
-                    './dashboard/mail.js',
-                    './dashboard/dashboard.js',
-                    './dashboard/fillFeatherTooltip.js',
-                    './dashboard/frames.css',
-                    './dashboard/sidebars.css', /////////////
-                    './libs/img/not_found.png'
-                ])
-            );
-    }
+const CACHE = "pwabuilder-offline";
+const QUEUE_NAME = "bgSyncQueue";
 
-    event.waitUntil(onInstall(event));
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
+
+const bgSyncPlugin = new workbox.backgroundSync.BackgroundSyncPlugin(QUEUE_NAME, {
+  maxRetentionTime: 24 * 60 // Retry for max of 24 Hours (specified in minutes)
+});
+
+workbox.routing.registerRoute(
+  new RegExp('/*'),
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: CACHE,
+    plugins: [
+      bgSyncPlugin
+    ]
+  })
+);
 });
 
 self.addEventListener('activate', event => {
