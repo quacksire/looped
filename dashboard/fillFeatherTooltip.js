@@ -56,6 +56,9 @@ function getBrowserName() {
     //userID
     let userID = document.getElementsByClassName('SLuserID')
     userID[0].innerHTML = `${user.userID}`
+    gtag('set', 'user_properties','MEASUREMENT_ID', {
+        'user_id': `${user.userID}`
+    });
 
     //schoolDomain
     let schoolDomain = document.getElementsByClassName('SLschoolDomain')
@@ -81,6 +84,9 @@ function getBrowserName() {
 
     //lastCommit
 })() //ext-version
+
+
+
 
 /*
 $('#username').click(function(e) {
