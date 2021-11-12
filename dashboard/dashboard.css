@@ -5,7 +5,13 @@ body {
 .feather {
     width: 16px;
     height: 16px;
-    vertical-align: text-bottom;
+    vertical-align: text-center;
+}
+
+.bi {
+    width: 25px;
+    height: 25px;
+    vertical-align: text-center;
 }
 
 
@@ -77,7 +83,11 @@ body {
  * Navbar
  */
 
-.navbar-brand {
+.navbar {
+    opacity: 0.98;
+}
+
+.navbar .navbar-brand {
     padding-top: .75rem;
     padding-bottom: .75rem;
     font-size: 1rem;
@@ -126,6 +136,9 @@ body {
     .link-dark {
         color: #d3d3d3;
     }
+    .main {
+        background-color: black;
+    }
 }
 
 @media (prefers-color-scheme: light) {
@@ -148,6 +161,9 @@ body {
         background-color: var(--white);
     }
     .show {
+        background-color: var(--white);
+    }
+    .main {
         background-color: var(--white);
     }
 }

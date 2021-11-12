@@ -2,11 +2,6 @@
     const QueryString = window.location.search;
     const urlParams = new URLSearchParams(QueryString);
     let user = JSON.parse(decodeURI(Cookies.get('slUser')))
-    let auth = {
-        headers: {
-            'Authorization': `${user.auth}`,
-        }
-    }
     var message = JSON.parse(localStorage.getItem(`mail-message-${urlParams.get('msg')}`))
         //console.log(message)
     if (message.links != null) {

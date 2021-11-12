@@ -15,6 +15,8 @@ function togglePage(page = null) {
     })
 
 
+
+
     if (page != null) {
         document.getElementById('home').hidden = true
         $('#home').attr("hidden", true);
@@ -112,11 +114,18 @@ function isFirefox() {
         let card = document.createElement('li')
         card.id = 'classSelector'
         card.onclick = `togglePage(${course.periodID})`
-        if (course.grade === 'null') course.grade = 'N/A'
+        if (course.grade === 'null') {
+            course.grade = '-&nbsp;&nbsp;&nbsp;&nbsp;'
+        } else {
+            let space = 5
+            let spaced = space - String(course.grade).length
+                //console.log(spaced)
+            course.grade = course.grade + '&nbsp;'.repeat(spaced)
+        }
         card.innerHTML = `
         <li class="nav-item" >
             <a class="nav-link"  id="page-button-${course.periodID}" href="#" ${mobileCollapse() || ''}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>                                ${course.grade || 'N/A'} - ${course.courseName}
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>${course.grade} ${course.courseName}
             </a>
         </li>`
         card.addEventListener('click', () => {
@@ -201,7 +210,13 @@ function isFirefox() {
         togglePage('news')
 
     })
-    if (urlParams.get('page')) togglePage(urlParams.get('page'))
+    if (urlParams.get('page')) {
+        if (!document.getElementById(urlParams.get('page'))) { //Check if page exists
+            window.location.search = ''
+        } else {
+            togglePage(urlParams.get('page'))
+        }
+    }
 
 
 
@@ -215,8 +230,8 @@ function isFirefox() {
     assignments.forEach(assignment => {
         if (assignment.description === 'null') assignment.description = ''
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date().toLocaleDateString()) var badge = '<span class="badge bg-danger">Due today</span>'
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-warning">Due tomorrow</span>'
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-warning">Due in two days</span>'
+        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-warning text-muted-">Due tomorrow</span>'
+        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-warning text-dark">Due in two days</span>'
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-success">Due in three days</span>'
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-success">Due in four days</span>'
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-primary">Due in five days</span>'
@@ -239,14 +254,4 @@ function isFirefox() {
         e.preventDefault();
         this.hidden = true
     });
-
-
-
-    //1632121200.000 -> remove last three zeros
-
-
-
-
-
-
 })()

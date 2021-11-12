@@ -2,7 +2,7 @@ function offline() {
     console.log('%c **************************\n OFFLINE\n**************************', 'background: #222; color: #FF0000');
 }
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/serviceWorker.js', {
+    navigator.serviceWorker.register('/sw.js', {
         scope: '/'
     });
 }

@@ -1,11 +1,12 @@
 {
-  "name": "Looped",
-  "short_name": "Looped",
-  "lang": "en-US",
-  "start_url": "/dashboard?utm_source=app&utm_medium=pwa",
-  "scope": "/",
-  "display": "standalone",
-  "icons": [{
+    "name": "Looped",
+    "short_name": "Looped",
+    "lang": "en-US",
+    "start_url": "/dashboard?utm_source=app&utm_medium=pwa",
+    "scope": "/",
+    "theme_color": "#343a40",
+    "display": "standalone",
+    "icons": [{
             "src": "/libs/icons/android/512.png",
             "sizes": "512x512"
         },

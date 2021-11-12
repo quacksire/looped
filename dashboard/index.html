@@ -137,40 +137,46 @@
 
                 <div id="home" class="page" style="min-vw-100">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-                        <h1 class="h2"><i data-feather="bar-chart-2"></i> GPA:
+                        <h1 class="h2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"/>
+</svg> GPA:
                             <div id="gpa" class="display-1"></div>
                         </h1>
                     </div>
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
-                        <h1 class="h2"><i data-feather="paperclip"></i> Assignments</h1>
+                        <h1 class="h2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+                        <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
+                        </svg> Assignments</h1>
+
                     </div>
                     <ul class="list-group overflow-auto" id="assignments"></ul>
                 </div>
 
-                <div class="modal" id="userInfo" aria-hidden="false">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Profile</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Name:
-                                    <code class="SLname"></code><br> Email:
-                                    <code class="SLemail"></code><br> Role:
-                                    <code class="SLrole"></code><br> UserID: <code class="SLuserID"></code><br> Domain: <code class="SLschoolDomain"></code><br> School Name: <code class="SLschoolName"></code><br> School District: <code class="SLschoolDistrict"></code><br>
-                                    <sub class="ext-version"></sub><br><sub id="lastCommit"></sub>
-                                </p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <a href="https://hmbhs.cabrillo.k12.ca.us/looped" target="_blank" class="btn btn-info">Help</a>
-                            </div>
+
+            </main>
+            <div class="modal" id="userInfo" aria-hidden="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Profile</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Name:
+                                <code class="SLname"></code><br> Email:
+                                <code class="SLemail"></code><br> Role:
+                                <code class="SLrole"></code><br> UserID: <code class="SLuserID"></code><br> Domain: <code class="SLschoolDomain"></code><br> School Name: <code class="SLschoolName"></code><br> School District: <code class="SLschoolDistrict"></code><br>
+                                <sub class="ext-version"></sub><br><sub id="lastCommit"></sub>
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href="https://hmbhs.cabrillo.k12.ca.us/looped" target="_blank" class="btn btn-info">Help</a>
                         </div>
                     </div>
                 </div>
-            </main>
-
+            </div>
         </div>
 
     </div>
