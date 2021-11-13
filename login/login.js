@@ -100,6 +100,8 @@ if (urlParams.has('out')) {
     toast.show()
 }
 if (/\bCrOS\b/.test(navigator.userAgent)) alert('ChromeOS support is not great, things might break', 'warning')
+//if (isMobile()) document.
+
 
 //JQuery Stuff
 $(document).ready(function() {

@@ -27,8 +27,16 @@ window.addEventListener('online', () => {
     })
     //768
 
+function isMobile() {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+        return true
+    } else {
+        return false
+    }
+}
+
 function mobileCollapse(p = null) {
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent) && p || $(window).width() < 800) {
+    if (isMobile() && p || $(window).width() < 800) {
         return `data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"`
     } else {
         return ''
