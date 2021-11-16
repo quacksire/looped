@@ -168,7 +168,7 @@ async function cache() {
 
     //------------------------ Static Pages ------------------------//
     let mailPage = document.createElement('iframe')
-    mailPage.src = `/mail`
+    mailPage.src = `/mail/index.html`
     mailPage = visibility(mailPage)
     mailPage.width = '100%'
     mailPage.height = '100%'
