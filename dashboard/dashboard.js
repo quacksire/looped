@@ -80,6 +80,7 @@ async function cache() {
             Cookies.set('sl', 'offline')
             offline()
         }
+        gtag('set', 'user_properties', { 'crm_id' : `${user.students[0].studentID}` });
     }
 }
 
