@@ -45,24 +45,33 @@ function inIframe() {
                     <span class="badge">${new Date(parseInt(String(mail.date))).toLocaleDateString()}</span>`
         document.getElementById('mail').appendChild(listItem)
         listItem.addEventListener('click', () => {
-            new WinBox(`${mail.subject}`, {
-                url: `mail-view.html?msg=${mail.ID}`,
-                class: 'navbar-themed'
-            })
+            if (isMobile() || urlParams.has('d')) {
+                document.location.href = `/mail/mail-view.html?m&msg=${mail.ID}`
+            } else {
+                new WinBox(`${mail.subject}`, {
+                    url: `mail-view.html?msg=${mail.ID}`,
+                    class: 'navbar-themed'
+                })
+            }
+
+
+
         })
     }
     feather.replace({ 'aria-hidden': 'true' })
     console.info(`Loaded Loopmail Page (${loopmails.length} messages)`)
-    if (inIframe()) {
-        let action = document.createElement('a')
-        action.href = document.location.href.split('.html')[0]
-        action.target = '_parent'
-        action.innerHTML = 'Hide Sidebar'
-        document.getElementById('embeddedAction').appendChild(action)
-    } else {
-        let action = document.createElement('a')
-        action.href = document.location.origin + '/dashboard/?page=mail'
-        action.innerHTML = 'Show Sidebar'
-        document.getElementById('embeddedAction').appendChild(action)
-    }
+        /*
+        if (inIframe()) {
+            let action = document.createElement('a')
+            action.href = document.location.href.split('.html')[0]
+            action.target = '_parent'
+            action.innerHTML = 'Hide Sidebar'
+            document.getElementById('embeddedAction').appendChild(action)
+        } else {
+            let action = document.createElement('a')
+            action.href = document.location.origin + '/dashboard/?page=mail'
+            action.innerHTML = 'Show Sidebar'
+            document.getElementById('embeddedAction').appendChild(action)
+        }
+        */
 })()

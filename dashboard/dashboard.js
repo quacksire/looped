@@ -50,14 +50,10 @@ function isFirefox() {
 
 
 async function cache() {
+    console.group('CACHE')
     let user = JSON.parse(decodeURI(Cookies.get('slUser')))
-    if (localStorage.getItem('sl-lastUpdated')) {
-        console.log(`Last Updated on ${new Date(parseInt(localStorage.getItem('sl-lastUpdated'))).toLocaleDateString()}, ${new Date(parseInt(localStorage.getItem('sl-lastUpdated'))).toLocaleTimeString()}`)
-    } else {
-        console.log('Last Updated unkown')
-    }
-    if (parseInt(localStorage.getItem('sl-lastUpdated')) >= Date.now() + 10 * 60 && online || urlParams.has('f')) Cookies.remove('sl') //
-    if (!Cookies.get('sl') && online) {
+    if (localStorage.getItem('sl-lastUpdated')) console.log(`Last Updated on ${new Date(parseInt(localStorage.getItem('sl-lastUpdated'))).toLocaleString()}\nWill Update at ${new Date(parseInt(localStorage.getItem('sl-updateAt'))).toLocaleString()}`)
+    if (parseInt(localStorage.getItem('sl-updateAt')) <= Date.now() && online || urlParams.has('f') || localStorage.length <= 1) {
         console.warn('Attempting to Refresh Data...')
         let courses = await fetch(`https://hmbhs.schoolloop.com/mapi/report_card?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
         let assignments = await fetch(`https://hmbhs.schoolloop.com/mapi/assignments?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
@@ -65,23 +61,24 @@ async function cache() {
         let loopmails = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
         console.info(`School Loop API Response: ${courses.status} ${courses.statusText}`)
         try {
-            localStorage.clear()
-            let slLoopmail = await loopmails.json().then((data) => { return data })
-            let slAssignments = await assignments.json().then((data) => { return data })
-            let slCourses = await courses.json().then((data) => { return data })
-                //console.log(slLoopmail)
+            //localStorage.clear()
             Cookies.set('sl', 'true')
             localStorage.setItem('sl-lastUpdated', encodeURI(new Date().getTime()))
-            localStorage.setItem('sl-loopmail', JSON.stringify(slLoopmail))
-            localStorage.setItem('sl-assignments', JSON.stringify(slAssignments))
-            localStorage.setItem('sl-courses', JSON.stringify(slCourses))
+            localStorage.setItem('sl-updateAt', encodeURI(new Date().setMinutes(new Date().getMinutes() + 10)))
+            localStorage.setItem('sl-loopmail', JSON.stringify(await loopmails.json().then((data) => { return data })))
+            localStorage.setItem('sl-assignments', JSON.stringify(await assignments.json().then((data) => { return data })))
+            localStorage.setItem('sl-courses', JSON.stringify(await courses.json().then((data) => { return data })))
         } catch (error) {
+            console.log(error)
             console.warn('Attempt to Refresh Data Failed')
             Cookies.set('sl', 'offline')
             offline()
         }
-        gtag('set', 'user_properties', { 'crm_id' : `${user.students[0].studentID}` });
+    } else {
+        console.log(`Updating in ${new Date(parseInt(localStorage.getItem('sl-updateAt'))).getMinutes() - new Date().getMinutes()} minutes(s)`)
     }
+    gtag('set', 'user_properties', { 'crm_id': `${user.students[0].studentID}` });
+    console.groupEnd()
 }
 
 (async function() {
@@ -91,9 +88,7 @@ async function cache() {
     } else {
         logout()
     }
-
     let user = JSON.parse(decodeURI(Cookies.get('slUser')))
-
     document.getElementById('username').innerHTML = `<i data-feather="user"></i> ${String(user.fullName).split(', ')[1]} ${String(user.fullName).split(', ')[0]}`
     setTimeout(() => {
         if (document.getElementById('username').innerHTML === 'Error') {
@@ -102,7 +97,9 @@ async function cache() {
     }, 2000)
     if (urlParams.has('f')) console.warn('FORCE CLEAR param')
     if (user.role != 'student') logout(user.role)
+
     await cache()
+
     let courseList = JSON.parse(localStorage.getItem('sl-courses'))
         //console.log(courseList)
         //console.log(JSON.parse(localStorage.getItem('sl-loopmail')))
@@ -168,6 +165,9 @@ async function cache() {
     console.log(`GPA: ${gpa}`)
 
     //------------------------ Static Pages ------------------------//
+    /*
+     * 'id' is used to "open" the page
+     */
     let mailPage = document.createElement('iframe')
     mailPage.src = `/mail/index.html`
     mailPage = visibility(mailPage)
@@ -190,26 +190,21 @@ async function cache() {
 
 
 
-    //------------------------ Click Events ------------------------//
+    //------------------------ Page Events ------------------------//
     document.getElementById('homeClick').addEventListener('click', () => {
-
             togglePage()
-
         })
-        //
+        //------------------------
     if (mobileCollapse(true)) $('#page-button-mail').attr("data-bs-toggle", "collapse").attr("data-bs-target", "#sidebarMenu").attr("aria-controls", "sidebarMenu").attr("aria-expanded", false)
     document.getElementById('page-button-mail').addEventListener('click', () => {
-
             togglePage('mail')
-
         })
-        //
+        //------------------------
     if (mobileCollapse(true)) $('#page-button-news').attr("data-bs-toggle", "collapse").attr("data-bs-target", "#sidebarMenu").attr("aria-controls", "sidebarMenu").attr("aria-expanded", false)
     document.getElementById('page-button-news').addEventListener('click', () => {
-
-        togglePage('news')
-
-    })
+            togglePage('news')
+        })
+        //------------------------
     if (urlParams.get('page')) {
         if (!document.getElementById(urlParams.get('page'))) { //Check if page exists
             window.location.search = ''
@@ -217,17 +212,10 @@ async function cache() {
             togglePage(urlParams.get('page'))
         }
     }
-
-
-
-
-
-
-
     //------------------------Page Content------------------------
     let assignments = JSON.parse(localStorage.getItem('sl-assignments'))
         //console.log(assignments)
-    assignments.forEach(assignment => {
+    assignments.forEach((assignment, index) => {
         if (assignment.description === 'null') assignment.description = ''
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date().toLocaleDateString()) var badge = '<span class="badge bg-danger">Due today</span>'
         if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-warning text-muted-">Due tomorrow</span>'
@@ -241,6 +229,7 @@ async function cache() {
         assignment.description = String(assignment.description).replace("\\n", '').replace('  ', '')
         let listItem = document.createElement('a')
         listItem.className = 'list-group-item list-group-item-action assignment'
+        listItem.id = `assignment-${assignment.iD}`
         listItem.innerHTML = `
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1"> ${assignment.title}</h5>
@@ -248,6 +237,11 @@ async function cache() {
         </div>
         <p class="mb-1">${assignment.description}</p>
         <small> ${assignment.courseName} - ${assignment.teacherName}</small>`
+        listItem.addEventListener('click', () => {
+            listItem.hidden = true
+            console.log(`Hide assignment ${assignment.iD}`)
+
+        })
         document.getElementById('assignments').appendChild(listItem)
     })
     $('.assignment').click(function(e) {

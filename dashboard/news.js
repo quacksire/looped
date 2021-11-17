@@ -26,7 +26,7 @@ function inIframe() {
     let news = JSON.parse(localStorage.getItem('news'))
 
 
-    news.forEach(async article => {
+    news.forEach(async(article, num) => {
         try {
             document.getElementById('noItems').remove();
             document.getElementById('reason').remove()
@@ -44,9 +44,11 @@ function inIframe() {
                     <span class="badge">${new Date(parseInt(String(article.createdDate))).toLocaleDateString()}</span>`
         document.getElementById('news').appendChild(listItem)
         listItem.addEventListener('click', () => {
-
-                var myModal = new bootstrap.Modal(document.getElementById(article.iD))
-                myModal.show()
+                if (isMobile() || urlParams.has('d')) {
+                    document.location.href = `/mail/mail-view.html?m&news=${num}`
+                } else {
+                    new bootstrap.Modal(document.getElementById(article.iD)).show()
+                }
             })
             //let message = await fetch(`https://hmbhs.schoolloop.com/mapi/mail_messages?studentID=${user.students[0].studentID}&ID=${mail.ID}`, auth).then((response) => { return response })
             //message = await message.json()
@@ -81,20 +83,20 @@ function inIframe() {
 
     console.info(`Loaded LoopNews Page (${news.length} messages)`)
     feather.replace({ 'aria-hidden': 'true' })
-
-    if (inIframe()) {
-        let action = document.createElement('a')
-        action.href = document.location.href.split('.html')[0]
-        action.target = '_parent'
-        action.innerHTML = 'Hide Sidebar'
-        document.getElementById('embeddedAction').appendChild(action)
-    } else {
-        let action = document.createElement('a')
-        action.href = document.location.origin + '/dashboard/?page=news'
-            //action.target = '_blank'
-        action.innerHTML = 'Show Sidebar'
-        document.getElementById('embeddedAction').appendChild(action)
-    }
-
+        /*
+            if (inIframe()) {
+                let action = document.createElement('a')
+                action.href = document.location.href.split('.html')[0]
+                action.target = '_parent'
+                action.innerHTML = 'Hide Sidebar'
+                document.getElementById('embeddedAction').appendChild(action)
+            } else {
+                let action = document.createElement('a')
+                action.href = document.location.origin + '/dashboard/?page=news'
+                    //action.target = '_blank'
+                action.innerHTML = 'Show Sidebar'
+                document.getElementById('embeddedAction').appendChild(action)
+            }
+        */
 
 })()
