@@ -72,6 +72,7 @@ async function checkUser(user, pass) {
                     //response.role = 'admin'
                     setCookie('slUser', encodeURI(JSON.stringify(response)), 7)
                     alert(`<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Please Wait, Signing you in</span></div> Signing you in...`, 'success')
+                    localStorage.clear()
                     setTimeout(() => {
                         login()
                     }, 1000)//2500
@@ -93,7 +94,7 @@ async function checkUser(user, pass) {
 
 
 //Entire Script
-document.getElementById('runas').innerHTML = `Web`
+document.getElementById('runas').innerHTML = whatIsSiteBeingRunAs
 if (urlParams.has('r')) incorrectRole(urlParams.get('r'))
 if (urlParams.has('out')) {
     var toast = new bootstrap.Toast(document.getElementById('loggedOutToast'))
@@ -104,12 +105,6 @@ if (/\bCrOS\b/.test(navigator.userAgent)) alert('ChromeOS support is not great, 
 
 
 //JQuery Stuff
-$(document).ready(function() {
-    $('.toast').toast('show');
-    setTimeout(() => {
-        $('.toast').toast('hide');
-    }, 2500)
-});
 $('#login').bind('submit', function(e) {
     e.preventDefault();
     console.log('Welcome!');

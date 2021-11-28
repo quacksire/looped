@@ -1,13 +1,22 @@
-function offline() {
-    console.log('%c **************************\n OFFLINE\n**************************', 'background: #222; color: #FF0000');
-}
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js', {
         scope: '/'
     });
 }
 
+
+//#region global vars
 var online = true
+let whatIsSiteBeingRunAs = window.matchMedia('(display-mode: standalone)').matches ? 'PWA' : 'Web'
+    //#endregion
+
+//#region offline handling
+
+function offline() {
+    console.log('%c **************************\n OFFLINE\n**************************', 'background: #222; color: #FF0000');
+}
+
+
 if (!navigator.onLine || Cookies.get('sl') === 'offline') {
     offline()
         /*
@@ -25,8 +34,9 @@ window.addEventListener('online', () => {
         online = true
         location.reload() //Will refresh cache if offline for more than 10 minutes
     })
-    //768
+    //#endregion
 
+//#region mnbile handling
 function isMobile() {
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
         return true
@@ -50,3 +60,4 @@ function mobileCollapse(p = null) {
 //window.addEventListener("resize", () => {
 //    if (loadedSize >= 800 && loadedSize >= window.innerWidth || loadedSize <= 800 && loadedSize <= window.innerWidth) window.location.reload()
 //})
+//#endregion

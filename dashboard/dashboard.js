@@ -48,12 +48,21 @@ function isFirefox() {
     return true
 }
 
+async function spin(e, degrees) {
+    //console.log(e)
+    for (let loop = 0; loop < degrees; loop++) {
+        setTimeout(() => {
+            e.style.transform = `rotate(-${loop}deg)`
+        }, degrees + loop)
+    }
+}
 
-async function cache() {
+
+async function cache(f = null) {
     console.group('CACHE')
     let user = JSON.parse(decodeURI(Cookies.get('slUser')))
     if (localStorage.getItem('sl-lastUpdated')) console.log(`Last Updated on ${new Date(parseInt(localStorage.getItem('sl-lastUpdated'))).toLocaleString()}\nWill Update at ${new Date(parseInt(localStorage.getItem('sl-updateAt'))).toLocaleString()}`)
-    if (parseInt(localStorage.getItem('sl-updateAt')) <= Date.now() && online || urlParams.has('f') || localStorage.length <= 1) {
+    if (parseInt(localStorage.getItem('sl-updateAt')) <= Date.now() && online || f && online || urlParams.has('f') || localStorage.length <= 1) {
         console.warn('Attempting to Refresh Data...')
         let courses = await fetch(`https://hmbhs.schoolloop.com/mapi/report_card?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
         let assignments = await fetch(`https://hmbhs.schoolloop.com/mapi/assignments?studentID=${user.students[0].studentID}`, { headers: { 'Authorization': `${user.auth}` } }).then((response) => { return response })
@@ -244,8 +253,18 @@ async function cache() {
         })
         document.getElementById('assignments').appendChild(listItem)
     })
+
+
+
     $('.assignment').click(function(e) {
         e.preventDefault();
         this.hidden = true
     });
+    $('.reload').click(function(e) {
+        let el = e.target
+        spin(el, 360)
+        cache('force').then(() => {
+            setTimeout(window.location.reload(), 2000)
+        })
+    })
 })()
