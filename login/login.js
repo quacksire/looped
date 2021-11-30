@@ -1,5 +1,7 @@
 const QueryString = window.location.search;
 const urlParams = new URLSearchParams(QueryString);
+var platform = window['platform-detect']
+
 
 function validate(e) {
     e.preventDefault();
@@ -100,7 +102,7 @@ if (urlParams.has('out')) {
     var toast = new bootstrap.Toast(document.getElementById('loggedOutToast'))
     toast.show()
 }
-if (/\bCrOS\b/.test(navigator.userAgent)) alert('ChromeOS support is not great, things might break', 'warning')
+if (platform.chromeos) alert('ChromeOS support is not great, things might break', 'warning')
 //if (isMobile()) document.
 
 
