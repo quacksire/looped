@@ -6,8 +6,9 @@ if ('serviceWorker' in navigator) {
 
 
 //#region global vars
+var platform = window['platform-detect']
 var online = true
-let whatIsSiteBeingRunAs = window.matchMedia('(display-mode: standalone)').matches ? 'PWA' : 'Web'
+let whatIsSiteBeingRunAs = platform.pwa || platform.uwp ? 'PWA' : 'Web'
     //#endregion
 
 //#region offline handling
