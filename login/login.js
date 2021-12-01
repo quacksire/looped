@@ -53,6 +53,7 @@ function incorrectRole(role) {
     document.getElementById('badRole').innerHTML = String(role)
     var myModal = new bootstrap.Modal(document.getElementById('roleError'), {})
     myModal.toggle()
+
 }
 async function checkUser(user, pass) {
     console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
@@ -68,23 +69,33 @@ async function checkUser(user, pass) {
             if (response.statusText == 'OK' || response.statusText == '') {
                 response = await response.json()
                 //response.role = 'admin'
-                document.getElementById('runas').innerHTML = response
+                //document.getElementById('runas').innerHTML = response
                 if (response.role == 'student') { //Student Support only (for now)
                     response.auth = `Basic ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}` //Save Auth header in auth cookie cause there's iframes involved
                     //response.role = 'admin'
                     setCookie('slUser', encodeURI(JSON.stringify(response)), 7)
-                    alert(`<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Please Wait, Signing you in</span></div> Signing you in...`, 'success')
+                    $('#signin-button').removeClass('btn-primary').addClass('btn-success')
+                    document.getElementById('signin-button').innerHTML = "✓"
+                    //alert(`<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Please Wait, Signing you in</span></div> Signing you in...`, 'success')
                     localStorage.clear()
                     setTimeout(() => {
                         login()
-                    }, 1000)//2500
+                    }, 2000)//2500
                     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 } else {
+                    $('#signin-button').removeClass('btn-primary').addClass('btn-danger')
+                    $('#wrongRoleButton').click(function(e) {
+                        e.preventDefault();
+                        $('#signin-button').removeClass('btn-danger').addClass('btn-primary')
+                        document.getElementById('signin-button').innerHTML = "Sign In"
+                    });
                     incorrectRole(response.role)
                     return
                 }
             } else {
-                alert('Something Went Wrong! Check Username and Password', 'danger')
+                //alert('Something Went Wrong! Check Username and Password', 'danger')
+                $('#signin-button').removeClass('btn-primary').addClass('btn-danger')
+                document.getElementById('signin-button').innerHTML = 'Check Username/Password'
                 return
             }
         } catch(e) {
@@ -96,18 +107,26 @@ async function checkUser(user, pass) {
 
 
 //Entire Script
+let crosWarning = new bootstrap.Toast(document.getElementById('crosWarning'))
+let loggedOut = new bootstrap.Toast(document.getElementById('loggedOutToast'))
 document.getElementById('runas').innerHTML = whatIsSiteBeingRunAs
 if (urlParams.has('r')) incorrectRole(urlParams.get('r'))
 if (urlParams.has('out')) {
-    var toast = new bootstrap.Toast(document.getElementById('loggedOutToast'))
-    toast.show()
+    loggedOut.show()
 }
-if (platform.chromeos) alert('ChromeOS support is not great, things might break', 'warning')
+//if (platform.chromeos) alert('ChromeOS support is not great, things might break', 'warning')
+
+crosWarning.show()
+
 //if (isMobile()) document.
 
 
 //JQuery Stuff
-$('#login').bind('submit', function(e) {
+$('#login').bind('submit', function (e) {
+    $('#signin-button').removeClass('btn-danger').removeClass('btn-secondary').addClass('btn-primary')
+    document.getElementById('signin-button').innerHTML = `<div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>`
     e.preventDefault();
     console.log('Welcome!');
     checkUser($('#floatingUsername').val(), $('#floatingPassword').val());

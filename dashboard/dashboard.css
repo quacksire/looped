@@ -14,6 +14,12 @@ body {
     vertical-align: text-center;
 }
 
+.bi .bi-question-circle {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-center;
+}
+
 
 /*
  * Sidebar
