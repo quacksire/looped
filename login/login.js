@@ -56,6 +56,8 @@ function incorrectRole(role) {
 
 }
 async function checkUser(user, pass) {
+    user = String(user)
+    pass = String(pass)
     console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
             let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI('Looped')}&devOS=${encodeURI(navigator.userAgent)}&year=${new Date().getFullYear()}`, {
                 headers: {
