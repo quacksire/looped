@@ -75,7 +75,7 @@ function getBrowserName() {
 
     let lastCommit = await fetch(`https://api.github.com/repos/child-duckling/looped/commits/main`).then(response => { return response })
     lastCommit = await lastCommit.json()
-    document.getElementById('lastCommit').innerHTML = `Commit <a href="${lastCommit.html_url}" target="_blank"><code> ${String(lastCommit.sha).slice(0, 7)}</code></a>`
+    document.getElementById('lastCommit').innerHTML = `Commit <a href="${lastCommit.html_url}" target="_blank"><code> ${String(lastCommit.sha).slice(0, 7)}</code></a> {lastCommit.commit.message}`
         //schoolName
 
     //let extVersion = document.getElementsByClassName('ext-version')
