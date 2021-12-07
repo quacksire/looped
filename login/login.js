@@ -3,13 +3,6 @@ const urlParams = new URLSearchParams(QueryString);
 var platform = window['platform-detect']
 
 
-function validate(e) {
-    e.preventDefault();
-    const username = document.getElementById("floatingUsername");
-    const password = document.getElementById("floatingPassword");
-    console.log(`${username} : ${password}`)
-    return valid;
-}
 
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
@@ -56,8 +49,6 @@ function incorrectRole(role) {
 
 }
 async function checkUser(user, pass) {
-    user = String(user)
-    pass = String(pass)
     console.log(`Trying to login with key: ${btoa(`${encodeURI(user)}:${encodeURI(pass)}`)}`)
             let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI('Looped')}&devOS=${encodeURI(navigator.userAgent)}&year=${new Date().getFullYear()}`, {
                 headers: {
@@ -116,9 +107,9 @@ if (urlParams.has('r')) incorrectRole(urlParams.get('r'))
 if (urlParams.has('out')) {
     loggedOut.show()
 }
-//if (platform.chromeos) alert('ChromeOS support is not great, things might break', 'warning')
+if (platform.chromeos) crosWarning.show()
 
-crosWarning.show()
+
 
 //if (isMobile()) document.
 

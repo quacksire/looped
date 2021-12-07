@@ -212,15 +212,32 @@ async function cache(f = null) {
         //console.log(assignments)
     assignments.forEach((assignment, index) => {
         if (assignment.description === 'null') assignment.description = ''
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date().toLocaleDateString()) var badge = '<span class="badge bg-danger">Due today</span>'
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-warning text-dark">Due tomorrow</span>'
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-warning text-dark">Due in two days</span>'
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-success">Due in three days</span>'
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-success">Due in four days</span>'
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-primary">Due in five days</span>'
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() === new Date(new Date().getTime() + 6 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = '<span class="badge bg-primary">Due in six days</span>'
-        if (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString() >= new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString()) var badge = `<span class="badge bg-secondary">Due ${new Date(parseInt(String(assignment.dueDate))).toLocaleDateString()}</span>`
-        var badge = badge || 'Due:' + new Date(parseInt(String(assignment.dueDate))).toLocaleDateString()
+        var badge
+        switch (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString()) {
+            case new Date().toLocaleDateString():
+                badge = '<span class="badge bg-danger">Due today</span>'
+                break
+            case new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000).toLocaleDateString():
+                badge = '<span class="badge bg-warning text-dark">Due tomorrow</span>'
+                break
+            case new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toLocaleDateString():
+                badge = '<span class="badge bg-warning text-dark">Due in two days</span>'
+                break
+            case new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString():
+                badge = '<span class="badge bg-success">Due in three days</span>'
+                break
+            case new Date(new Date().getTime() + 4 * 24 * 60 * 60 * 1000).toLocaleDateString():
+                badge = '<span class="badge bg-success">Due in four days</span>'
+                break
+            case new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000).toLocaleDateString():
+                badge = '<span class="badge bg-primary">Due in five days</span>'
+                break
+            case new Date(new Date().getTime() + 6 * 24 * 60 * 60 * 1000).toLocaleDateString():
+                badge = '<span class="badge bg-primary">Due in six days</span>'
+                break
+            default:
+                badge = `<span class="badge bg-secondary">Due ${new Date(parseInt(String(assignment.dueDate))).toLocaleDateString()}</span>`
+        }
         assignment.description = String(assignment.description).replace("\\n", '').replace('  ', '')
         let listItem = document.createElement('a')
         listItem.className = 'list-group-item list-group-item-action assignment'
