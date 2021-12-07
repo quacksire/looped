@@ -1,7 +1,7 @@
 /* globals Chart:false, feather:false */
 const QueryString = window.location.search;
 const urlParams = new URLSearchParams(QueryString);
-
+if (Cookies.get('sl') != 'demo') document.querySelector('#demoUser').remove()
 
 
 function togglePage(page = null) {
@@ -102,6 +102,7 @@ async function cache(f = null) {
     }, 2000)
     if (urlParams.has('f')) console.warn('FORCE CLEAR param')
     if (user.role != 'student') logout(user.role)
+
 
     await cache()
     setInterval(cache(), 600000)
