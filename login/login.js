@@ -70,7 +70,7 @@ async function checkUser(user, pass) {
                     $('#signin-button').removeClass('btn-primary').addClass('btn-success')
                     document.getElementById('signin-button').innerHTML = "✓"
                     //alert(`<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Please Wait, Signing you in</span></div> Signing you in...`, 'success')
-                    localStorage.clear()
+                    if (urlParams.has('f')) localStorage.clear()
                     setTimeout(() => {
                         login()
                     }, 2000)//2500
@@ -104,9 +104,7 @@ let crosWarning = new bootstrap.Toast(document.getElementById('crosWarning'))
 let loggedOut = new bootstrap.Toast(document.getElementById('loggedOutToast'))
 document.getElementById('runas').innerHTML = whatIsSiteBeingRunAs
 if (urlParams.has('r')) incorrectRole(urlParams.get('r'))
-if (urlParams.has('out')) {
-    loggedOut.show()
-}
+if (urlParams.has('out')) loggedOut.show()
 if (platform.chromeos) crosWarning.show()
 
 
