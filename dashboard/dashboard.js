@@ -213,6 +213,7 @@ async function cache(f = null) {
         //console.log(assignments)
     assignments.forEach((assignment, index) => {
         if (assignment.description === 'null') assignment.description = ''
+        if (new Date(parseInt(String(assignment.dueDate))).getUTCSeconds <= new Date().getUTCSeconds()) return
         var badge
         switch (new Date(parseInt(String(assignment.dueDate))).toLocaleDateString()) {
             case new Date().toLocaleDateString():
