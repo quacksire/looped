@@ -82,30 +82,11 @@ async function cache(f = null) {
     } else {
         console.log(`Updating in ${new Date(parseInt(localStorage.getItem('sl-updateAt'))).getMinutes() - new Date().getMinutes()} minutes(s)`)
     }
-    gtag('set', 'user_properties', { 'crm_id': `${user.students[0].studentID}` });
+
     console.groupEnd()
 }
 
-(async function() {
-    'use strict'
-    if (Cookies.get('slUser')) {
-        console.info('School Loop User Cookie Found!')
-    } else {
-        logout()
-    }
-    let user = JSON.parse(decodeURI(Cookies.get('slUser')))
-    document.getElementById('username').innerHTML = `<i data-feather="user"></i> ${String(user.fullName).split(', ')[1]} ${String(user.fullName).split(', ')[0]}`
-    setTimeout(() => {
-        if (document.getElementById('username').innerHTML === 'Error') {
-            logout()
-        }
-    }, 2000)
-    if (urlParams.has('f')) console.warn('FORCE CLEAR param')
-    if (user.role != 'student') logout(user.role)
-
-
-    await cache()
-    setInterval(cache(), 600000)
+async function setupCourses() {
     let courseList = JSON.parse(localStorage.getItem('sl-courses'))
         //console.log(courseList)
         //console.log(JSON.parse(localStorage.getItem('sl-loopmail')))
@@ -113,47 +94,46 @@ async function cache(f = null) {
     let gpa = 0
     let trueClassCount = 0
     courseList.forEach(course => {
-            let link = '#'
-            let card = document.createElement('li')
-            card.id = 'classSelector'
-            card.onclick = `togglePage(${course.periodID})`
-            if (course.grade === 'null') {
-                course.grade = '-&nbsp;&nbsp;&nbsp;&nbsp;'
-            } else {
-                let space = 5
-                let spaced = space - String(course.grade).length
-                    //console.log(spaced)
-                course.grade = course.grade + '&nbsp;'.repeat(spaced)
-            }
-            card.innerHTML = `
+        let link = '#'
+        let card = document.createElement('li')
+        card.id = 'classSelector'
+        card.onclick = `togglePage(${course.periodID})`
+        if (course.grade === 'null') {
+            course.grade = '-&nbsp;&nbsp;&nbsp;&nbsp;'
+        } else {
+            let space = 5
+            let spaced = space - String(course.grade).length
+                //console.log(spaced)
+            course.grade = course.grade + '&nbsp;'.repeat(spaced)
+        }
+        card.innerHTML = `
         <li class="nav-item" >
             <a class="nav-link"  id="page-button-${course.periodID}" href="#" ${mobileCollapse() || ''}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>${course.grade} ${course.courseName}
             </a>
         </li>`
-            card.addEventListener('click', () => {
+        card.addEventListener('click', () => {
 
-                togglePage(`${course.periodID}`)
+            togglePage(`${course.periodID}`)
 
-            })
-            document.getElementById('classlist').appendChild(card)
-            let iframe = document.createElement('iframe')
-            iframe.src = `class.html?id=${course.periodID}`
-            iframe = visibility(iframe)
-            iframe.width = '100%'
-            iframe.height = '100%'
-            iframe.frameBorder = '0'
-            iframe.id = `${course.periodID}`
-            iframe.className = 'page min-vh-100'
-            document.getElementById('mainView').appendChild(iframe)
-                //console.log(course)
-            if (course.score != 'null') {
-                //console.log(parseFloat(String(course.score).slice(0, String(course.score).length - 1)))
-                gpa = gpa + parseFloat(String(course.score).slice(0, String(course.score).length - 1))
-                trueClassCount++
-            }
         })
-        //------------------------ GPA ------------------------//
+        document.getElementById('classlist').appendChild(card)
+        let iframe = document.createElement('iframe')
+        iframe.src = `class.html?id=${course.periodID}`
+        iframe = visibility(iframe)
+        iframe.width = '100%'
+        iframe.height = '100%'
+        iframe.frameBorder = '0'
+        iframe.id = `${course.periodID}`
+        iframe.className = 'page min-vh-100'
+        document.getElementById('mainView').appendChild(iframe)
+            //console.log(course)
+        if (course.score != 'null') {
+            //console.log(parseFloat(String(course.score).slice(0, String(course.score).length - 1)))
+            gpa = gpa + parseFloat(String(course.score).slice(0, String(course.score).length - 1))
+            trueClassCount++
+        }
+    })
     gpa = gpa / trueClassCount
     gpa = gpa.toFixed(2)
     let simplified = ((gpa - 50) / 10).toFixed(1)
@@ -163,10 +143,12 @@ async function cache(f = null) {
     if (simplified >= 3.0 && simplified <= 4.5) { color = 'text-success' } else if (simplified <= 2.0) { color = 'text-danger' } else if (simplified >= 4.5) { color = 'text-info' } else { color = 'text-warning' }
     document.getElementById('gpa').innerHTML = `<strong class="${color} center" data-bs-toggle="tooltip" data-bs-placement="right" title="${gpa}">${simplified}</strong>`
     console.log(`GPA: ${gpa}`)
-        //------------------------ Static Pages ------------------------//
-        /*
-         * 'id' is used to "open" the page
-         */
+}
+
+async function setupStaticPages() {
+    /*
+     * 'id' is used to "open" the page
+     */
     let mailPage = document.createElement('iframe')
     mailPage.src = `/mail/index.html`
     mailPage = visibility(mailPage)
@@ -203,12 +185,13 @@ async function cache(f = null) {
         //------------------------
     if (urlParams.get('page')) {
         if (!document.getElementById(urlParams.get('page'))) { //Check if page exists
-            window.location.search = ''
+            window.location.search = '' //Clear invalid page
         } else {
             togglePage(urlParams.get('page'))
         }
     }
-    //------------------------Page Content------------------------
+}
+async function setupDashPage() {
     let assignments = JSON.parse(localStorage.getItem('sl-assignments'))
         //console.log(assignments)
     assignments.forEach((assignment, index) => {
@@ -254,12 +237,28 @@ async function cache(f = null) {
         listItem.addEventListener('click', () => {
             listItem.hidden = true
             console.log(`Hide assignment ${assignment.iD}`)
-
         })
         document.getElementById('assignments').appendChild(listItem)
     })
 
 
+
+
+}
+
+(async function() {
+    'use strict'
+    if (!Cookies.get('slUser')) logout()
+    let user = JSON.parse(decodeURI(Cookies.get('slUser')))
+    if (user.role != 'student') logout(user.role)
+    document.getElementById('username').innerHTML = `<i data-feather="user"></i> ${String(user.fullName).split(', ')[1]} ${String(user.fullName).split(', ')[0]}`
+
+    await cache() // Wait for cache
+    setInterval(cache(), 600000)
+
+    setupCourses()
+    setupStaticPages()
+    setupDashPage()
 
     $('.assignment').click(function(e) {
         e.preventDefault();
