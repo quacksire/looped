@@ -126,6 +126,7 @@ async function setupCourses() {
         iframe.frameBorder = '0'
         iframe.id = `${course.periodID}`
         iframe.className = 'page min-vh-100'
+        iframe.seemless = true
         document.getElementById('mainView').appendChild(iframe)
             //console.log(course)
         if (course.score != 'null') {
