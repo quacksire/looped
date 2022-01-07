@@ -11,6 +11,12 @@ var online = true
 let whatIsSiteBeingRunAs = platform.pwa || platform.uwp ? 'PWA' : 'Web'
     //#endregion
 
+    //Domain Migration
+    if (!platform.pwa) {
+        if (document.location.host.endsWith('pages.dev') || document.location.host.endsWith('duckling.pw')) document.location.host = 'looped.duckapp.de'
+    }
+
+
 //#region offline handling
 
 function offline() {
