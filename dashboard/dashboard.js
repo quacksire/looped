@@ -14,7 +14,7 @@ function togglePage(page = null) {
     var bsCollapse = new bootstrap.Collapse(myCollapse, {
         toggle: false
     })
-    if (page != null) {
+    if (page) {
         document.getElementById('home').hidden = true
         $('#home').attr("hidden", true);
         $('#mainView').css({ 'overflow': 'hidden' });
