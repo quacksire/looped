@@ -122,3 +122,14 @@ $('#login').bind('submit', function (e) {
     console.log('Welcome!');
     checkUser($('#floatingUsername').val(), $('#floatingPassword').val());
 });
+
+$('#signin-button').click(function (e) { 
+    $('#signin-button').removeClass('btn-danger').removeClass('btn-secondary').addClass('btn-primary')
+    document.getElementById('signin-button').innerHTML = `<div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>`
+    e.preventDefault();
+    console.log('Welcome!');
+    checkUser($('#floatingUsername').val(), $('#floatingPassword').val());
+    
+});
