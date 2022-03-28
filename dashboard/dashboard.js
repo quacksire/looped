@@ -257,6 +257,8 @@ async function setupDashPage() {
     await cache() // Wait for cache
     setInterval(cache(), 600000)
 
+    // Async Functions makes it load faster as all elements are created at the same time instaed of one at a time.
+
     setupCourses()
     setupStaticPages()
     setupDashPage()
@@ -265,7 +267,7 @@ async function setupDashPage() {
         e.preventDefault();
         this.hidden = true
     });
-    $('.reload').click(function(e) {
+    $('.reload').click(function(e) { // A fore reload button, so it the cache gets reset.
         let el = e.target
         spin(el, 360)
         cache('force').then(() => {
