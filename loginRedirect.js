@@ -1,5 +1,5 @@
 (async function() {
-    if (!navigator.cookieEnabled) // TODO: DO something if cookies are disabled
+    if (!navigator.cookieEnabled) {} // TODO: DO something if cookies are disabled
     if (Cookies.get('slUser')) {
         //School Loop User Cookie Found! Sending to Dashboard
         setTimeout(() => {
