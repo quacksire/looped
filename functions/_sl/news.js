@@ -6,8 +6,9 @@ export async function onRequestGet(context) {
             return new Response('Not logged in', {status: 401})
         }
 
-        let token = cookies.split("sl-token=")[1].split(";")[0]
-        let uid = cookies.split("sl-uid=")[1].split(";")[0]
+        let cooks = cookies.split(';')
+        let token = cooks[0].split('=')[1]
+        let uid =  cooks[1].split('=')[1]
 
         //"https://\(domainName)/mapi/report_card?studentID=\(studentID)"
 
