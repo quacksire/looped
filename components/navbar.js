@@ -21,7 +21,7 @@ export default function NavBar() {
 
 
     function logout() {
-        localStorage.removeItem("sl-token");
+        localStorage.clear()
         removeCookies("sl-token");
         router.reload();
     }
