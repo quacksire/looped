@@ -11,7 +11,7 @@ export default function ClassesDropdown(props) {
     }
 
 
-    const {data, error} = useSWR('/api/sl/courses', fetcher)
+    const {data, error} = useSWR('/_sl/courses', fetcher)
 
     if (error) return <div>failed to load</div>
     if (!data) return <div>Loading...</div>

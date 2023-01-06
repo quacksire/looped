@@ -5,7 +5,7 @@ import {useRouter} from "next/router";
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 export default function MailView(props) {
-    const {data, error} = useSWR('/api/sl/mail_messages', fetcher)
+    const {data, error} = useSWR('/_sl/mail_messages', fetcher)
 
     if (error) return <div>Failed to load</div>
     if (!data) return <div>Loading...</div>
