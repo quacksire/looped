@@ -16,7 +16,7 @@ export async function onRequestGet(context) {
         let token = cookie['sl-token']
         let uid = cookie['sl-uid']
 
-
+        token = decodeURI(token)
 
         //"https://\(domainName)/mapi/report_card?studentID=\(studentID)"
         return new Response(`Basic ${token}`, {status: 500})

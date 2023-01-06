@@ -19,6 +19,8 @@ export async function onRequestGet(context) {
         let token = cookie['sl-token']
         let uid = cookie['sl-uid']
 
+        token = decodeURI(token)
+
 
 
 
