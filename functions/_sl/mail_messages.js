@@ -1,10 +1,6 @@
-export const config = {
-    runtime: 'edge',
-}
 
-
-export default async function handler(req, res) {
-    let cookies = req.headers.get('Cookie') || ""
+export async function onRequestGet(context) {
+    let cookies = context.request.headers.get('Cookie') || ""
     if (!cookies.includes("sl-token") || !cookies.includes("sl-token")) {
         return new Response('Not logged in', {status: 401})
     }
