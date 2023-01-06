@@ -88,8 +88,9 @@ export default function ClassesDropdown(props) {
                         command={`CTRL + ${item.i}`}
                         onPress={() => console.log('Pressed' + item.key)}
                         showFullDescription
+                        href={`/class/${item.key}`}
                     >
-                        <Link href={`/class/${item.key}`}>
+                        <Link href={`/class/${item.key}`} color={'text'}>
                             {item.name}
                         </Link>
                     </Dropdown.Item>

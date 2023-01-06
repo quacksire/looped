@@ -30,7 +30,7 @@ export default function NavBar() {
         <Navbar variant="floating">
             <Navbar.Brand>
                 <Text b color="inherit" hideIn="xs">
-                    Looped
+                    <Link href="/" color="text">Looped</Link>
                 </Text>
             </Navbar.Brand>
             <Navbar.Content
@@ -40,10 +40,8 @@ export default function NavBar() {
 
             >
                 {!String(active).includes('class') ? <ClassesDropdown/> : <ClassesDropdown isActive/>}
-                <Navbar.Link href="#">
-                    Customers
-                </Navbar.Link>
-                <Navbar.Link href="/mail">Mail</Navbar.Link>
+                {!String(active).includes('mail') ? <Navbar.Link href="/mail">LoopMail</Navbar.Link> : <Navbar.Link href="/mail" isActive>LoopMail</Navbar.Link>}
+
                 <Navbar.Link href="#">Company</Navbar.Link>
             </Navbar.Content>
             <Navbar.Content>
