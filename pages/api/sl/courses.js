@@ -1,20 +1,24 @@
-import { parse } from 'cookie';
-
 export const config = {
     runtime: 'edge',
 }
 
 
 export default async function handler(req, res) {
-    const cookie = parse(request.headers.get('Cookie') || '');
-    if (!cookie['sl-token'] || !cookie['sl-uid']) {
+    let cookies = req.headers.get('Cookie') || ""
+    if (!cookies.includes("sl-token") || !cookies.includes("sl-token")) {
         return new Response('Not logged in', {status: 401})
     }
 
-    let response = await fetch(`https://hmbhs.schoolloop.com/mapi/report_card?studentID=${cookie['sl-uid']}`,
+    let token = cookies.split("sl-token=")[1].split(";")[0]
+    let uid = cookies.split("sl-uid=")[1].split(";")[0]
+
+    //"https://\(domainName)/mapi/report_card?studentID=\(studentID)"
+
+
+    let response = await fetch(`https://hmbhs.schoolloop.com/mapi/report_card?studentID=${uid}`,
         {
             headers: {
-                authorization: `Basic ${cookie['sl-token']}`
+                authorization: `Basic ${token}`
             }
         }
     )
