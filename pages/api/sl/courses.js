@@ -1,6 +1,5 @@
 import {getCookie, getCookies, hasCookie} from "cookies-next";
-import {NextApiResponse} from "next";
-import {NextApiRequest} from "next";
+
 export const config = {
     runtime: 'edge',
 }
