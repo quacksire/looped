@@ -1,4 +1,4 @@
-import {getCookie, getCookies, hasCookie} from "cookies-next";
+import { parse } from 'cookie';
 
 export const config = {
     runtime: 'edge',
@@ -6,16 +6,17 @@ export const config = {
 
 
 export default async function handler(req, res) {
-    if (!hasCookie('sl-token', {req, res}) || !hasCookie('sl-uid', {req, res})) {
+    const cookie = parse(request.headers.get('Cookie') || '');
+    if (!cookie['sl-token'] || !cookie['sl-uid']) {
         return new Response('Not logged in', {status: 401})
     }
     //"https://\(domainName)/mapi/report_card?studentID=\(studentID)"
 
 
-    let response = await fetch(`https://hmbhs.schoolloop.com/mapi/assignments?studentID=${getCookie('sl-uid', {req, res})}`,
+    let response = await fetch(`https://hmbhs.schoolloop.com/mapi/assignments?studentID=${cookie['sl-uid']}`,
         {
             headers: {
-                authorization: `Basic ${getCookie('sl-token', {req, res})}`
+                authorization: `Basic ${cookie['sl-token']}`
             }
         }
     )
