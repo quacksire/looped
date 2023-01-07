@@ -10,7 +10,7 @@ export async function onRequestGet(context) {
 
         //"https://\(domainName)/mapi/report_card?studentID=\(studentID)"
 
-        let response = await fetch(`https://hmbhs.schoolloop.com/mapi/assignments?studentID=${uid}`,
+        let response = await fetch(`https://subdomain.schoolloop.com/mapi/assignments?studentID=${uid}`,
             {
                 headers: {
                     "Authorization": `Basic ${token}`
@@ -18,7 +18,6 @@ export async function onRequestGet(context) {
             }
         )
         response = await response.json()
-        console.log(response)
 
         return new Response(
             JSON.stringify(response),
