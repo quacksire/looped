@@ -78,6 +78,7 @@ export default function App() {
                     </Text>
                 </Modal.Header>
                 <Modal.Body>
+                    <Text>Login with School Loop</Text>
                     <Input
                         onChange={setUsername}
                         clearable
