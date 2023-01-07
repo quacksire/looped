@@ -51,7 +51,7 @@ export default function GradesCard() {
 
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "250px"}} >
+    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "auto", maxWidth: "100%"}} >
         <Card.Header css={{ marginBottom: "-50px", position: "relative"}}>
             <Text b css={{ userSelectable: "none"}}>Classes</Text>
         </Card.Header>

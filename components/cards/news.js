@@ -38,22 +38,22 @@ export default function NewsCard() {
 
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", maxWidth: "calc(100% + var(--nextui--gridGapUnit) * 2)"}}>
+    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "auto", manWidth: "80%"}}>
         <Card.Header css={{ marginBottom: "-50px", position: "relative"}}>
             <Text b>News</Text>
         </Card.Header>
         <Card.Body css={{alignItems: "center", marginBottom: "-30px", position: "relative"}}>
             {newsElement ? newsElement : (
-                <Table>
+                <Table css={{height: "auto", manWidth: "80%", overflow: "hidden", textOverflow: "ellipsis"}}>
                     <Table.Header columns={columns}>
                         {(column) => (
-                            <Table.Column key={column.key} css={{height: "0px", topPadding: "-20px"}}></Table.Column>
+                            <Table.Column key={column.key} css={{height: "0px", topPadding: "-20px", overflow: "hidden", textOverflow: "ellipsis"}}></Table.Column>
                         )}
                     </Table.Header>
                     <Table.Body items={rows}>
                         {(item) => (
                             <Table.Row key={item.key}>
-                                {(columnKey) => <Table.Cell>{item[columnKey]}</Table.Cell>}
+                                {(columnKey) => <Table.Cell css={{ overflow: "hidden", textOverflow: "ellipsis"}}>{item[columnKey]}</Table.Cell>}
                             </Table.Row>
                         )}
                     </Table.Body>

@@ -85,9 +85,9 @@ export default function AssignmentCard() {
        }
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "250px"}}>
+    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "auto", maxWidth: "100%"}}>
         <Card.Header css={{ marginBottom: "-20px", position: "relative"}}>
-            <Text b>Assignments</Text>
+            <Text b css={{alignItems: "center", position: "flex"}}>Assignments</Text>
         </Card.Header>
         <Card.Body css={{alignItems: "center"}}>
             <Checkbox.Group

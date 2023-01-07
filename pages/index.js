@@ -18,18 +18,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-        <Grid.Container gap={3} justify="center" css={{ userSelectable: "none"}}>
-            <Grid>
+        <Grid.Container gap={3} css={{ userSelectable: "none"}}>
+            <Grid xs={12} sm={4} md={3} lg={3} xl={2}>
                 <GPA/>
             </Grid>
-            <Grid>
+            <Grid xs={12} sm={8} md={5} lg={5} xl={3.5}>
                 <GradesCard />
             </Grid>
-            <Grid>
+            <Grid xs={13} md={6} lg={4} xl={3}>
                 <AssignmentCard />
             </Grid>
-
-            <Grid>
+            <Grid xs={13} md={6} lg={5.5} xl={3.75}>
                 <NewsCard />
             </Grid>
             {/*<Grid>
