@@ -7,19 +7,21 @@ import { RequestCookies } from '@edge-runtime/cookies'
 
 
 export default async function handler(req, res) {
-    try {
-        const cookies = new RequestCookies(req.headers)
+    const cookies = new RequestCookies(req.headers)
 
-        if (!cookies.has('sl-token') || !cookies.has('sl-uid')) {
-            return new Response('Not logged in', {status: 401})
-        }
-        let token = cookies.get('sl-token')?.value
-        let uid = cookies.get('sl-uid')?.value
-        token = decodeURI(token)
+    if (!cookies.has('sl-token') || !cookies.has('sl-uid')) {
+        return new Response('Not logged in', {status: 401})
+    }
+    let token = cookies.get('sl-token')?.value
+    let uid = cookies.get('sl-uid')?.value
+    token = decodeURI(token)
+
+    try {
+
 
         //"https://\(domainName)/mapi/report_card?studentID=\(studentID)"
 
-        let response = await fetch(`https://subdomain.schoolloop.com/mapi/assignments?studentID=${uid}`,
+        let response = await fetch(`https://hmbhs.schoolloop.com/mapi/assignments?studentID=${uid}`,
             {
                 headers: {
                     "Authorization": `Basic ${token}`
@@ -34,7 +36,7 @@ export default async function handler(req, res) {
                 status: 200,
                 headers: {
                     'content-type': 'application/json',
-                    "cache-control": `s-maxage=1200, stale-while-revalidate=600`
+                    "Cache-Control": `s-maxage=1200, stale-while-revalidate=600`
                 },
             }
         )

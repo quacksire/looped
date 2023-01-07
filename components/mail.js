@@ -4,7 +4,7 @@ import {Dropdown, Link, Navbar, Table} from '@nextui-org/react';
 import {useRouter} from "next/router";
 import {fetcher} from "../libs/sl";
 export default function MailView(props) {
-    const {data, error} = useSWR('api/_sl/mail_messages', fetcher)
+    const {data, error} = useSWR('/api/_sl/mail_messages', fetcher)
 
     if (error) return <div>Failed to load</div>
     if (!data) return <div>Loading...</div>
@@ -21,12 +21,9 @@ export default function MailView(props) {
 
     return (<Table
         aria-label="Example static collection table"
-        css={{
-            height: "auto",
-            minWidth: "100%",
-        }}
         compact
         selectionMode="single"
+        css={{zIndex: '1'}}
     >
         <Table.Header>
             <Table.Column>Subject</Table.Column>

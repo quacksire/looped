@@ -2,15 +2,16 @@
 
 import NavBar from './navbar'
 import LoginModal from "./LoginModal";
+import {Container, Grid, Spacer} from "@nextui-org/react";
 //import Footer from './footer'
 
 export default function Layout({ children }) {
+    // Create a 2x2 grid with a component in each cell using NextUI components
     return (
-        <>
-            <NavBar />
-            <LoginModal />
-            <main>{children}</main>
-            {/* <Footer /> */}
-        </>
+        <Container>
+                    <LoginModal />
+
+                        {children}
+        </Container>
     )
 }

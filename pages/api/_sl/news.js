@@ -35,7 +35,7 @@ export default async function handler(req, res) {
                 status: 200,
                 headers: {
                     'content-type': 'application/json',
-                    "cache-control": `s-maxage=1200, stale-while-revalidate=600`
+                    "Cache-Control": `s-maxage=1200, stale-while-revalidate=1200`
                 },
             }
         )

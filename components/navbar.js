@@ -1,10 +1,12 @@
 // Using Nextui, create a navbar react component that will be used in all pages.
 
-import {Navbar, Button, Dropdown, Link, Text} from '@nextui-org/react';
+import {Navbar, Button, Dropdown, Link, Text, styled} from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import {useEffect, useState} from 'react';
 import ClassesDropdown from "./ClassesDropdown";
 import {setCookie, removeCookies} from "cookies-next";
+
+
 
 
 
@@ -27,8 +29,10 @@ export default function NavBar() {
         router.reload();
     }
 
+
+
     return (
-        <Navbar variant="floating">
+        <Navbar variant="sticky" css={{ zIndex: 10}}>
             <Navbar.Brand>
                 <Text b color="inherit" hideIn="xs">
                     <Link href="/" color="text">Looped</Link>
@@ -43,7 +47,7 @@ export default function NavBar() {
                 {!String(active).includes('class') ? <ClassesDropdown/> : <ClassesDropdown isActive/>}
                 {!String(active).includes('mail') ? <Navbar.Link href="/mail">LoopMail</Navbar.Link> : <Navbar.Link href="/mail" isActive>LoopMail</Navbar.Link>}
 
-                <Navbar.Link href="#">Company</Navbar.Link>
+                <Navbar.Link href="#">Calender</Navbar.Link>
             </Navbar.Content>
             <Navbar.Content>
                 <Navbar.Item>
@@ -53,6 +57,7 @@ export default function NavBar() {
                 </Navbar.Item>
             </Navbar.Content>
         </Navbar>
+
     )
 }
 
