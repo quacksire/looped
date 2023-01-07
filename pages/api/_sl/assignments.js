@@ -3,15 +3,18 @@ export const config = {
     regions: ['sfo1'], // only execute this function on sfo1
 };
 
+import { RequestCookies } from '@edge-runtime/cookies'
 
 
 export default async function handler(req, res) {
     try {
-        if (req.headers.get('X-SL-User')) {
+        const cookies = new RequestCookies(req.headers)
+
+        if (!cookies.has('sl-token') || !cookies.has('sl-uid')) {
             return new Response('Not logged in', {status: 401})
         }
-        let token = req.headers.get('X-SL-User').split(':')[0]
-        let uid = req.headers.get('X-SL-User').split(':')[1]
+        let token = cookies.get('sl-token')?.value
+        let uid = cookies.get('sl-uid')?.value
         token = decodeURI(token)
 
         //"https://\(domainName)/mapi/report_card?studentID=\(studentID)"
