@@ -5,7 +5,7 @@ export const config = {
 
 
 
-export async function handler(req, res) {
+export default async function handler(req, res) {
     try {
         if (req.headers.get('X-SL-User')) {
             return new Response('Not logged in', {status: 401})

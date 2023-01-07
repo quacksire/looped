@@ -2,7 +2,7 @@ export const config = {
     runtime: 'edge', // this is a pre-requisite
     regions: ['sfo1'], // only execute this function on sfo1
 };
-export async function onRequestGet(context) {
+export default async function handler(req, res) {
 
     try {
         if (req.headers.get('X-SL-User')) {
