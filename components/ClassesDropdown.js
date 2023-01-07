@@ -3,15 +3,15 @@ import {Dropdown, Link, Navbar} from '@nextui-org/react';
 
 import {useRouter} from "next/router";
 import {getCookie, hasCookie} from "cookies-next";
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
+import {fetcher} from "../libs/sl";
 export default function ClassesDropdown(props) {
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
         return null;
     }
 
 
-    const {data, error} = useSWR('/_sl/courses', fetcher)
+    const {data, error} = useSWR('api/_sl/courses', fetcher)
 
     if (error) return <div>failed to load</div>
     if (!data) return <div>Loading...</div>

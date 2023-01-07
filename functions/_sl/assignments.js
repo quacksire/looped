@@ -1,25 +1,14 @@
 
 export async function onRequestGet(context) {
     try {
-        let get_cookies = function(request) {
-            let cookies = {};
-            context.request.headers.get('Cookie').split(';').forEach(function(cookie) {
-                let parts = cookie.match(/(.*?)=(.*)$/)
-                cookies[ parts[1].trim() ] = (parts[2] || '').trim();
-            });
-            return cookies;
-        };
-        let cookie = get_cookies(context.request)
-        if (!cookie['sl-token'] || !cookie['sl-uid']) {
+        if (!context.request.headers.get('X-SL-User')) {
             return new Response('Not logged in', {status: 401})
         }
-        let token = cookie['sl-token']
-        let uid = cookie['sl-uid']
-
+        let token = context.request.headers.get('X-SL-User').split(':')[0]
+        let uid = context.request.headers.get('X-SL-User').split(':')[1]
         token = decodeURI(token)
 
         //"https://\(domainName)/mapi/report_card?studentID=\(studentID)"
-        return new Response(`Basic ${token}`, {status: 500})
 
         let response = await fetch(`https://hmbhs.schoolloop.com/mapi/assignments?studentID=${uid}`,
             {

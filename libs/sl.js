@@ -1,4 +1,8 @@
-import { createContext } from 'react';
+import {getCookie} from "cookies-next";
 
-const SchoolLoopContext = createContext();
-export default SchoolLoopContext;
+
+export const fetcher = (url) => fetch(url, {
+    headers: {
+        'X-SL-User': `${getCookie('sl-token')}:${getCookie('sl-uid')}`
+    },
+    }).then((res) => res.json());

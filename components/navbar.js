@@ -7,6 +7,7 @@ import ClassesDropdown from "./ClassesDropdown";
 import {setCookie, removeCookies} from "cookies-next";
 
 
+
 export default function NavBar() {
 
 
