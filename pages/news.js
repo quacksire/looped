@@ -22,7 +22,8 @@ export default function News() {
     if (data) {
         if (data.length > 0) {
             newsElement = data.map((news, index) => {
-                if (index >= 5) return null;
+                //if (index >= 5) return null;
+                // TODO: Add date on card
                 return (
                     <Link href={`/news/${news.iD}`}>
                         <Card
