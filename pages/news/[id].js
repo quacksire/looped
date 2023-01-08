@@ -55,6 +55,11 @@ export default function NewsArticle(props) {
 export async function getServerSideProps(context) {
     const { id } = context.query
 
+    // Cache it, cause I don't want to grab it again lol.
+    context.res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=604800'
+    )
 
     let article
     try {
