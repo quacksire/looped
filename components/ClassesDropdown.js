@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import {Dropdown, Link, Navbar} from '@nextui-org/react';
+import {Dropdown, Link, Loading, Navbar} from '@nextui-org/react';
 
 import {useRouter} from "next/router";
 import {getCookie, hasCookie} from "cookies-next";
@@ -13,8 +13,8 @@ export default function ClassesDropdown(props) {
 
     const {data, error} = useSWR('/api/_sl/courses', fetcher)
 
-    if (error) return <div>failed to load</div>
-    if (!data) return <div>Loading...</div>
+    if (error) return null
+    if (!data) return <Loading type="points-opacity" color={'currentColor'}></Loading>
 
     console.log(data)
 
@@ -61,7 +61,7 @@ export default function ClassesDropdown(props) {
                 </Dropdown.Button>
             </Navbar.Item>
             <Dropdown.Menu
-                aria-label="ACME features"
+                aria-label="Looped"
                 css={{
                     $$dropdownMenuWidth: "340px",
                     $$dropdownItemHeight: "70px",

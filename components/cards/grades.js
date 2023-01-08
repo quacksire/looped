@@ -1,7 +1,9 @@
-import {Card, Loading, Text, Table} from "@nextui-org/react";
+import {Card, Text, Table, Grid, Link} from "@nextui-org/react";
 import {hasCookie} from "cookies-next";
 import useSWR from "swr";
 import {fetcher} from "../../libs/sl";
+import No from "../util/no";
+import Load from "../util/Loading";
 
 export default function GradesCard() {
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
@@ -29,13 +31,38 @@ export default function GradesCard() {
 
 
     const {data, error} = useSWR('/api/_sl/courses', fetcher)
-    let gradeElement = <Loading />
+    let gradeElement = <Load />
     let rows = []
     if (error) gradeElement = <Text>Failed to load</Text>
     if (data) {
         if (data.length > 0) {
-            rows = data.map((course, index) => {
-                let g = (course.grade != "null") ? `${course.grade} (${course.score})` : ''
+            gradeElement = data.map((course, index) => {
+
+
+                let g = (course.grade != "null") ? `${String(course.grade) + ' '.repeat(4 - String(course.grade).length)}` : '-'
+
+                return (
+                    <Link href={`/class/${course.periodID}`}>
+                        <Card isPressable variant="flat" css={{ p: "5px" }}>
+                            <Card.Header>
+                                <Text h3 css={{display: "flex"}}>{g}</Text>
+                                <Grid.Container css={{ pl: "$6" }}>
+                                    <Grid xs={12}>
+                                        <Text h4 css={{ lineHeight: "$xs" }}>
+                                            {course.courseName}
+                                        </Text>
+                                    </Grid>
+                                    <Grid xs={12}>
+                                        <Text css={{ color: "$accents8" }}>{course.teacherName}</Text>
+                                    </Grid>
+                                </Grid.Container>
+                            </Card.Header>
+                        </Card>
+                    </Link>
+                )
+
+
+                /*
                 return {
                     period: course.period,
                     courseName: course.courseName,
@@ -43,38 +70,21 @@ export default function GradesCard() {
                     grade: g,
                     teacherName: course.teacherName
                 }
+                *.
+                 */
             })
-            gradeElement = null
         } else {
-            gradeElement = <Text>No Classes</Text>
+            gradeElement = <No thing={"Classes"} />
         }
 
     }
 
     return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "auto", maxWidth: "100%"}} >
-        <Card.Header css={{ marginBottom: "-50px", position: "relative"}}>
+        <Card.Header css={{ marginBottom: "-20px", position: "relative"}}>
             <Text b css={{ userSelectable: "none"}}>Classes</Text>
         </Card.Header>
-        <Card.Body css={{alignItems: "center", marginBottom: "-30px"}}>
-            {gradeElement ? gradeElement : (
-                <Table css={{ marginTop: "-10px", position: "relative"}}>
-                    <Table.Header columns={columns}>
-                        {(column) => (
-                            <Table.Column key={column.key} css={{height: "0px", topPadding: "-20px"}}></Table.Column>
-                        )}
-                    </Table.Header>
-                    <Table.Body items={rows}>
-                        {(item) => (
-                            <Table.Row key={item.key}>
-                                <Table.Cell> <Text small > {item.period} </Text></Table.Cell>
-                                <Table.Cell>{item.courseName}</Table.Cell>
-                                <Table.Cell>{item.grade}</Table.Cell>
-                                <Table.Cell>{item.teacherName}</Table.Cell>
-                            </Table.Row>
-                        )}
-                    </Table.Body>
-                </Table>
-            )}
+        <Card.Body css={{ marginBottom: "-30px"}}>
+            {gradeElement}
         </Card.Body>
 
     </Card>)

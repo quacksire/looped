@@ -1,8 +1,10 @@
-import {Card, Loading, Checkbox, Text, Grid, Spacer} from "@nextui-org/react";
+import {Card, Checkbox, Text, Grid, Spacer} from "@nextui-org/react";
 import {hasCookie} from "cookies-next";
 import useSWR from "swr";
 import {fetcher} from "../../libs/sl";
 import {useEffect, useState} from "react";
+import No from "../util/no";
+import Load from "../util/Loading";
 
 export default function AssignmentCard() {
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
@@ -28,7 +30,7 @@ export default function AssignmentCard() {
 
 
 
-    let assignments = <Loading />
+    let assignments = <Load />
     if (error) assignments = <Text>Failed to load</Text>
     if (data) {
         if (data.length > 0) {
@@ -66,26 +68,40 @@ export default function AssignmentCard() {
                return (
                    <>
                        { selected.includes(assignment.iD) ? (
-                           <Checkbox isRounded defaultSelected lineThrough value={assignment.iD}>
-                               <Text size="$md">{assignment.courseName} - {assignment.title}</Text>
-                               <Spacer y={0.5} />
-                               <Text size="$xs">{due}</Text>
+                           <Checkbox isRounded defaultSelected value={assignment.iD}>
+                               <Grid.Container css={{ pl: "$6" }}>
+                                   <Grid xs={12}>
+                                       <Text css={{ lineHeight: "10px" }}>
+                                           <Text del size="$md" css={{ color: "$accents8" }}>{assignment.courseName} - {assignment.title}</Text>
+                                       </Text>
+                                   </Grid>
+                                   <Grid xs={6}>
+                                       <Text del size="$xs" css={{ color: "$accents8" }}>{due}</Text>
+                                   </Grid>
+                               </Grid.Container>
                            </Checkbox>
                            ) : (<Checkbox isRounded lineThrough value={assignment.iD}>
-                           <Text size="$md">{assignment.courseName} - {assignment.title}</Text>
-                           <Spacer y={0.5} />
-                           <Text size="$xs">{due}</Text>
+                               <Grid.Container css={{ pl: "$6" }}>
+                                   <Grid xs={12}>
+                                       <Text css={{ lineHeight: "10px" }}>
+                                           <Text size="$md">{assignment.courseName} - {assignment.title}</Text>
+                                       </Text>
+                                   </Grid>
+                                   <Grid xs={6}>
+                                       <Text size="$xs">{due}</Text>
+                                   </Grid>
+                               </Grid.Container>
                        </Checkbox>
                        )}
                    </>
                )
            })
        } else {
-            let assignments = <Text>No assignments</Text>
+            let assignments = <No thing={"Assignments"} />
        }
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "auto", maxWidth: "100%"}}>
+    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "auto"}}>
         <Card.Header css={{ marginBottom: "-20px", position: "relative"}}>
             <Text b css={{alignItems: "center", position: "flex"}}>Assignments</Text>
         </Card.Header>

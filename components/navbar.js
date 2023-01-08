@@ -44,7 +44,10 @@ export default function NavBar() {
                 hideIn="xs"
 
             >
+                {String(active) === '/' ? <Navbar.Link href="/" isActive>Home</Navbar.Link> : <Navbar.Link href="/" >Home</Navbar.Link>}
+
                 {!String(active).includes('class') ? <ClassesDropdown/> : <ClassesDropdown isActive/>}
+                {!String(active).includes('news') ? null : <Navbar.Link href="/news" isActive>News</Navbar.Link>}
                 {!String(active).includes('mail') ? <Navbar.Link href="/mail">LoopMail</Navbar.Link> : <Navbar.Link href="/mail" isActive>LoopMail</Navbar.Link>}
 
                 <Navbar.Link href="#">Calender</Navbar.Link>

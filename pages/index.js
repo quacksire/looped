@@ -22,7 +22,7 @@ export default function Home() {
             <Grid xs={12} sm={4} md={3} lg={3} xl={2}>
                 <GPA/>
             </Grid>
-            <Grid xs={12} sm={8} md={5} lg={5} xl={3.5}>
+            <Grid xs={12} sm={8} md={5} lg={5} xl={3}>
                 <GradesCard />
             </Grid>
             <Grid xs={13} md={6} lg={4} xl={3}>
