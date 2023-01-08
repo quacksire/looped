@@ -27,6 +27,7 @@ export default function News() {
                     <Link href={`/news/${news.iD}`}>
                         <Card
                             isPressable
+                            isHoverable
                             key={news.iD}
                             variant="flat"
                             css={{padding: "1rem", marginBottom: "1rem", cursor: "pointer"}}
