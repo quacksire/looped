@@ -42,7 +42,7 @@ export default function GPACard() {
         gpaElement = <Text size="$6xl" weight={"extrabold"} b transform={"full-size-kana"} color={color}>{simplified}</Text>
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "25px", maxWidth: "100%", maxHeight: "100%"}}>
+    return (<Card isHoverable variant="flat" css={{ minWidth: "25px", maxWidth: "100%", maxHeight: "225px"}}>
         <Card.Header>
             <Text b>GPA</Text>
         </Card.Header>
