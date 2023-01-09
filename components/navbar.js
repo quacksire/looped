@@ -44,13 +44,12 @@ export default function NavBar() {
                 hideIn="xs"
 
             >
-                {String(active) === '/' ? <Navbar.Link href="/" isActive>Home</Navbar.Link> : <Navbar.Link href="/" >Home</Navbar.Link>}
+                {String(active) === '/' ? <Navbar.Link isActive>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} >Home</Navbar.Link>}
 
                 <ClassesDropdown></ClassesDropdown>
-                {!String(active).includes('news') ? null : <Navbar.Link href="/news" isActive>News</Navbar.Link>}
-                {!String(active).includes('mail') ? <Navbar.Link href="/mail">LoopMail</Navbar.Link> : <Navbar.Link href="/mail" isActive>LoopMail</Navbar.Link>}
-
-                <Navbar.Link href="#">Calender</Navbar.Link>
+                {!String(active).includes('news') ? null : <Navbar.Link onPress={() => { router.push("/news")}} isActive>News</Navbar.Link>}
+                {!String(active).includes('mail') ? <Navbar.Link onPress={() => { router.push("/mail")}}>LoopMail</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/mail")}}>LoopMail</Navbar.Link>}
+                {!String(active).includes('calender') ? <Navbar.Link onPress={() => { router.push("/calender")}}>Calender</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/calender")}}>Calender</Navbar.Link>}
             </Navbar.Content>
             <Navbar.Content>
                 <Navbar.Item>
