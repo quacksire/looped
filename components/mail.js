@@ -15,7 +15,7 @@ export default function MailView(props) {
         >
             <Table.Cell>{mail.subject}</Table.Cell>
             <Table.Cell>{mail.sender.name}</Table.Cell>
-            <Table.Cell>{new Date((parseInt(mail.date) / 1000).toFixed(0)).toLocaleString()}</Table.Cell>
+            <Table.Cell>{new Date(parseInt(String(mail.date))).toLocaleDateString()}</Table.Cell>
         </Table.Row>
     ))
 

@@ -5,24 +5,31 @@ import {fetcher} from "../../libs/sl";
 import {useEffect, useState} from "react";
 import No from "../util/no";
 import Load from "../util/Loading";
+import confetti from 'canvas-confetti';
+import {useLocalStorage, useMouse, useWindowSize} from "@react-hooks-library/core";
 
 export default function AssignmentCard() {
+    const { height, width } = useWindowSize()
+    const { x, y } = useMouse({ type: 'client' })
+    const handleConfetti = () => {
+        console.log({ x: (((100 * x) / width) / 100), y: (((100 * y) / height) / 100) })
+
+        confetti({
+            particleCount: 100,
+            spread: 100,
+            origin: { x: (((100 * x) / width) / 100), y: (((100 * y) / height) / 100) }
+        });
+    };
+
+    const [selected, setSelected] = useLocalStorage(
+        'finishedAssignments',
+        []
+    )
+    console.log(selected)
+
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
         return null;
     }
-    const [selected, setSelected] = useState([]);
-
-
-    useEffect(() => {
-        return () => {
-            setSelected(JSON.parse(localStorage.getItem('finishedAssignments')))
-        };
-    }, []);
-
-
-    useEffect(() => {
-        localStorage.setItem('finishedAssignments', JSON.stringify(selected));
-    }, [selected]);
 
 
 
@@ -42,7 +49,7 @@ export default function AssignmentCard() {
                         due = 'Due today'
                         break
                     case new Date(new Date().getTime() + 1 * 24 * 60 * 60 * 1000).toLocaleDateString():
-                        due = '>Due tomorrow'
+                        due = 'Due tomorrow'
                         break
                     case new Date(new Date().getTime() + 2 * 24 * 60 * 60 * 1000).toLocaleDateString():
                         due = 'Due in two days'
@@ -68,7 +75,7 @@ export default function AssignmentCard() {
                return (
                    <>
                        { selected.includes(assignment.iD) ? (
-                           <Checkbox isRounded defaultSelected value={assignment.iD}>
+                           <Checkbox isRounded value={assignment.iD} aria-label={`${assignment.courseName} - ${assignment.title}`}>
                                <Grid.Container css={{ pl: "$6" }}>
                                    <Grid xs={12}>
                                        <Text css={{ lineHeight: "10px" }}>
@@ -109,7 +116,11 @@ export default function AssignmentCard() {
             <Checkbox.Group
                 color="success"
                 value={selected}
-                onChange={setSelected}
+                onChange={(value) => {
+                    setSelected(value)
+                    handleConfetti()
+                }}
+                aria-label="Assignments"
             >
                 {assignments}
             </Checkbox.Group>
