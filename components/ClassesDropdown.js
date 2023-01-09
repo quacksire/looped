@@ -69,7 +69,8 @@ export default function ClassesDropdown() {
     })
     return (
                 <Dropdown>
-                    <Navbar.Item isActive={a}>
+                    {!router.pathname.includes('class') ? ( //isActive
+                        <Navbar.Item>
                         <Dropdown.Button
                             auto
                             light
@@ -83,6 +84,23 @@ export default function ClassesDropdown() {
                             Classes
                         </Dropdown.Button>
                     </Navbar.Item>
+                    ) : (
+                        <Navbar.Item isActive activeColor={'primary'}>
+                        <Dropdown.Button
+                            auto
+                            light
+                            css={{
+                                px: 0,
+                                dflex: "center",
+                                svg: {pe: "none"},
+                            }}
+                            ripple={false}
+                            color={'secondary'}
+                        >
+                            Classes
+                        </Dropdown.Button>
+                    </Navbar.Item>
+                    )}
                     <Dropdown.Menu
                         aria-label="Looped"
                         css={{

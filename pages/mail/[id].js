@@ -65,7 +65,7 @@ export async function getServerSideProps(context) {
 
     let mail
     try {
-        mail = await getMailMessage(getCookie('sl-token', context), getCookie('sl-uid', context), '1671985701949');
+        mail = await getMailMessage(getCookie('sl-token', context), getCookie('sl-uid', context), id);
         console.log(mail)
         return {
             props: {
@@ -81,12 +81,6 @@ export async function getServerSideProps(context) {
             }
         }
     }
-
-
-
-
-
-
 
 }
 
