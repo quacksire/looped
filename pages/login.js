@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import LoginModal from '../components/LoginModal'
 import Layout from "../components/layout";
+import {Button, Loading} from "@nextui-org/react"
 
 export default function Home() {
     return (
@@ -12,7 +13,9 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            Login
+            <Button disabled auto bordered color="warning" css={{ px: "$13" }}>
+                <Loading type="points-opacity" color="currentColor" size="sm" />
+            </Button>
         </>
     )
 }

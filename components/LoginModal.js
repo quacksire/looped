@@ -14,12 +14,15 @@ export default function App() {
     useEffect(() => {
         console.log(hasCookie("sl-token"))
         if (!hasCookie("sl-token")) {
-            if (!router.pathname.includes("login")) {
-                router.push("/login");
+            if (!router.pathname === '/login') {
+                router.push(`/login?path=${encodeURI(router.pathname)}`, '/login');
             }
             setVisible(true);
+        } else {
+            setVisible(false);
+            
         }
-    }, []);
+    }, [router.pathname]);
 
 
     const handler = () => setVisible(true);
@@ -60,7 +63,7 @@ export default function App() {
         setLoading(false);
         setVisible(false);
 
-        router.push("/");
+        router.query.path ? router.push(router.query.path) : router.push('/');
     }
 
     return (
@@ -110,12 +113,14 @@ export default function App() {
                     </Row>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button auto flat color="error" onClick={closeHandler}>
-                        Close
+                    {loading ? (<Button disabled auto bordered color="warning" css={{ px: "$13" }}>
+                        <Loading type="points-opacity" color="currentColor" size="sm" />
+                    </Button>) : (
+                        <Button auto onClick={signInHandler}>
+                         Sign in
                     </Button>
-                    <Button auto onClick={signInHandler}>
-                        {loading ? <Loading type="gradient" color={"white"} /> : "Sign in"}
-                    </Button>
+                    )}
+                    
                 </Modal.Footer>
             </Modal>
         </div>
