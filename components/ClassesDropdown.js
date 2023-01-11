@@ -129,7 +129,7 @@ export default function ClassesDropdown() {
                             <Dropdown.Item
                                 key={item.key}
                                 description={item.description}
-                                command={`ALT + ${item.i + 1}`}
+                                command={`ALT + ${parseInt(item.i) + 1}`}
                                 showFullDescription
                             >
                                     {item.name}

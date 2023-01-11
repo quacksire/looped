@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Grid, Text} from "@nextui-org/react";
+import {Grid, Text, Button} from "@nextui-org/react";
 import { getArticle} from "../api/_sl/news/[id]";
 
 import { RequestCookies } from '@edge-runtime/cookies'
@@ -7,6 +7,7 @@ import {getCookie, hasCookie} from "cookies-next";
 import {NextRequest} from "next/server";
 import {useRouter} from "next/router";
 import Back from "../../components/util/Back";
+import Link from 'next/link';
 
 
 
@@ -41,6 +42,17 @@ export default function NewsArticle(props) {
                 </Grid.Container>
                 <h3>Sent by {props.article.authorName} on {new Date(parseInt(String(props.article.createdDate))).toLocaleDateString()}</h3>
                 <p dangerouslySetInnerHTML={{__html: props.article.description}}></p>
+                {props.article.links && props.article.links.length > 0 && (
+                    <div>
+                            {props.article.links.map((link) => (
+                                <Link href={link.URL} target={'_blank'} referrerPolicy={"no-referrer"}>
+                                    <Button light color="primary" auto>
+                                        {link.Title}
+                                    </Button>
+                                </Link>
+                            ))}
+                    </div>
+                )}
             </div>
         )
     }

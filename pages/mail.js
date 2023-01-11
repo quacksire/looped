@@ -3,19 +3,23 @@ import {hasCookie} from "cookies-next";
 import useSWR from "swr";
 import {fetcher} from "../libs/sl";
 import Load from "../components/util/Loading";
-import {Card, Text, Table} from "@nextui-org/react";
+import {Card, Text, Table, Badge} from "@nextui-org/react";
 import Link from "next/link";
 import No from "../components/util/no";
 import { useRouter } from 'next/router';
 import { getMail } from './api/_sl/mail_messages';
+import {useLocalStorage} from "@react-hooks-library/core";
 
 export default function Mail(props) {
 
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
         return null;
-    } else {
-
     }
+
+    const [read, setRead] = useLocalStorage(
+        'readMails',
+        []
+    )
 
 
     let {data, error} = useSWR('/api/_sl/mail_messages', fetcher)
@@ -31,7 +35,12 @@ export default function Mail(props) {
                 <Table.Row
                     key={mail.ID}
                 >
-                    <Table.Cell>{mail.subject}</Table.Cell>
+                    <Table.Cell>
+                        {read.includes(`${mail.ID}`) || mail.read == 'false' && (
+                            <Badge color="primary" variant="dot" />
+                        )}
+                        
+                        {mail.subject}</Table.Cell>
                     <Table.Cell>{mail.sender.name}</Table.Cell>
                     <Table.Cell>{new Date(parseInt(String(mail.date))).toLocaleDateString()}</Table.Cell>
                 </Table.Row>
@@ -42,7 +51,9 @@ export default function Mail(props) {
                 compact
                 selectionMode="single"
                 css={{zIndex: '1'}}
-                onSelectionChange={(key) => router.push(`/mail/${key.currentKey}`)}
+                onSelectionChange={(key) => {
+                    
+                    router.push(`/mail/${key.currentKey}`)}}
             >
                 <Table.Header>
                     <Table.Column>Subject</Table.Column>
