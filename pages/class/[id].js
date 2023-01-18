@@ -42,6 +42,7 @@ export default function NewsArticle(props) {
                 <h3>{props.course.teacherName}</h3>
                 <h5>Last Updated on {String(props.course.lastUpdated).split(' ')[0]} at {String(props.course.lastUpdated).split(' ')[1]}</h5>
                 <small>Coming soon</small>
+                {JSON.stringify(props.course)}
             </div>
         )
     }

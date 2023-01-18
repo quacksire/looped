@@ -6,7 +6,7 @@ import { RequestCookies } from '@edge-runtime/cookies'
 
 
 export async function getCourse(token, uid, id) {
-    let response = await fetch(`https://hmbhs.schoolloop.com/mapi/report_card?studentID=${uid}`,
+    let response = await fetch(`https://hmbhs.schoolloop.com/mapi/progress_report?studentID=${uid}&periodID=${id}`,
         {
             headers: {
                 "Authorization": `Basic ${token}`
