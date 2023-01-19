@@ -25,6 +25,7 @@ export default function NewsArticle(props) {
 
 
     if (props.course) {
+        if (props.course.date) props.course.lastUpdated = `${new Date(props.course.date).toDateString()} ${new Date(props.course.date).toLocaleTimeString()}`
         content = (
             <div>
                 <Head>
@@ -40,8 +41,10 @@ export default function NewsArticle(props) {
                     </Grid>
                 </Grid.Container>
                 <h3>{props.course.teacherName}</h3>
-                <h5>Last Updated on {String(props.course.lastUpdated).split(' ')[0]} at {String(props.course.lastUpdated).split(' ')[1]}</h5>
+                <h5>Last Updated on {props.course.lastUpdated}</h5>
                 <small>Coming soon</small>
+
+                ignore this:
                 {JSON.stringify(props.course)}
             </div>
         )
