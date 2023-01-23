@@ -3,6 +3,8 @@ import {Modal, Button, Text, Input, Row, Checkbox, Loading} from "@nextui-org/re
 import Link from "next/link";
 import {getCookie, hasCookie, setCookie} from "cookies-next";
 import {useRouter} from "next/router";
+import {useLocalStorage} from "@react-hooks-library/core";
+
 
 export default function App() {
     const [visible, setVisible] = React.useState(false);
@@ -10,6 +12,16 @@ export default function App() {
     const [usernameTarget, setUsername] = React.useState("");
     const [passwordTarget, setPassword] = React.useState("");
     const router = useRouter();
+
+    const [usr, setUsr] = useLocalStorage(
+        'sl-user',
+        {loading: true}
+    )
+
+    const [token, setToken] = useLocalStorage(
+        'sl-token',
+        0
+    )
 
     useEffect(() => {
         console.log(hasCookie("sl-token"))
@@ -58,8 +70,8 @@ export default function App() {
 
         setCookie("sl-token", btoa(`${encodeURI(username)}:${encodeURI(password)}`), { expires: new Date(new Date().setHours(720)) });
         setCookie('sl-uid', response.userID, { expires: new Date(new Date().setHours(720)) });
-        localStorage.setItem("sl-token", btoa(`${encodeURI(username)}:${encodeURI(password)}`));
-        localStorage.setItem("sl-user", JSON.stringify(response));
+        setUsr(response);
+        setToken(btoa(`${encodeURI(username)}:${encodeURI(password)}`));
         setLoading(false);
         setVisible(false);
 

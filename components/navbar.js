@@ -1,10 +1,11 @@
 // Using Nextui, create a navbar react component that will be used in all pages.
 
-import {Navbar, Button, Dropdown, Link, Text, styled} from '@nextui-org/react';
+import {Navbar, Button, Dropdown, Link, Text, styled, User} from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import {Suspense, useEffect, useState} from 'react';
 import ClassesDropdown from "./ClassesDropdown";
 import {setCookie, removeCookies} from "cookies-next";
+import { useLocalStorage } from '@react-hooks-library/core';
 
 
 
@@ -21,7 +22,7 @@ export default function NavBar() {
         console.log(active);
     }, [router.pathname]);
 
-
+    const [user] = useLocalStorage('sl-user', {loading: true})
 
     function logout() {
         localStorage.clear()
@@ -33,7 +34,6 @@ export default function NavBar() {
 
     return (
         <Navbar variant="sticky" isCompact css={{ zIndex: 10}}>
-            
             <Navbar.Brand>
                 <Text b color="inherit" hideIn="xs">
                     <Link href="/" color="text">Looped</Link>
@@ -54,11 +54,16 @@ export default function NavBar() {
                 {!String(active).includes('calender') ? <Navbar.Link onPress={() => { router.push("/calender")}}>Calender</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/calender")}}>Calender</Navbar.Link>}
             </Navbar.Content>
             <Navbar.Content>
-                <Navbar.Item>
-                    <Button auto flat onPress={logout}>
-                        Log Out
-                    </Button>
-                </Navbar.Item>
+                <Navbar.Link onPress={logout}>
+                    {user.loading ? (<Button > Log Out </Button>) : (<User onPress={logout}
+                        src={`https://api.dicebear.com/5.x/bottts/svg?seed=${user.email}`}
+                        name={`{String(user.fullName).split(', ')[1] + ' ' + String(user.fullName).split(', ')[0]}`}
+                        description={`${user.email}`}
+                        size="xs"
+                        pointer
+                        />)}
+                        
+                </Navbar.Link>
             </Navbar.Content>
         </Navbar>
     )
