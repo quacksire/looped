@@ -23,6 +23,7 @@
     "react-dom": "18.2.0",
     "react-hotkeys-hook": "^4.3.2",
     "react-scale-text": "^1.2.2",
-    "swr": "^2.0.0"
+    "swr": "^2.0.0",
+    "victory": "^36.6.8"
   }
 }

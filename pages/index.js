@@ -3,6 +3,7 @@ import Image from 'next/image'
 import LoginModal from '../components/LoginModal'
 import Layout from "../components/layout";
 import {Container, Grid, Spacer, Card, Text} from "@nextui-org/react";
+import { Suspense } from 'react';
 import NavBar from "../components/navbar";
 import GPA from "../components/cards/GPA";
 import AssignmentCard from "../components/cards/assignments";
@@ -20,16 +21,17 @@ export default function Home() {
       </Head>
         <Grid.Container gap={3} css={{ userSelectable: "none"}}>
             <Grid xs={12} sm={4} md={3} lg={3} xl={2}>
-                <GPA/>
+                <Suspense><GPA/></Suspense>
+                
             </Grid>
             <Grid xs={12} sm={8} md={5} lg={5} xl={3}>
-                <GradesCard />
+            <Suspense><GradesCard /></Suspense>
             </Grid>
             <Grid xs={13} md={6} lg={4} xl={3}>
-                <AssignmentCard />
+            <Suspense><AssignmentCard /> </Suspense>
             </Grid>
             <Grid xs={13} md={6} lg={5.5} xl={3.75}>
-                <NewsCard />
+            <Suspense><NewsCard /></Suspense>
             </Grid>
             {/*<Grid>
                 <GradesCard/>

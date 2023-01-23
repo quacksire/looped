@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
           }}
       >
         <NextUIProvider>
-                    <NavBar/>
+            <NavBar/>
             <Layout >
                 <Component {...pageProps} />
             </Layout>

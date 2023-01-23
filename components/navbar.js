@@ -2,7 +2,7 @@
 
 import {Navbar, Button, Dropdown, Link, Text, styled} from '@nextui-org/react';
 import { useRouter } from 'next/router';
-import {useEffect, useState} from 'react';
+import {Suspense, useEffect, useState} from 'react';
 import ClassesDropdown from "./ClassesDropdown";
 import {setCookie, removeCookies} from "cookies-next";
 
@@ -46,7 +46,8 @@ export default function NavBar() {
             >
                 {String(active) === '/' ? <Navbar.Link isActive>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} >Home</Navbar.Link>}
 
-                <ClassesDropdown></ClassesDropdown>
+                <Suspense> <ClassesDropdown></ClassesDropdown> </Suspense>
+                
                 {!String(active).includes('news') ? null : <Navbar.Link onPress={() => { router.push("/news")}} isActive>News</Navbar.Link>}
                 {!String(active).includes('mail') ? <Navbar.Link onPress={() => { router.push("/mail")}}>LoopMail</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/mail")}}>LoopMail</Navbar.Link>}
                 {!String(active).includes('calender') ? <Navbar.Link onPress={() => { router.push("/calender")}}>Calender</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/calender")}}>Calender</Navbar.Link>}

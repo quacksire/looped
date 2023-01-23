@@ -5,6 +5,7 @@ import {hasCookie} from "cookies-next";
 import useSWR from "swr";
 import {fetcher} from "../../libs/sl";
 import Load from "../util/Loading";
+import { VictoryPie, VictoryAnimation, VictoryLabel} from 'victory';
 
 export default function GPACard() {
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
@@ -15,6 +16,9 @@ export default function GPACard() {
 
     if (error) gpaElement = <Text>Failed to load</Text>
 
+
+    let gpaText = '0.0'
+    let simplified = 0.0
     if (data) {
         let gpa = 0
         let trueCourseCount = 0
@@ -26,8 +30,8 @@ export default function GPACard() {
             }
         })
 
-        let gpaText = '' + (gpa / trueCourseCount).toFixed(2)
-        let simplified = ((((gpa / trueCourseCount) - 50) / 10).toFixed(1) - 0.3)
+        gpaText = gpa / trueCourseCount
+        simplified = ((((gpa / trueCourseCount) - 50) / 10).toFixed(1) - 0.3)
         simplified = simplified.toFixed(1);
         let color;
         if (simplified >= 3.0 && simplified <= 4.5) {
@@ -47,7 +51,37 @@ export default function GPACard() {
             <Text b>GPA</Text>
         </Card.Header>
         <Card.Body css={{alignItems: "center"}}>
-            {gpaElement}
+        <svg viewBox="0 0 400 400" width="100%" height="100%">
+          <VictoryPie
+            standalone={false}
+            animate={{ duration: 1000 }}
+            width={400} height={400}
+            data={gpaText}
+            innerRadius={120}
+            cornerRadius={25}
+            labels={() => null}
+            style={{
+              data: { fill: ({ datum }) => {
+                const color = "green";
+                return color;
+              }
+              }
+            }}
+          />
+          <VictoryAnimation duration={1000} data={gpaText}>
+            {(newProps) => {
+              return (
+                <VictoryLabel
+                  textAnchor="middle" verticalAnchor="middle"
+                  x={200} y={200}
+                    text={`${simplified}`}
+                  style={{ fontSize: 45, color: "white" }}
+                >
+                </VictoryLabel>
+              );
+            }}
+          </VictoryAnimation>
+        </svg>
         </Card.Body>
         <Card.Footer>
             <Text small>Calculated as an average from your grades</Text>
