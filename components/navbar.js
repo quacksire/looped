@@ -33,6 +33,7 @@ export default function NavBar() {
 
     return (
         <Navbar variant="sticky" isCompact css={{ zIndex: 10}}>
+            
             <Navbar.Brand>
                 <Text b color="inherit" hideIn="xs">
                     <Link href="/" color="text">Looped</Link>
@@ -60,7 +61,6 @@ export default function NavBar() {
                 </Navbar.Item>
             </Navbar.Content>
         </Navbar>
-
     )
 }
 

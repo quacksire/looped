@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Grid, Text} from "@nextui-org/react";
+import {Card, Container, Grid, Text} from "@nextui-org/react";
 import { getArticle} from "../api/_sl/news/[id]";
 
 import { RequestCookies } from '@edge-runtime/cookies'
@@ -37,15 +37,45 @@ export default function NewsArticle(props) {
                         <Back/>
                     </Grid>
                     <Grid xs={12} css={{topMargin: "10px"}}>
-                        <Text h1>{props.course.courseName}</Text>
+                        
                     </Grid>
                 </Grid.Container>
-                <h3>{props.course.teacherName}</h3>
+                <Text h1>{props.course.course.name}</Text>
                 <h5>Last Updated on {props.course.lastUpdated}</h5>
-                <small>Coming soon</small>
 
-                ignore this:
-                {JSON.stringify(props.course)}
+
+                
+                <Card>
+                    <Card.Header>
+                        <Text h3>Grades</Text>
+                    </Card.Header>
+                    <Card.Divider />
+                    <Container>
+                        {props.course?.grades?.length > 0 ? props.course.grades.map((grade, index) => {
+                            return(
+                                <Card variant="flat" css={{ p: "5px" }}>
+                                    <Card.Header>
+                                        <Text b css={{display: "flex"}}>{grade.percentScore}</Text>
+                                        <Grid.Container css={{ pl: "$6" }}>
+                                            <Grid xs={12}>
+                                                <Text h5 css={{ lineHeight: "$xs" }}>
+                                                    {grade.assignment.title}
+                                                </Text>
+                                            </Grid>
+                                            <Grid xs={12}>
+                                                <Text css={{ color: "$accents8" }}>{new Date(grade.assignment.dueDate).toLocaleDateString()}</Text>
+                                            </Grid>
+                                        </Grid.Container>
+                                    </Card.Header>
+                                </Card>
+                            )
+                        }) : <Text>No grades</Text>}
+
+
+                    </Container>
+                        
+                </Card>
+                {JSON.stringify(props.course.grades)}
             </div>
         )
     }

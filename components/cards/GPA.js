@@ -55,7 +55,7 @@ export default function GPACard() {
           <VictoryPie
             standalone={false}
             animate={{ duration: 1000 }}
-            width={400} height={400}
+            width={50} height={50}
             data={gpaText}
             innerRadius={120}
             cornerRadius={25}
@@ -73,7 +73,7 @@ export default function GPACard() {
               return (
                 <VictoryLabel
                   textAnchor="middle" verticalAnchor="middle"
-                  x={200} y={200}
+                  x={50} y={50}
                     text={`${simplified}`}
                   style={{ fontSize: 45, color: "white" }}
                 >
