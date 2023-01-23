@@ -29,8 +29,8 @@ export default function NewsArticle(props) {
         content = (
             <div>
                 <Head>
-                    <title>Looped - {props.course.courseName}</title>
-                    <meta name="description" content={`My ${props.course.courseName} class`} />
+                    <title>{props.course.course.name || 'My Class'} - Looped</title>
+                    <meta name="description" content={`My ${props.course.course.name} class`} />
                 </Head>
                 <Grid.Container>
                     <Grid xs={0.75}>
@@ -40,19 +40,19 @@ export default function NewsArticle(props) {
                         
                     </Grid>
                 </Grid.Container>
-                <Text h1>{props.course.course.name}</Text>
+                <Text h1>{props.course.course.name} with {String(props.course.teacher.name).split(', ')[1] + ' ' + String(props.course.teacher.name).split(', ')[0]}</Text>
                 <h5>Last Updated on {props.course.lastUpdated}</h5>
 
 
                 
                 <Card>
                     <Card.Header>
-                        <Text h3>Grades</Text>
+                        <Text h3>Past Assignments</Text>
                     </Card.Header>
                     <Card.Divider />
                     <Container>
                         {props.course?.grades?.length > 0 ? props.course.grades.map((grade, index) => {
-                            return(
+                            return (
                                 <Card variant="flat" css={{ p: "5px" }}>
                                     <Card.Header>
                                         <Text b css={{display: "flex"}}>{grade.percentScore}</Text>
