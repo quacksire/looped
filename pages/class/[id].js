@@ -37,14 +37,14 @@ export default function NewsArticle(props) {
                         <Back/>
                     </Grid>
                     <Grid xs={12} css={{topMargin: "10px"}}>
-                        
+
                     </Grid>
                 </Grid.Container>
                 <Text h1>{props.course.course.name} with {String(props.course.teacher.name).split(', ')[1] + ' ' + String(props.course.teacher.name).split(', ')[0]}</Text>
                 <h5>Last Updated on {props.course.lastUpdated}</h5>
 
 
-                
+
                 <Card>
                     <Card.Header>
                         <Text h3>Past Assignments</Text>
@@ -58,7 +58,7 @@ export default function NewsArticle(props) {
                                         <Text b css={{display: "flex"}}>{grade.percentScore}</Text>
                                         <Grid.Container css={{ pl: "$6" }}>
                                             <Grid xs={12}>
-                                                <Text h5 css={{ lineHeight: "$xs" }}>
+                                                <Text css={{ lineHeight: "$xs" }}>
                                                     {grade.assignment.title}
                                                 </Text>
                                             </Grid>
@@ -73,7 +73,7 @@ export default function NewsArticle(props) {
 
 
                     </Container>
-                        
+
                 </Card>
                 {JSON.stringify(props.course.grades)}
             </div>

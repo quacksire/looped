@@ -25,7 +25,7 @@ export default function GPACard() {
         data.forEach((course) => {
             if (parseFloat(String(course.score).split('%')[0])) {
                 gpa += parseFloat(String(course.score).split('%')[0])
-                console.log(parseFloat(String(course.score).split('%')[0]))
+                //console.log(parseFloat(String(course.score).split('%')[0]))
                 trueCourseCount++
             }
         })
@@ -46,42 +46,12 @@ export default function GPACard() {
         gpaElement = <Text size="$6xl" weight={"extrabold"} b transform={"full-size-kana"} color={color}>{simplified}</Text>
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "25px", maxWidth: "100%"}}>
+    return (<Card isHoverable variant="flat" css={{ minWidth: "25px", maxWidth: "100%", height: "250px"}}>
         <Card.Header>
             <Text b>GPA</Text>
         </Card.Header>
         <Card.Body css={{alignItems: "center"}}>
-        <svg viewBox="0 0 400 400" width="100%" height="100%">
-          <VictoryPie
-            standalone={false}
-            animate={{ duration: 1000 }}
-            width={50} height={50}
-            data={gpaText}
-            innerRadius={120}
-            cornerRadius={25}
-            labels={() => null}
-            style={{
-              data: { fill: ({ datum }) => {
-                const color = "green";
-                return color;
-              }
-              }
-            }}
-          />
-          <VictoryAnimation duration={1000} data={gpaText}>
-            {(newProps) => {
-              return (
-                <VictoryLabel
-                  textAnchor="middle" verticalAnchor="middle"
-                  x={50} y={50}
-                    text={`${simplified}`}
-                  style={{ fontSize: 45, color: "white" }}
-                >
-                </VictoryLabel>
-              );
-            }}
-          </VictoryAnimation>
-        </svg>
+            {gpaElement}
         </Card.Body>
         <Card.Footer>
             <Text small>Calculated as an average from your grades</Text>

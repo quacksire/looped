@@ -12,7 +12,7 @@ export default function AssignmentCard() {
     const { height, width } = useWindowSize()
     const { x, y } = useMouse({ type: 'client' })
     const handleConfetti = () => {
-        console.log({ x: (((100 * x) / width) / 100), y: (((100 * y) / height) / 100) })
+        //console.log({ x: (((100 * x) / width) / 100), y: (((100 * y) / height) / 100) })
 
         confetti({
             particleCount: 100,
@@ -25,7 +25,6 @@ export default function AssignmentCard() {
         'finishedAssignments',
         []
     )
-    console.log(selected)
 
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
         return null;
