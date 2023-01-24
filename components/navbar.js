@@ -1,6 +1,6 @@
 // Using Nextui, create a navbar react component that will be used in all pages.
 
-import {Navbar, Button, Dropdown, Link, Text, styled, User} from '@nextui-org/react';
+import {Navbar, Button, Dropdown, Text, styled, User, Link} from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import {Suspense, useEffect, useState} from 'react';
 import ClassesDropdown from "./ClassesDropdown";
@@ -37,7 +37,7 @@ export default function NavBar() {
         <Navbar variant="sticky" isCompact css={{ zIndex: 10}}>
             <Navbar.Brand>
                 <Text b color="inherit">
-                    <Link href="/" color="text">Looped</Link>
+                    <Link href="#" onPress={() => { router.push("/")}} style={{ textDecoration: "none"}}>Looped</Link>
                 </Text>
             </Navbar.Brand>
             <Navbar.Content
@@ -48,8 +48,7 @@ export default function NavBar() {
             >
                 {String(active) === '/' ? <Navbar.Link isActive>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} >Home</Navbar.Link>}
 
-                <Suspense> <ClassesDropdown></ClassesDropdown> </Suspense>
-
+                <ClassesDropdown />
                 {!String(active).includes('news') ? null : <Navbar.Link onPress={() => { router.push("/news")}} isActive>News</Navbar.Link>}
                 {!String(active).includes('mail') ? <Navbar.Link onPress={() => { router.push("/mail")}}>LoopMail</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/mail")}}>LoopMail</Navbar.Link>}
                 {!String(active).includes('calender') ? <Navbar.Link onPress={() => { router.push("/calender")}}>Calender</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/calender")}}>Calender</Navbar.Link>}
