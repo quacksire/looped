@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Grid, Text, Button} from "@nextui-org/react";
+import {Grid, Text, Button, Link} from "@nextui-org/react";
 import { getArticle} from "../api/_sl/news/[id]";
 
 import { RequestCookies } from '@edge-runtime/cookies'
@@ -7,7 +7,7 @@ import {getCookie, hasCookie} from "cookies-next";
 import {NextRequest} from "next/server";
 import {useRouter} from "next/router";
 import Back from "../../components/util/Back";
-import Link from 'next/link';
+import NextLink from 'next/link';
 
 
 
@@ -41,15 +41,15 @@ export default function NewsArticle(props) {
                     </Grid>
                 </Grid.Container>
                 <h3>Sent by {props.article.authorName} on {new Date(parseInt(String(props.article.createdDate))).toLocaleDateString()}</h3>
-                <p dangerouslySetInnerHTML={{__html: props.article.description}}></p>
+                <p dangerouslySetInnerHTML={{__html: props.article.description}} style={{ color: 'white'}}></p>
                 {props.article.links && props.article.links.length > 0 && (
                     <div>
                             {props.article.links.map((link) => (
-                                <Link href={link.URL} target={'_blank'} referrerPolicy={"no-referrer"}>
-                                    <Button light color="primary" auto>
-                                        {link.Title}
-                                    </Button>
+                                <NextLink href={link.URL} passHref target={'_blank'} referrerPolicy={"no-referrer"}>
+                                <Link isExternal color={"primary"}>
+                                {link.Title}
                                 </Link>
+                                </NextLink>
                             ))}
                     </div>
                 )}
@@ -67,11 +67,22 @@ export default function NewsArticle(props) {
 export async function getServerSideProps(context) {
     const { id } = context.query
 
+    if (!hasCookie("sl-token", context)) {
+        return {
+            redirect: {
+                destination: `/login?path=/news/${encodeURI(id)}`,
+                permanent: false
+            }
+        }
+    }
+    
     // Cache it, cause I don't want to grab it again lol.
     context.res.setHeader(
         'Cache-Control',
         'public, s-maxage=604800'
     )
+
+
 
     let article
     try {

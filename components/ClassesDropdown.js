@@ -2,7 +2,7 @@ import useSWR from 'swr'
 import {Dropdown, Link, Loading, Navbar} from '@nextui-org/react';
 
 import {useRouter} from "next/router";
-import {getCookie, hasCookie} from "cookies-next";
+import { hasCookie} from "cookies-next";
 import useHotkeys from "@reecelucas/react-use-hotkeys"
 import {fetcher} from "../libs/sl";
 import {useEffect, useState} from "react";

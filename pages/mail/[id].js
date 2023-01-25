@@ -1,16 +1,31 @@
 import Head from 'next/head'
-import {Grid, Text, Button} from "@nextui-org/react";
-import {getCookie} from "cookies-next";
+import {Grid, Text, Button, Link} from "@nextui-org/react";
+import {getCookie, hasCookie} from "cookies-next";
 import Back from "../../components/util/Back";
 import {getMailMessage} from "../api/_sl/mail_message/[id]";
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useEffect } from 'react';
 import {useLocalStorage} from "@react-hooks-library/core";
+import { useRouter } from 'next/router';
+
 
 
 
 export default function MailMessage(props) {
+    
+    
     let content;
+    
+    if (!hasCookie("sl-token")) {
+        content = (<div>
+            <Text h1>Error</Text>
+            <Text>You must be logged in to view this page.</Text>
+        </div>)
+    }
+
+    const router = useRouter();
+    
+
 
     const [read, setRead] = useLocalStorage(
         'readMails',
@@ -18,8 +33,8 @@ export default function MailMessage(props) {
     )
 
     useEffect(() => {
-        if (!read.includes(`${props.mail.id}`)) {
-            setRead([...read, `${props.mail.id}`])
+        if (!read.includes(`${props.mail?.id}`)) {
+            setRead([...read, `${props.mail?.id}`])
         }
     }, [])
 
@@ -52,11 +67,11 @@ export default function MailMessage(props) {
                 {props.mail.links && props.mail.links.length > 0 && (
                     <div>
                             {props.mail.links.map((link) => (
-                                <Link href={link.URL} target={'_blank'} referrerPolicy={"no-referrer"}>
-                                    <Button light color="primary" auto>
-                                        {link.Title}
-                                    </Button>
+                                <NextLink href={link.URL} passHref target={'_blank'} referrerPolicy={"no-referrer"}>
+                                <Link isExternal color={"primary"}>
+                                {link.Title}
                                 </Link>
+                                </NextLink>
                             ))}
                     </div>
                 )}
@@ -74,11 +89,22 @@ export default function MailMessage(props) {
 export async function getServerSideProps(context) {
     const { id } = context.query
 
+    if (!hasCookie("sl-token", context)) {
+        return {
+            redirect: {
+                destination: `/login?path=/mail/${encodeURI(id)}`,
+                permanent: false
+            }
+        }
+    }
+
     // Cache it, cause I don't want to grab it again lol.
     context.res.setHeader(
         'Cache-Control',
         'private, s-maxage=604800'
     )
+
+    
 
     let mail
     try {

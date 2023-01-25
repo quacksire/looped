@@ -8,6 +8,7 @@ import {NextRequest} from "next/server";
 import {useRouter} from "next/router";
 import Back from "../../components/util/Back";
 import {getCourse} from "../api/_sl/course/[id]";
+import { useEffect } from 'react';
 
 
 
@@ -16,6 +17,9 @@ import {getCourse} from "../api/_sl/course/[id]";
 export default function NewsArticle(props) {
     let content;
 
+    
+    
+    
     if (props.error) {
         content = (<div>
             <Text h1>Error</Text>
@@ -89,6 +93,15 @@ export default function NewsArticle(props) {
 
 export async function getServerSideProps(context) {
     const { id } = context.query
+
+    if (!hasCookie("sl-token", context)) {
+        return {
+            redirect: {
+                destination: `/login?path=/class/${encodeURI(id)}`,
+                permanent: false
+            }
+        }
+    }
 
     // Cache it, cause I don't want to grab it again lol.
     context.res.setHeader(

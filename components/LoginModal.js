@@ -27,7 +27,7 @@ export default function App() {
         console.log(hasCookie("sl-token"))
         if (!hasCookie("sl-token")) {
             if (!router.pathname === '/login') {
-                router.push(`/login?path=${encodeURI(router.pathname)}`, '/login');
+                router.push(`/login?path=${encodeURI(router.pathname.replace("[id]", `${window.location.pathname.split("/")[2]}`))}`);
             }
             setVisible(true);
         } else {

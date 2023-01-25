@@ -28,7 +28,7 @@ export default function NavBar() {
     function logout() {
         localStorage.clear()
         removeCookies("sl-token");
-        router.push(`/login?path=${encodeURI(router.pathname)}`);
+        router.push(`/login?path=${encodeURI(router.pathname.replace("[id]", `${window.location.pathname.split("/")[2]}`))}`);
     }
 
 
