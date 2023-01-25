@@ -19,7 +19,8 @@ export default function MailMessage(props) {
     if (!hasCookie("sl-token")) {
         content = (<div>
             <Text h1>Error</Text>
-            <Text>You must be logged in to view this page.</Text>
+            <Text>You probaly don't have access to this message</Text>
+            <Text small>{props.message}</Text>
         </div>)
     }
 
@@ -62,7 +63,7 @@ export default function MailMessage(props) {
                         <Text h1>{props.mail.subject}</Text>
                     </Grid>
                 </Grid.Container>
-                    <h3>Sent by {props.mail.sender.name} on {new Date(parseInt(String(props.mail.date))).toLocaleDateString()}</h3>
+                    <h3>Sent by {String(props.mail.sender.name).split(', ')[1] + ' ' + String(props.mail.sender.name).split(', ')[0]} on {new Date(parseInt(String(props.mail.date))).toLocaleDateString()} at {new Date(parseInt(String(props.mail.date))).toLocaleTimeString()}</h3>
                 <p dangerouslySetInnerHTML={{__html: props.mail.message}}></p>
                 {props.mail.links && props.mail.links.length > 0 && (
                     <div>

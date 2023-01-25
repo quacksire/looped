@@ -41,7 +41,7 @@ export default function Mail(props) {
                         )}
                         
                         {mail.subject}</Table.Cell>
-                    <Table.Cell>{mail.sender.name}</Table.Cell>
+                    <Table.Cell>{String(mail.sender.name).split(', ')[1] + ' ' + String(mail.sender.name).split(', ')[0]}</Table.Cell>
                     <Table.Cell>{new Date(parseInt(String(mail.date))).toLocaleDateString()}</Table.Cell>
                 </Table.Row>
             ))
@@ -50,7 +50,7 @@ export default function Mail(props) {
                 aria-label="Example static collection table"
                 compact
                 selectionMode="single"
-                css={{zIndex: '1'}}
+                css={{zIndex: '1', overflow: "scroll", maxHeight: "80vh", width: "100%", position: "relative"}}
                 onSelectionChange={(key) => {
                     
                     router.push(`/mail/${key.currentKey}`)}}
@@ -87,6 +87,15 @@ export default function Mail(props) {
 }
 
 export async function getServerSideProps(context) {
+
+    if (!hasCookie("sl-token", context)) {
+        return {
+            redirect: {
+                destination: `/login?path=/mail`,
+                permanent: false
+            }
+        }
+    }
 
     // Cache it, cause I don't want to grab it again lol.
     context.res.setHeader(

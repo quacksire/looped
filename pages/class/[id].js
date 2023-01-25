@@ -23,7 +23,8 @@ export default function NewsArticle(props) {
     if (props.error) {
         content = (<div>
             <Text h1>Error</Text>
-            <Text>{props.message}</Text>
+            <Text>You probaly aren't in this class.</Text>
+            <Text small>{props.message}</Text>
         </div>)
     }
 

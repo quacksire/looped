@@ -19,7 +19,8 @@ export default function NewsArticle(props) {
     if (props.error) {
         content = (<div>
             <Text h1>Error</Text>
-            <Text>{props.message}</Text>
+            <Text>You probaly don't have access to this article</Text>
+            <Text small>{props.message}</Text>
         </div>)
     }
 
@@ -39,7 +40,7 @@ export default function NewsArticle(props) {
                     <Grid xs={12} css={{topMargin: "10px"}}>
                         <Text h1>{props.article.title}</Text>
                     </Grid>
-                </Grid.Container>
+                </Grid.Container> 
                 <h3>Sent by {props.article.authorName} on {new Date(parseInt(String(props.article.createdDate))).toLocaleDateString()}</h3>
                 <p dangerouslySetInnerHTML={{__html: props.article.description}} style={{ color: 'white'}}></p>
                 {props.article.links && props.article.links.length > 0 && (

@@ -3,6 +3,9 @@ import Image from 'next/image'
 import LoginModal from '../components/LoginModal'
 import Layout from "../components/layout";
 import {Button, Loading} from "@nextui-org/react"
+import { useEffect } from 'react';
+import { hasCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 
 export default function Home() {
     return (
@@ -18,4 +21,23 @@ export default function Home() {
             </Button>
         </>
     )
+}
+
+export async function getServerSideProps({req, res, query}) {
+    //
+    // Get search params from url
+    //
+    
+
+    if (hasCookie("sl-token", {req, res})) {
+        return {
+            redirect: {
+                destination: `${query.path ? query.path : '/'}`,
+                permanent: false,
+            },
+        }
+    }
+    return {
+        props: {}
+    }
 }
