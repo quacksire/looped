@@ -117,7 +117,7 @@ export default function App() {
                     />
                     <Row justify="space-between">
                         <Checkbox>
-                            <Text size={14}>Remember me</Text>
+                            <Text size={14} id="rm">Remember me</Text>
                         </Checkbox>
                         <Link href="https://looped.schoolloop.com/portal/forgot_password" target={'_blank'} referrer={"blank"}>
                             <Text size={14}>Forgot password?</Text>
