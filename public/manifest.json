@@ -1,0 +1,11 @@
+{
+    "name": "Looped",
+    "short_name": "Looped",
+    "author": "Quacksire <sam@quacksire.dev>",
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/",
+    "start_url": "/",
+    "display_override": ["window-controls-overlay"]
+  }

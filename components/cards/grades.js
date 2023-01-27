@@ -4,7 +4,7 @@ import useSWR from "swr";
 import {fetcher} from "../../libs/sl";
 import No from "../util/no";
 import Load from "../util/Loading";
-
+import { CardStackIcon } from "@radix-ui/react-icons";
 export default function GradesCard() {
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
         return null;

@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { getMail } from './api/_sl/mail_messages';
 import {useLocalStorage} from "@react-hooks-library/core";
 
+
 export default function Mail(props) {
 
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
@@ -50,7 +51,7 @@ export default function Mail(props) {
                 aria-label="Example static collection table"
                 compact
                 selectionMode="single"
-                css={{zIndex: '1', overflow: "scroll", maxHeight: "80vh", width: "100%", position: "relative"}}
+                css={{zIndex: '1'}}
                 onSelectionChange={(key) => {
                     
                     router.push(`/mail/${key.currentKey}`)}}
@@ -80,7 +81,7 @@ export default function Mail(props) {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <h1>LoopMail</h1>
+            <h1>  LoopMail</h1>
             {mailElement}
         </>
     )

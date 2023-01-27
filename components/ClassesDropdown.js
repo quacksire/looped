@@ -3,9 +3,10 @@ import {Dropdown, Link, Loading, Navbar} from '@nextui-org/react';
 
 import {useRouter} from "next/router";
 import { hasCookie} from "cookies-next";
-import useHotkeys from "@reecelucas/react-use-hotkeys"
 import {fetcher} from "../libs/sl";
 import {useEffect, useState} from "react";
+import { CardStackIcon } from '@radix-ui/react-icons';
+
 export default function ClassesDropdown() {
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
         return null;
@@ -38,7 +39,7 @@ export default function ClassesDropdown() {
                     }}
                     ripple={false}
                 >
-                    Classes
+                   <CardStackIcon style={{paddingRight: "10px"}}/> Classes
                 </Dropdown.Button>
             </Navbar.Item>
         </Dropdown>
@@ -81,7 +82,7 @@ export default function ClassesDropdown() {
                             }}
                             ripple={false}
                         >
-                            Classes
+                            <CardStackIcon style={{paddingRight: "10px"}}/> Classes
                         </Dropdown.Button>
                     </Navbar.Item>
                     ) : (
@@ -97,7 +98,7 @@ export default function ClassesDropdown() {
                             ripple={false}
                             color={'secondary'}
                         >
-                            Classes
+                            <CardStackIcon style={{paddingRight: "10px"}}/> Classes
                         </Dropdown.Button>
                     </Navbar.Item>
                     )}
