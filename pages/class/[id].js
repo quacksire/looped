@@ -1,25 +1,10 @@
 import Head from 'next/head'
 import {Card, Container, Grid, Text} from "@nextui-org/react";
-import { getArticle} from "../api/_sl/news/[id]";
-
-import { RequestCookies } from '@edge-runtime/cookies'
 import {getCookie, hasCookie} from "cookies-next";
-import {NextRequest} from "next/server";
-import {useRouter} from "next/router";
 import Back from "../../components/util/Back";
 import {getCourse} from "../api/_sl/course/[id]";
-import { useEffect } from 'react';
-
-
-
-
-
 export default function NewsArticle(props) {
-    let content;
-
-    
-    
-    
+    let content;    
     if (props.error) {
         content = (<div>
             <Text h1>Error</Text>
