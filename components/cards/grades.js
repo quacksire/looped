@@ -37,7 +37,7 @@ export default function GradesCard() {
     if (data) {
         if (data.length > 0) {
             gradeElement = data.map((course, index) => {
-
+                if (course.grade = "null") return null;
 
                 let g = (course.grade != "null") ? `${String(course.grade) + ' '.repeat(4 - String(course.grade).length)}` : '-'
 
@@ -81,7 +81,7 @@ export default function GradesCard() {
 
     return (<Card isHoverable variant="flat" css={{ minWidth: "250px", maxHeight: "auto", maxWidth: "100%"}} >
         <Card.Header css={{ marginBottom: "-20px", position: "relative"}}>
-            <Text b css={{ userSelectable: "none"}}>Classes</Text>
+            <Text b css={{ userSelectable: "none"}}>Current Grades</Text>
         </Card.Header>
         <Card.Body css={{ marginBottom: "-30px"}}>
             {gradeElement}
