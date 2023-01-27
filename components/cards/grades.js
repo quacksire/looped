@@ -37,7 +37,6 @@ export default function GradesCard() {
     if (data) {
         if (data.length > 0) {
             gradeElement = data.map((course, index) => {
-                if (course.grade = "null") return null;
 
                 let g = (course.grade != "null") ? `${String(course.grade) + ' '.repeat(4 - String(course.grade).length)}` : '-'
 

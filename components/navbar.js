@@ -8,6 +8,7 @@ import {setCookie, removeCookies} from "cookies-next";
 import { useLocalStorage } from '@react-hooks-library/core';
 import Load from '../components/util/Loading'
 import { EnvelopeClosedIcon, HomeIcon, CalendarIcon } from '@radix-ui/react-icons';
+import Profile from './profile';
 
 
 
@@ -24,13 +25,8 @@ export default function NavBar() {
         console.log(active);
     }, [router.pathname]);
 
-    const [user] = useLocalStorage('sl-user', {loading: true})
 
-    function logout() {
-        localStorage.clear()
-        removeCookies("sl-token");
-        router.push(`/login?path=${encodeURI(router.pathname.replace("[id]", `${window.location.pathname.split("/")[2]}`))}`);
-    }
+    
 
 
 
@@ -54,18 +50,12 @@ export default function NavBar() {
                 {!String(active).includes('mail') ? <Navbar.Link onPress={() => { router.push("/mail")}}><EnvelopeClosedIcon style={{paddingRight: "10px"}}/>LoopMail</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/mail")}}><EnvelopeClosedIcon style={{paddingRight: "10px"}}/>LoopMail</Navbar.Link>}
                 {!String(active).includes('calender') ? <Navbar.Link onPress={() => { router.push("/calender")}}><CalendarIcon style={{paddingRight: "10px"}} /> Calender</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/calender")}}><CalendarIcon style={{paddingRight: "10px"}}/> Calender</Navbar.Link>}
             </Navbar.Content>
-            <Navbar.Content>
-                <Navbar.Link onPress={logout}>
-                    {user.loading ? (<Load />) : (<User onPress={logout}
-                        src={`https://api.dicebear.com/5.x/bottts/svg?seed=${user.email}`}
-                        name={`${String(user.fullName).split(', ')[1] + ' ' + String(user.fullName).split(', ')[0]}`}
-                        description={`${user.email}`}
-                        size="xs"
-                        pointer
-                        />)}
 
-                </Navbar.Link>
+            <Navbar.Content>
+            <Profile />
             </Navbar.Content>
+            
+        
         </Navbar>
     )
 }
