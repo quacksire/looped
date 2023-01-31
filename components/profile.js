@@ -56,8 +56,8 @@ export default function Profile() {
                         /></Dropdown.Trigger>)}
                     <Dropdown.Menu color="primary" aria-label="User Actions" selectionMode={"single"}  onSelectionChange={(key) => {
                         setMenuItem(key)
-                    }}>
-                        <Dropdown.Item>
+                    }} disabledKeys={["profile"]}>
+                        <Dropdown.Item key="profile">
                             <User
                             src={`https://api.dicebear.com/5.x/bottts/svg?seed=${user.email}`}
                             size="xs"
@@ -67,7 +67,7 @@ export default function Profile() {
                             description={`${user.email}`}
                             />
                         </Dropdown.Item>
-                        <Dropdown.Item key="settings" icon={<GearIcon />}>
+                        <Dropdown.Item key="settings" icon={<GearIcon />} withDivider>
                         Settings
                         </Dropdown.Item>
                         <Dropdown.Item key="info" icon={<InfoCircledIcon />}>
