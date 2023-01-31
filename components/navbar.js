@@ -80,9 +80,12 @@ export default function NavBar() {
                 activeColor="secondary"
                 showIn="xs"
             >
-                {String(active) != '/' ? <Navbar.Link onPress={() => { router.push("/")}} ><ChevronLeftIcon style={{paddingRight: "10px"}}/></Navbar.Link> : null}
                 {String(active) === '/' ? <Navbar.Link isActive><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} ><HomeIcon style={{paddingRight: "10px"}}/></Navbar.Link>}
-
+                {String(active) != '/' ? <Navbar.Link onPress={() => { router.push("/")}} ><ChevronLeftIcon style={{paddingRight: "10px"}}/></Navbar.Link> : null}
+                
+                {String(active) != '/' ? <Navbar.Item>
+                    {pageTitle}
+                </Navbar.Item> : null}
             </Navbar.Content>
 
 
