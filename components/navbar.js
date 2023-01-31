@@ -52,7 +52,7 @@ export default function NavBar() {
     return (
         <Navbar variant="sticky" isCompact css={{ zIndex: 10, webkitAppRegion: "drag", paddingRight: "env(--titlebar-area-y)"}} id={'navbar'}>
 
-            {inPwa ? null : <Navbar.Brand>
+            {inPwa ? null : <Navbar.Brand hideIn="xs">
                 <Text b color={"foreground"}>
                     <Link href="#" onPress={() => { router.push("/")}} style={{ textDecoration: "none"}} >Looped</Link>
                 </Text>
@@ -77,7 +77,7 @@ export default function NavBar() {
                 activeColor="secondary"
                 showIn="xs"
             >
-                {String(active) === '/' ? <Navbar.Link isActive><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} ><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link>}
+                {String(active) === '/' ? <Navbar.Link isActive><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} ><HomeIcon style={{paddingRight: "10px"}}/></Navbar.Link>}
 
             </Navbar.Content>
 
