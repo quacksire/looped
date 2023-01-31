@@ -52,17 +52,20 @@ export default function Profile() {
                         src={`https://api.dicebear.com/5.x/bottts/svg?seed=${user.email}`}
                         size="xs"
                         pointer
+                        color="primary"
                         /></Dropdown.Trigger>)}
                     <Dropdown.Menu color="primary" aria-label="User Actions" selectionMode={"single"}  onSelectionChange={(key) => {
                         setMenuItem(key)
                     }}>
                         <Dropdown.Item withDivider>
-                            <Text b color="inherit" css={{ d: "flex" }}>
-                            Signed in as {name ? name : `${String(user.fullName).split(', ')[1] + ' ' + String(user.fullName).split(', ')[0]}`}
-                            </Text>
-                            <Text b color="inherit" css={{ d: "flex" }}>
-                            {`${user.email}`}
-                            </Text>
+                            <User
+                            src={`https://api.dicebear.com/5.x/bottts/svg?seed=${user.email}`}
+                            size="xs"
+                            pointer
+                            color="primary"
+                            name={name ? name : `${String(user.fullName).split(', ')[1]} ${String(user.fullName).split(', ')[0]}`}
+                            description={`${user.email}`}
+                            />
                         </Dropdown.Item>
                         <Dropdown.Item key="settings" icon={<GearIcon />}>
                         Settings
