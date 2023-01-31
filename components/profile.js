@@ -42,7 +42,7 @@ export default function Profile() {
     });
 
 
-    /*name={name ? name : `${String(user.fullName).split(', ')[1] + ' ' + String(user.fullName).split(', ')[0]}`}
+    /*name=
     description={`${user.email}`}*/
 
     return (
@@ -56,6 +56,14 @@ export default function Profile() {
                     <Dropdown.Menu color="primary" aria-label="User Actions" selectionMode={"single"}  onSelectionChange={(key) => {
                         setMenuItem(key)
                     }}>
+                        <Dropdown.Item withDivider>
+                            <Text b color="inherit" css={{ d: "flex" }}>
+                            Signed in as {name ? name : `${String(user.fullName).split(', ')[1] + ' ' + String(user.fullName).split(', ')[0]}`}
+                            </Text>
+                            <Text b color="inherit" css={{ d: "flex" }}>
+                            {`${user.email}`}
+                            </Text>
+                        </Dropdown.Item>
                         <Dropdown.Item key="settings" icon={<GearIcon />}>
                         Settings
                         </Dropdown.Item>
