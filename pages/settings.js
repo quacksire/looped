@@ -43,6 +43,7 @@ export default function App() {
                 color="primary"
                 size="lg"
                 onChange={setVal}
+                initialValue={name ? name : `${String(usr.fullName).split(', ')[1] + ' ' + String(usr.fullName).split(', ')[0]}`}
                 placeholder={name ? name : `${String(usr.fullName).split(', ')[1] + ' ' + String(usr.fullName).split(', ')[0]}`}
             />
             <Spacer y={1}/>
