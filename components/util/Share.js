@@ -25,20 +25,15 @@ export default function Share() {
     //             <Share2Icon/>
     //         </Button>
     return (
-        <Button
-            light
-            onClick={() => {
-                        navigator.share({
-                            title: `${document.title}`,
-                            text: 'Check out this paged on Looped',
-                            url: `${window.location.href}`,
-                        })
-                    .then(() => console.log('Successful share'))
-                    .catch((error) => console.log('Error sharing', error));
-            }}
-            icon={<Share2Icon size={20} 
-            css={{m: "0 6px", width: "32px"}}/>}
-            >
-        </Button>
+
+        <Navbar.Link><Share2Icon style={{paddingRight: "10px"}} onClick={() => {
+            navigator.share({
+                title: `${document.title}`,
+                text: 'Check out this paged on Looped',
+                url: `${window.location.href}`,
+            })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));}}/>
+        </Navbar.Link>
     )
 }
