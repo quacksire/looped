@@ -36,11 +36,16 @@ export default function NavBar() {
     useEffect(() => {
         document.getElementById('navbar').style.setProperty('-webkit-app-region', `drag`);
         document.getElementById('profile')?.style?.setProperty('padding-right', `env(titlebar-area-width, 25%)`);
-
-
-
-
     }, [])
+
+    const [canShare, setCanShare] = useState(false);
+    useEffect(() => {
+        return () => {
+            if (navigator.canShare) {
+                setCanShare(true);
+            }
+        };
+    }, []);
 
 
 
@@ -71,9 +76,9 @@ export default function NavBar() {
 
             <Navbar.Content>
             <Profile   />
-                <Navbar.Link>
+                {canShare && <Navbar.Link>
                     <Share />
-                </Navbar.Link>
+                </Navbar.Link>}
             </Navbar.Content>
 
 
