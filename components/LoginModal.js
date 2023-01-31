@@ -96,7 +96,6 @@ export default function App() {
                     <Text>Login with School Loop</Text>
                     <Input
                         onChange={setUsername}
-                        clearable
                         bordered
                         fullWidth
                         color="primary"
@@ -106,7 +105,6 @@ export default function App() {
                     />
                     <Input
                         onChange={setPassword}
-                        clearable
                         aria-label="Password"
                         bordered
                         fullWidth

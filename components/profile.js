@@ -42,14 +42,14 @@ export default function Profile() {
     });
 
 
+    /*name={name ? name : `${String(user.fullName).split(', ')[1] + ' ' + String(user.fullName).split(', ')[0]}`}
+    description={`${user.email}`}*/
 
     return (
                 <Navbar.Link onPress={logout} css={{paddingRight: `env(titlebar-area-width, 25%)`}}>
                     <Dropdown placement="bottom-left">
                     {user.loading ? (<Load />) : (<Dropdown.Trigger id={'profile'}><User
                         src={`https://api.dicebear.com/5.x/bottts/svg?seed=${user.email}`}
-                        name={name ? name : `${String(user.fullName).split(', ')[1] + ' ' + String(user.fullName).split(', ')[0]}`}
-                        description={`${user.email}`}
                         size="xs"
                         pointer
                         /></Dropdown.Trigger>)}
