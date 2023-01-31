@@ -7,7 +7,7 @@ import ClassesDropdown from "./ClassesDropdown";
 import {setCookie, removeCookies} from "cookies-next";
 import { useLocalStorage } from '@react-hooks-library/core';
 import Load from '../components/util/Loading'
-import { EnvelopeClosedIcon, HomeIcon, CalendarIcon } from '@radix-ui/react-icons';
+import { EnvelopeClosedIcon, HomeIcon, CalendarIcon, ReaderIcon} from '@radix-ui/react-icons';
 import Profile from './profile';
 import Share from "./util/Share";
 
@@ -67,7 +67,7 @@ export default function NavBar() {
                 {String(active) === '/' ? <Navbar.Link isActive><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} ><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link>}
 
                 <ClassesDropdown />
-                {!String(active).includes('news') ? null : <Navbar.Link onPress={() => { router.push("/news")}} isActive>News</Navbar.Link>}
+                {!String(active).includes('news') ? null : <Navbar.Link onPress={() => { router.push("/news")}} isActive><ReaderIcon style={{paddingRight: "10px"}} />   News</Navbar.Link>}
                 {!String(active).includes('mail') ? <Navbar.Link onPress={() => { router.push("/mail")}}><EnvelopeClosedIcon style={{paddingRight: "10px"}}/>LoopMail</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/mail")}}><EnvelopeClosedIcon style={{paddingRight: "10px"}}/>LoopMail</Navbar.Link>}
                 {!String(active).includes('calender') ? <Navbar.Link onPress={() => { router.push("/calender")}}><CalendarIcon style={{paddingRight: "10px"}} /> Calender</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/calender")}}><CalendarIcon style={{paddingRight: "10px"}}/> Calender</Navbar.Link>}
             </Navbar.Content>
