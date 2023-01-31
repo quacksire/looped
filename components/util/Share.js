@@ -37,7 +37,7 @@ export default function Share() {
                     .catch((error) => console.log('Error sharing', error));
             }}
             icon={<Share2Icon size={20} 
-            css={{m: "0 6px"}}/>}
+            css={{m: "0 6px", width: "32px"}}/>}
             >
         </Button>
     )
