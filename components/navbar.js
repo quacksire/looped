@@ -88,9 +88,9 @@ export default function NavBar() {
 
 
             <Navbar.Content>
-            {canShare && <Navbar.Link>
+            {canShare && <Navbar.Item>
                     <Share />
-                </Navbar.Link>}
+                </Navbar.Item>}
             <Profile   />
             </Navbar.Content>
 

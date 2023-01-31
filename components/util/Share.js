@@ -36,7 +36,9 @@ export default function Share() {
                     .then(() => console.log('Successful share'))
                     .catch((error) => console.log('Error sharing', error));
             }}
-            > <Share2Icon/>
+            icon={<Share2Icon size={20} 
+            css={{m: "0 6px"}}/>}
+            >
         </Button>
     )
 }

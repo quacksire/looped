@@ -57,7 +57,7 @@ export default function Profile() {
                     <Dropdown.Menu color="primary" aria-label="User Actions" selectionMode={"single"}  onSelectionChange={(key) => {
                         setMenuItem(key)
                     }}>
-                        <Dropdown.Item withDivider>
+                        <Dropdown.Item>
                             <User
                             src={`https://api.dicebear.com/5.x/bottts/svg?seed=${user.email}`}
                             size="xs"
