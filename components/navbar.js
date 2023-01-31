@@ -7,7 +7,7 @@ import ClassesDropdown from "./ClassesDropdown";
 import {setCookie, removeCookies} from "cookies-next";
 import { useLocalStorage } from '@react-hooks-library/core';
 import Load from '../components/util/Loading'
-import { EnvelopeClosedIcon, HomeIcon, CalendarIcon, ReaderIcon} from '@radix-ui/react-icons';
+import { EnvelopeClosedIcon, HomeIcon, CalendarIcon, ReaderIcon, ChevronLeftIcon} from '@radix-ui/react-icons';
 import Profile from './profile';
 import Share from "./util/Share";
 
@@ -40,11 +40,14 @@ export default function NavBar() {
 
     const [canShare, setCanShare] = useState(false);
     useEffect(() => {
-        return () => {
-            if (navigator.canShare) {
-                setCanShare(true);
-            }
-        };
+        if (navigator.canShare) {
+            setCanShare(true);
+        }
+    }, []);
+
+    const [pageTitle, setPageTitle] = useState("")
+    useEffect(() => {
+            setPageTitle(document.title);
     }, []);
 
 
@@ -77,8 +80,9 @@ export default function NavBar() {
                 activeColor="secondary"
                 showIn="xs"
             >
+                {String(active) != '/' ? <Navbar.Link onPress={() => { router.push("/")}} ><ChevronLeftIcon style={{paddingRight: "10px"}}/></Navbar.Link> : null}
                 {String(active) === '/' ? <Navbar.Link isActive><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} ><HomeIcon style={{paddingRight: "10px"}}/></Navbar.Link>}
-                
+
             </Navbar.Content>
 
 
