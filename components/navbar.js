@@ -78,7 +78,7 @@ export default function NavBar() {
                 showIn="xs"
             >
                 {String(active) === '/' ? <Navbar.Link isActive><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} ><HomeIcon style={{paddingRight: "10px"}}/></Navbar.Link>}
-
+                
             </Navbar.Content>
 
 
