@@ -72,6 +72,15 @@ export default function NavBar() {
                 {!String(active).includes('calender') ? <Navbar.Link onPress={() => { router.push("/calender")}}><CalendarIcon style={{paddingRight: "10px"}} /> Calender</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/calender")}}><CalendarIcon style={{paddingRight: "10px"}}/> Calender</Navbar.Link>}
             </Navbar.Content>
 
+            <Navbar.Content
+                enableCursorHighlight
+                activeColor="secondary"
+                showIn="xs"
+            >
+                {String(active) === '/' ? <Navbar.Link isActive><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} ><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link>}
+
+            </Navbar.Content>
+
 
 
             <Navbar.Content>
