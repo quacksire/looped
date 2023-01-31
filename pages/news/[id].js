@@ -42,9 +42,6 @@ export default function NewsArticle(props) {
                     <meta name="description" content={`Sent by ${props.article.authorName}`} />
                 </Head>
                 <Grid.Container>
-                    <Grid xs={0.75}>
-                        <Back/>
-                    </Grid>
                     <Grid xs={12} css={{topMargin: "10px"}}>
                         <Text h1>{props.article.title}</Text>
                     </Grid>

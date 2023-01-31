@@ -32,9 +32,6 @@ export default function NewsArticle(props) {
                     <meta name="description" content={`My ${props.course.course.name} class`} />
                 </Head>
                 <Grid.Container>
-                    <Grid xs={0.75}>
-                        <Back/>
-                    </Grid>
                     <Grid xs={12} css={{topMargin: "10px"}}>
 
                     </Grid>

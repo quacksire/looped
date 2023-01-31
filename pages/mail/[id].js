@@ -65,9 +65,6 @@ export default function MailMessage(props) {
                     <meta name="description" content={`Sent by ${props.mail.authorName}`} />
                 </Head>
                 <Grid.Container>
-                    <Grid xs={0.75}>
-                        <Back/>
-                    </Grid>
                     <Grid xs={12} css={{topMargin: "10px"}}>
                         <Text h1>{props.mail.subject}</Text>
                     </Grid>
