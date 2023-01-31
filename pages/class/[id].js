@@ -3,8 +3,9 @@ import {Card, Container, Grid, Text} from "@nextui-org/react";
 import {getCookie, hasCookie} from "cookies-next";
 import Back from "../../components/util/Back";
 import {getCourse} from "../api/_sl/course/[id]";
+import {useEffect, useState} from "react";
 export default function NewsArticle(props) {
-    let content;    
+    let content;
     if (props.error) {
         content = (<div>
             <Text h1>Error</Text>
@@ -13,13 +14,21 @@ export default function NewsArticle(props) {
         </div>)
     }
 
+    const [inPwa, setInPwa] = useState(false);
+    useEffect(() => {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            setInPwa(true);
+        }
+    }, [])
+    //{inPwa ? null : ' - Looped'}
+
 
     if (props.course) {
         if (props.course.date) props.course.lastUpdated = `${new Date(props.course.date).toDateString()} ${new Date(props.course.date).toLocaleTimeString()}`
         content = (
             <div>
                 <Head>
-                    <title>{props.course.course.name || 'My Class'} - Looped</title>
+                    <title>{props.course.course.name || 'My Class'}</title>
                     <meta name="description" content={`My ${props.course.course.name} class`} />
                 </Head>
                 <Grid.Container>
@@ -43,7 +52,7 @@ export default function NewsArticle(props) {
                     <Container>
                         {props.course?.grades?.length > 0 ? props.course.grades.map((grade, index) => {
                             return (
-                                <Card variant="flat" css={{ p: "5px" }}>
+                                <Card variant="flat" css={{ p: "5px" }} key={grade.systemID}>
                                     <Card.Header>
                                         <Text b css={{display: "flex"}}>{grade.percentScore}</Text>
                                         <Grid.Container css={{ pl: "$6" }}>

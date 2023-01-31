@@ -8,6 +8,7 @@ import {NextRequest} from "next/server";
 import {useRouter} from "next/router";
 import Back from "../../components/util/Back";
 import NextLink from 'next/link';
+import {useEffect, useState} from "react";
 
 
 
@@ -24,13 +25,20 @@ export default function NewsArticle(props) {
         </div>)
     }
 
+    const [inPwa, setInPwa] = useState(false);
+    useEffect(() => {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            setInPwa(true);
+        }
+    }, [])
+    //{inPwa ? null : ' - Looped'}
 
     if (props.article) {
 
         content = (
             <div>
                 <Head>
-                    <title>Looped - {props.article.title}</title>
+                    <title>{props.article.title}{inPwa ? null : ' - Looped'}</title>
                     <meta name="description" content={`Sent by ${props.article.authorName}`} />
                 </Head>
                 <Grid.Container>
@@ -40,7 +48,7 @@ export default function NewsArticle(props) {
                     <Grid xs={12} css={{topMargin: "10px"}}>
                         <Text h1>{props.article.title}</Text>
                     </Grid>
-                </Grid.Container> 
+                </Grid.Container>
                 <h3>Sent by {props.article.authorName} on {new Date(parseInt(String(props.article.createdDate))).toLocaleDateString()}</h3>
                 <p dangerouslySetInnerHTML={{__html: props.article.description}} style={{ color: 'white'}}></p>
                 {props.article.links && props.article.links.length > 0 && (
@@ -76,7 +84,7 @@ export async function getServerSideProps(context) {
             }
         }
     }
-    
+
     // Cache it, cause I don't want to grab it again lol.
     context.res.setHeader(
         'Cache-Control',

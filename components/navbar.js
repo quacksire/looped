@@ -9,16 +9,16 @@ import { useLocalStorage } from '@react-hooks-library/core';
 import Load from '../components/util/Loading'
 import { EnvelopeClosedIcon, HomeIcon, CalendarIcon } from '@radix-ui/react-icons';
 import Profile from './profile';
+import Share from "./util/Share";
 
 
 
 
 
 export default function NavBar() {
-
-
     const router = useRouter();
-    const [active, setActive] = useState(router.pathname);
+    const [active, setActive] = useState(router.pathname || "");
+
 
     useEffect(() => {
         setActive(router.pathname);
@@ -26,17 +26,33 @@ export default function NavBar() {
     }, [router.pathname]);
 
 
-    
+    const [inPwa, setInPwa] = useState(false);
+    useEffect(() => {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            setInPwa(true);
+        }
+    }, [])
+
+    useEffect(() => {
+        document.getElementById('navbar').style.setProperty('-webkit-app-region', `drag`);
+        document.getElementById('profile')?.style?.setProperty('padding-right', `env(titlebar-area-width, 25%)`);
+
+
+
+
+    }, [])
 
 
 
     return (
-        <Navbar variant="sticky" isCompact css={{ zIndex: 10}}>
-            <Navbar.Brand>
-                <Text b color="inherit">
-                    <Link href="#" onPress={() => { router.push("/")}} style={{ textDecoration: "none"}}>Looped</Link>
+        <Navbar variant="sticky" isCompact css={{ zIndex: 10, webkitAppRegion: "drag", paddingRight: "env(--titlebar-area-y)"}} id={'navbar'}>
+
+            {inPwa ? null : <Navbar.Brand>
+                <Text b color={"foreground"}>
+                    <Link href="#" onPress={() => { router.push("/")}} style={{ textDecoration: "none"}} >Looped</Link>
                 </Text>
-            </Navbar.Brand>
+            </Navbar.Brand>}
+
             <Navbar.Content
                 enableCursorHighlight
                 activeColor="secondary"
@@ -51,11 +67,16 @@ export default function NavBar() {
                 {!String(active).includes('calender') ? <Navbar.Link onPress={() => { router.push("/calender")}}><CalendarIcon style={{paddingRight: "10px"}} /> Calender</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/calender")}}><CalendarIcon style={{paddingRight: "10px"}}/> Calender</Navbar.Link>}
             </Navbar.Content>
 
+
+
             <Navbar.Content>
-            <Profile />
+            <Profile   />
+                <Navbar.Link>
+                    <Share />
+                </Navbar.Link>
             </Navbar.Content>
-            
-        
+
+
         </Navbar>
     )
 }

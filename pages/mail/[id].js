@@ -4,7 +4,7 @@ import {getCookie, hasCookie} from "cookies-next";
 import Back from "../../components/util/Back";
 import {getMailMessage} from "../api/_sl/mail_message/[id]";
 import NextLink from 'next/link';
-import { useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import {useLocalStorage} from "@react-hooks-library/core";
 import { useRouter } from 'next/router';
 
@@ -12,20 +12,20 @@ import { useRouter } from 'next/router';
 
 
 export default function MailMessage(props) {
-    
-    
+
+
     let content;
-    
+
     if (!hasCookie("sl-token")) {
         content = (<div>
             <Text h1>Error</Text>
-            <Text>You probaly don't have access to this message</Text>
+            <Text>You probably don't have access to this message</Text>
             <Text small>{props.message}</Text>
         </div>)
     }
 
     const router = useRouter();
-    
+
 
 
     const [read, setRead] = useLocalStorage(
@@ -34,10 +34,11 @@ export default function MailMessage(props) {
     )
 
     useEffect(() => {
-        if (!read.includes(`${props.mail?.id}`)) {
-            setRead([...read, `${props.mail?.id}`])
+        console.log(read)
+        if (!read.includes(`${props.mail?.messageID}` || read < 0)) {
+            setRead([...read, `${props.mail?.messageID}`])
         }
-    }, [])
+    }, [read])
 
     if (props.error) {
         content = (<div>
@@ -46,13 +47,21 @@ export default function MailMessage(props) {
         </div>)
     }
 
+    const [inPwa, setInPwa] = useState(false);
+    useEffect(() => {
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            setInPwa(true);
+        }
+    }, [])
+    //{inPwa ? null : ' - Looped'}
+
 
     if (props.mail) {
-        console.log(props.mail)
+        //console.log(props.mail)
         content = (
             <div>
                 <Head>
-                    <title>Looped - Mail</title>
+                    <title>LoopMail Message {inPwa ? null : ' - Looped'}</title>
                     <meta name="description" content={`Sent by ${props.mail.authorName}`} />
                 </Head>
                 <Grid.Container>
@@ -105,7 +114,7 @@ export async function getServerSideProps(context) {
         'private, s-maxage=604800'
     )
 
-    
+
 
     let mail
     try {

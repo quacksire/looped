@@ -10,14 +10,15 @@ import useHotkeys from "@reecelucas/react-use-hotkeys"
 
 export default function Profile() {
     const [user] = useLocalStorage('sl-user', {loading: true})
-    const [name] = useLocalStorage(`name.${getCookie("sl-uid")}`, null)
+    let [name] = useLocalStorage(`name.${getCookie("sl-uid")}`, null)
 
     const [menuItem, setMenuItem] = useState("")
 
     const router = useRouter()
 
     function logout() {
-        localStorage.clear()
+        localStorage.removeItem("sl-user")
+        localStorage.removeItem("sl-token")
         removeCookies("sl-token");
         router.push(`/login?path=${encodeURI(router.pathname.replace("[id]", `${window.location.pathname.split("/")[2]}`))}`);
     }
@@ -40,12 +41,12 @@ export default function Profile() {
         logout()
     });
 
-    
+
 
     return (
-                <Navbar.Link onPress={logout}>
+                <Navbar.Link onPress={logout} css={{paddingRight: `env(titlebar-area-width, 25%)`}}>
                     <Dropdown placement="bottom-left">
-                    {user.loading ? (<Load />) : (<Dropdown.Trigger><User
+                    {user.loading ? (<Load />) : (<Dropdown.Trigger id={'profile'}><User
                         src={`https://api.dicebear.com/5.x/bottts/svg?seed=${user.email}`}
                         name={name ? name : `${String(user.fullName).split(', ')[1] + ' ' + String(user.fullName).split(', ')[0]}`}
                         description={`${user.email}`}

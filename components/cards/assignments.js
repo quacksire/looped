@@ -1,5 +1,5 @@
 import {Card, Checkbox, Text, Grid, Spacer} from "@nextui-org/react";
-import {hasCookie} from "cookies-next";
+import {getCookie, hasCookie} from "cookies-next";
 import useSWR from "swr";
 import {fetcher} from "../../libs/sl";
 import {useEffect, useState} from "react";
@@ -21,14 +21,15 @@ export default function AssignmentCard() {
         });
     };
 
-    const [selected, setSelected] = useLocalStorage(
-        'finishedAssignments',
-        []
-    )
+
 
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
         return null;
     }
+    const [selected, setSelected] = useLocalStorage(
+        `finishedAssignments.${getCookie('sl-uid')}`,
+        []
+    )
 
 
 
