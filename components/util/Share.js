@@ -30,7 +30,7 @@ export default function Share() {
             onClick={() => {
                         navigator.share({
                             title: `${document.title}`,
-                            text: 'Check out this Looped page!',
+                            text: 'Check out this paged on Looped',
                             url: `${window.location.href}`,
                         })
                     .then(() => console.log('Successful share'))
