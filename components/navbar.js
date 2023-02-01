@@ -53,7 +53,13 @@ export default function NavBar() {
 
 
     return (
-        <Navbar variant="sticky" isCompact css={{ zIndex: 10, webkitAppRegion: "drag", paddingRight: "env(--titlebar-area-y)"}} id={'navbar'}>
+        <Navbar 
+            variant="sticky" 
+            isCompact 
+            css={{ zIndex: 10, webkitAppRegion: "drag", paddingRight: "env(--titlebar-area-y)"}} 
+            id={'navbar'}
+            
+            >
 
             {inPwa ? null : <Navbar.Brand hideIn="xs">
                 <Text b color={"foreground"}>
@@ -81,10 +87,10 @@ export default function NavBar() {
                 showIn="xs"
             >
                 {String(active) === '/' ? <Navbar.Link isActive><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} ><HomeIcon style={{paddingRight: "10px"}}/></Navbar.Link>}
-                {String(active) != '/' ? <Navbar.Link onPress={() => { router.push("/")}} ><ChevronLeftIcon style={{paddingRight: "10px"}}/></Navbar.Link> : null}
+                {String(active) != '/' ? <Navbar.Link onPress={() => { router.back() }} ><ChevronLeftIcon style={{paddingRight: "10px"}}/></Navbar.Link> : null}
                 
                 {String(active) != '/' ? <Navbar.Item>
-                    {pageTitle}
+                    {String(pageTitle).split(' - Looped')[0]}
                 </Navbar.Item> : null}
             </Navbar.Content>
 
