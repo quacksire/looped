@@ -25,11 +25,15 @@ export default function NavBar() {
         console.log(active);
     }, [router.pathname]);
 
-
+//
     const [inPwa, setInPwa] = useState(false);
+    const [displayControls, setDisplayControls] = useState(false)
     useEffect(() => {
-        if (window.matchMedia('(display-mode: standalone)').matches) {
+        if (window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: window-controls-overlay)').matches) {
             setInPwa(true);
+        }
+        if (window.matchMedia('(display-mode: window-controls-overlay)').matches) {
+            setDisplayControls(true)
         }
     }, [])
 
@@ -56,9 +60,10 @@ export default function NavBar() {
         <Navbar 
             variant="sticky" 
             isCompact 
+            isBordered={displayControls ? true : false}
             css={{ zIndex: 10, webkitAppRegion: "drag", paddingRight: "env(--titlebar-area-y)"}} 
             id={'navbar'}
-            
+            style={{ "left": "env(titlebar-area-x, 0)", "right": "env(safe-area-inset-right) - env(titlebar-area-x, 0)"}}
             >
 
             {inPwa ? null : <Navbar.Brand hideIn="xs">
