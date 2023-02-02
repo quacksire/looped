@@ -87,10 +87,6 @@ export default function NavBar() {
 
 
     return (
-        <>
-        <Head>
-            <meta name="theme-color" content={isDark ? "black" : "#889096"} />
-        </Head>
         <Navbar
             variant="sticky"
             isCompact
@@ -144,7 +140,6 @@ export default function NavBar() {
 
 
         </Navbar>
-        </>
     )
 }
 
