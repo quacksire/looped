@@ -70,13 +70,27 @@ export default function NavBar() {
         if ('windowControlsOverlay' in navigator) {
             //navigator.windowControlsOverlay.getTitlebarAreaRect().height
             setTitlebarHeight(navigator.windowControlsOverlay.visible ? navigator.windowControlsOverlay.getTitlebarAreaRect().height * 1.5 : null);
-            if(navigator.windowControlsOverlay.visible) setIntegratedTitlebar(true);
+            if(navigator.windowControlsOverlay.visible) {
+                setIntegratedTitlebar(true);
+                setTitlebarGapAdjust((window.innerWidth - navigator.windowControlsOverlay.getTitlebarAreaRect().width));
+            }
         }
     }, [])
+
+    const [isDark, setIsDark] = useState(false)
+    useEffect(() => {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setIsDark(true)
+        }
+    })
 
 
 
     return (
+        <>
+        <Head>
+            <meta name="theme-color" content={isDark ? "black" : "#889096"} />
+        </Head>
         <Navbar
             variant="sticky"
             isCompact
@@ -130,6 +144,7 @@ export default function NavBar() {
 
 
         </Navbar>
+        </>
     )
 }
 
