@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import LoginModal from '../components/LoginModal'
 import Layout from "../components/layout";
-import {Container, Grid, Spacer, Card, Text} from "@nextui-org/react";
+import { Container, Grid, Spacer, Card, Text } from "@nextui-org/react";
 import { Suspense } from 'react';
 import NavBar from "../components/navbar";
 import GPA from "../components/cards/GPA";
@@ -19,35 +19,16 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-        <Grid.Container gap={3} css={{ userSelectable: "none"}}>
-            <Grid xs={12} sm={4} md={3} lg={3} xl={2}>
-                <Suspense><GPA/></Suspense>
-                
-            </Grid>
-            <Grid xs={12} sm={8} md={5} lg={5} xl={3}>
-            <Suspense><GradesCard /></Suspense>
-            </Grid>
-            <Grid xs={13} md={6} lg={4} xl={3}>
-            <Suspense><AssignmentCard /> </Suspense>
-            </Grid>
-            <Grid xs={13} md={6} lg={5.5} xl={3.75}>
-            <Suspense><NewsCard /></Suspense>
-            </Grid>
-            {/*<Grid>
-                <GradesCard/>
-            </Grid> */}
-            {/*<Grid>
-                <Card variant="bordered">
-                    <Card.Header>
-                        <Text b>Calender</Text>
-                    </Card.Header>
-                    <Card.Body>
-                        <Text>Bordered card.</Text>
-                    </Card.Body>
-                </Card>
-            </Grid>*/}
-        </Grid.Container>
-
+      <div className='dashboardContainer'>
+        <div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', gap: 20, alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+          <GPA />
+          <GradesCard />
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', gap: 20, alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+          <AssignmentCard />
+          <NewsCard />
+        </div>
+      </div>
     </>
   )
 }
