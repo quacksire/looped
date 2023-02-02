@@ -1,8 +1,8 @@
-import {Card, Text, Table} from "@nextui-org/react";
-import {hasCookie} from "cookies-next";
+import { Card, Text, Table } from "@nextui-org/react";
+import { hasCookie } from "cookies-next";
 import useSWR from "swr";
 import ScaleText from "react-scale-text";
-import {fetcher} from "../../libs/sl";
+import { fetcher } from "../../libs/sl";
 import No from "../util/no";
 import Load from "../util/Loading";
 import Link from "next/link";
@@ -14,7 +14,7 @@ export default function NewsCard() {
 
 
 
-    const {data, error} = useSWR('/api/_sl/news', fetcher)
+    const { data, error } = useSWR('/api/_sl/news', fetcher)
     let newsElement = <Load />
     if (error) newsElement = <Text>Failed to load</Text>
     if (data) {
@@ -41,11 +41,11 @@ export default function NewsCard() {
 
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "max-content",  maxWidth: "80%"}}>
-        <Card.Header css={{ marginBottom: "-50px", position: "relative"}}>
+    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "min-content", maxWidth: "100%" }}>
+        <Card.Header css={{ marginBottom: "-50px", position: "relative" }}>
             <Text b>News</Text>
         </Card.Header>
-        <Card.Body css={{ marginBottom: "-15px", position: "relative"}}>
+        <Card.Body css={{ marginBottom: "-15px", position: "relative", paddingLeft: 20 }}>
             {newsElement}
         </Card.Body>
     </Card>)

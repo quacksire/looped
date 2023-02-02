@@ -1,17 +1,17 @@
 // Create React Component
 
-import {Card, Spacer, Text} from "@nextui-org/react";
-import {hasCookie} from "cookies-next";
+import { Card, Spacer, Text } from "@nextui-org/react";
+import { hasCookie } from "cookies-next";
 import useSWR from "swr";
-import {fetcher} from "../../libs/sl";
+import { fetcher } from "../../libs/sl";
 import Load from "../util/Loading";
-import { VictoryPie, VictoryAnimation, VictoryLabel} from 'victory';
+import { VictoryPie, VictoryAnimation, VictoryLabel } from 'victory';
 
 export default function GPACard() {
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
         return null;
     }
-    const {data, error} = useSWR('/api/_sl/courses', fetcher)
+    const { data, error } = useSWR('/api/_sl/courses', fetcher)
     let gpaElement = <Load />
 
     if (error) gpaElement = <Text>Failed to load</Text>
@@ -46,11 +46,11 @@ export default function GPACard() {
         gpaElement = <Text size="$6xl" weight={"extrabold"} b transform={"full-size-kana"} color={color}>{simplified}</Text>
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "25px", maxWidth: "100%", height: "250px"}}>
+    return (<Card isHoverable variant="flat" css={{ minWidth: "25px", maxWidth: "100%", height: "min-content" }}>
         <Card.Header>
             <Text b>GPA</Text>
         </Card.Header>
-        <Card.Body css={{alignItems: "center"}}>
+        <Card.Body css={{ alignItems: "center" }}>
             {gpaElement}
         </Card.Body>
         <Card.Footer>

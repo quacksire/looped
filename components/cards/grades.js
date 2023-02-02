@@ -1,7 +1,7 @@
-import {Card, Text, Table, Grid, Link} from "@nextui-org/react";
-import {hasCookie} from "cookies-next";
+import { Card, Text, Table, Grid, Link } from "@nextui-org/react";
+import { hasCookie } from "cookies-next";
 import useSWR from "swr";
-import {fetcher} from "../../libs/sl";
+import { fetcher } from "../../libs/sl";
 import No from "../util/no";
 import Load from "../util/Loading";
 import { CardStackIcon } from "@radix-ui/react-icons";
@@ -30,7 +30,7 @@ export default function GradesCard() {
 
 
 
-    const {data, error} = useSWR('/api/_sl/courses', fetcher)
+    const { data, error } = useSWR('/api/_sl/courses', fetcher)
     let gradeElement = <Load />
     let rows = []
     if (error) gradeElement = <Text>Failed to load</Text>
@@ -47,7 +47,7 @@ export default function GradesCard() {
                     <Link href={`/class/${course.periodID}`}>
                         <Card isPressable variant="flat" css={{ p: "5px" }}>
                             <Card.Header>
-                                <Text h3 css={{display: "flex"}}>{g}</Text>
+                                <Text h3 css={{ display: "flex" }}>{g}</Text>
                                 <Grid.Container css={{ pl: "$6" }}>
                                     <Grid xs={12}>
                                         <Text h4 css={{ lineHeight: "$xs" }}>
@@ -81,11 +81,11 @@ export default function GradesCard() {
 
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", maxHeight: "auto", maxWidth: "100%"}} >
-        <Card.Header css={{ marginBottom: "-20px", position: "relative"}}>
-            <Text b css={{ userSelectable: "none"}}>Current Grades</Text>
+    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", maxHeight: "auto", maxWidth: "100%", height: 'min-content' }} >
+        <Card.Header css={{ marginBottom: "-20px", position: "relative" }}>
+            <Text b css={{ userSelectable: "none" }}>Current Grades</Text>
         </Card.Header>
-        <Card.Body css={{ marginBottom: "-30px"}}>
+        <Card.Body css={{ marginBottom: "-30px", paddingLeft: 20 }}>
             {gradeElement}
         </Card.Body>
 
