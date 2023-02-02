@@ -87,7 +87,7 @@ export default function NavBar() {
             style={integratedTitlebar ? {"-webkit-app-region": "drag", "app-region": "drag"} : null}
             >
 
-            {(inPwa || displayControls) ? null : <Navbar.Brand hideIn="xs">
+            {(inPwa || integratedTitlebar) ? null : <Navbar.Brand hideIn="xs">
                 <Text b color={"foreground"}>
                     <Link href="#" onPress={() => { router.push("/")}} style={{ textDecoration: "none"}} >Looped</Link>
                 </Text>
