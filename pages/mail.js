@@ -52,7 +52,7 @@ export default function Mail(props) {
                 aria-label="Example static collection table"
                 compact
                 selectionMode="single"
-                css={{zIndex: '1'}}
+                css={{zIndex: '1', width: "80%"}}
                 onSelectionChange={(key) => {
 
                     router.push(`/mail/${key.currentKey}`)}}
