@@ -26,6 +26,9 @@ function MyApp({ Component, pageProps }) {
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
                 <link rel="shortcut icon" href="/favicon.ico" />
+
+                <meta name="theme-color" media="(prefers-color-scheme: light)" content="white" />
+                <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
             </Head>
             <NextThemesProvider
                 defaultTheme="system"
