@@ -3,7 +3,7 @@ import { User, Navbar, Dropdown, Text} from "@nextui-org/react"
 import { useRouter } from "next/router"
 import { removeCookies, getCookie, setCookie } from "cookies-next"
 import Load from "./util/Loading"
-import { InfoCircledIcon, GearIcon, ExitIcon } from '@radix-ui/react-icons';
+import {InfoCircledIcon, GearIcon, ExitIcon, Share2Icon} from '@radix-ui/react-icons';
 import { useEffect, useState } from "react"
 import useHotkeys from "@reecelucas/react-use-hotkeys"
 
@@ -32,8 +32,14 @@ export default function Profile() {
             router.push("/settings")
         } else if (menuItem.currentKey === "info") {
             router.push("/info")
-        } else if (menuItem.currentKey === "changeName") {
-            setCookie("set")
+        } else if (menuItem.currentKey === "share") {
+                navigator.share({
+                    title: `${document.title}`,
+                    text: 'Check out this paged on Looped',
+                    url: `${window.location.href}`,
+                })
+                .then(() => console.log('Successful share'))
+                .catch((error) => console.log('Error sharing', error));
         }
     }, [menuItem])
 
@@ -41,12 +47,19 @@ export default function Profile() {
         logout()
     });
 
+    const [canShare, setCanShare] = useState(false);
+    useEffect(() => {
+        if (navigator.canShare) {
+            setCanShare(true);
+        }
+    }, []);
+
 
     /*name=
     description={`${user.email}`}*/
 
     return (
-                <Navbar.Link onPress={logout} css={{paddingRight: `env(titlebar-area-width, 25%)`}}>
+                <Navbar.Link onPress={logout} css={{"left": 'env(titlebar-area-x, 0)'}}>
                     <Dropdown placement="bottom-left">
                     {user.loading ? (<Load />) : (<Dropdown.Trigger id={'profile'}><User
                         src={`https://api.dicebear.com/5.x/bottts/svg?seed=${user.email}`}
@@ -67,7 +80,10 @@ export default function Profile() {
                             description={`${user.email}`}
                             />
                         </Dropdown.Item>
-                        <Dropdown.Item key="settings" icon={<GearIcon />} withDivider>
+                        <Dropdown.Item key="share" icon={<Share2Icon />} withDivider={canShare}>
+                            Share
+                        </Dropdown.Item>
+                        <Dropdown.Item key="settings" icon={<GearIcon />} withDivider={!canShare}>
                         Settings
                         </Dropdown.Item>
                         <Dropdown.Item key="info" icon={<InfoCircledIcon />}>
