@@ -41,7 +41,7 @@ export default function NewsCard() {
 
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "auto", manWidth: "80%"}}>
+    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "max-content",  maxWidth: "80%"}}>
         <Card.Header css={{ marginBottom: "-50px", position: "relative"}}>
             <Text b>News</Text>
         </Card.Header>

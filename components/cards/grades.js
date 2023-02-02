@@ -38,7 +38,10 @@ export default function GradesCard() {
         if (data.length > 0) {
             gradeElement = data.map((course, index) => {
 
-                let g = (course.grade != "null") ? `${String(course.grade) + ' '.repeat(4 - String(course.grade).length)}` : '-'
+                let g = (course.grade != "null") ? `${String(course.grade) + ' '.repeat(4 - String(course.grade).length)}` : null
+                if (g == null) {
+                    return null
+                }
 
                 return (
                     <Link href={`/class/${course.periodID}`}>
