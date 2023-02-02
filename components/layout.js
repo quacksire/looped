@@ -10,9 +10,6 @@ export default function Layout({ children }) {
     // Create a 2x2 grid with a component in each cell using NextUI components
     return (
         <Container>
-            <Head>
-                <meta name="theme-color" content={"black"}></meta>
-            </Head>
          <LoginModal />
          {children}
         </Container>

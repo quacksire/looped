@@ -1,5 +1,5 @@
 // 1. import `NextUIProvider` component
-import { createTheme, NextUIProvider } from '@nextui-org/react';
+import { createTheme, NextUIProvider, Spacer } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import Layout from "../components/layout";
 import NavBar from "../components/navbar";
@@ -37,6 +37,7 @@ function MyApp({ Component, pageProps }) {
             >
                 <NextUIProvider>
                     <NavBar />
+                    <Spacer y={1}/>
                     <Layout >
                         <Component {...pageProps} />
                     </Layout>
