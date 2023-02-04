@@ -11,7 +11,18 @@ import AssignmentCard from "../components/cards/assignments";
 import NewsCard from "../components/cards/news";
 import GradesCard from "../components/cards/grades";
 
+import { navigate } from "@reach/router"
+
+
 export default function Home() {
+  if (!hasCookie("sl-token")) {
+    navigate('/login?path=/')
+  }
+
+
+
+
+
   return (
     <>
       <Head>
@@ -32,8 +43,4 @@ export default function Home() {
       </div>
     </>
   )
-}
-
-export async function getServerSideProps(context) {
-  if (!hasCookie("sl-token", context)) { return { redirect: { destination: `/login?path=/}`, permanent: false } } }
 }
