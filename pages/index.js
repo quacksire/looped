@@ -11,14 +11,7 @@ import AssignmentCard from "../components/cards/assignments";
 import NewsCard from "../components/cards/news";
 import GradesCard from "../components/cards/grades";
 
-import { useRouter } from 'next/router'
-
-
 export default function Home() {
-  const router = useRouter()
-  if (!hasCookie("sl-token")) {
-    router.push('/login?path=/')
-  }
 
   return (
     <>
