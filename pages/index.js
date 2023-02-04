@@ -4,6 +4,7 @@ import LoginModal from '../components/LoginModal'
 import Layout from "../components/layout";
 import { Container, Grid, Spacer, Card, Text } from "@nextui-org/react";
 import { Suspense } from 'react';
+import { hasCookie } from 'cookies-next';
 import NavBar from "../components/navbar";
 import GPA from "../components/cards/GPA";
 import AssignmentCard from "../components/cards/assignments";
@@ -31,4 +32,8 @@ export default function Home() {
       </div>
     </>
   )
+}
+
+export async function getServerSideProps(context) {
+  if (!hasCookie("sl-token", context)) { return { redirect: { destination: `/login?path=/}`, permanent: false } } }
 }
