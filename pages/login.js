@@ -5,7 +5,7 @@ import Layout from "../components/layout";
 import {Button, Loading} from "@nextui-org/react"
 import { useEffect } from 'react';
 import { hasCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
 export default function Home() {
     return (
