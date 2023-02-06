@@ -47,7 +47,7 @@ export default function NewsArticle(props) {
                     </Grid>
                 </Grid.Container>
                 <h3>Sent by {props.article.authorName} on {new Date(parseInt(String(props.article.createdDate))).toLocaleDateString()}</h3>
-                <p dangerouslySetInnerHTML={{__html: props.article.description}} style={{ color: 'white'}}></p>
+                <p dangerouslySetInnerHTML={{__html: props.article.description}} style={{ color: '$text'}}></p>
                 {props.article.links && props.article.links.length > 0 && (
                     <div>
                             {props.article.links.map((link) => (
