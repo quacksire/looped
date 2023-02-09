@@ -91,11 +91,11 @@ export default function AssignmentCard() {
                             <Grid.Container css={{ pl: "$6" }}>
                                 <Grid xs={12}>
                                     <Text css={{ lineHeight: "10px" }}>
-                                        <Text size="$md">{assignment.courseName} - {assignment.title}</Text>
+                                        <Text size="$md">{assignment.title}</Text>
                                     </Text>
                                 </Grid>
                                 <Grid xs={6}>
-                                    <Text size="$xs">{due}</Text>
+                                    <Text size="$xs">{due} for {assignment.courseName}</Text>
                                 </Grid>
                             </Grid.Container>
                         </Checkbox>
