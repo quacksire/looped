@@ -3,6 +3,7 @@ import {Modal, Button, Text, Input, Row, Checkbox, Spacer} from "@nextui-org/rea
 import { useLocalStorage } from "@react-hooks-library/core";
 import { getCookie } from "cookies-next";
 import Head from "next/head";
+import {usePWA} from "../components/util/usePWA";
 export default function App() {
     const [name, setName] = useLocalStorage(`name.${getCookie("sl-uid")}`, null)
 
@@ -19,19 +20,14 @@ export default function App() {
         document.location.reload()
     };
 
-    const [inPwa, setInPwa] = useState(false);
-    useEffect(() => {
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            setInPwa(true);
-        }
-    }, [])
+    const isPWA = usePWA()
     //{inPwa ? null : ' - Looped'}
 
 
     return (
         <div>
             <Head>
-                <title>{inPwa ? null : 'Settings - Looped'}</title>
+                <title>{isPWA ? null : 'Settings - Looped'}</title>
             </Head>
 
             <Text h1> Settings</Text>

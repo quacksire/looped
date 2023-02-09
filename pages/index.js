@@ -34,3 +34,23 @@ export default function Home() {
     </>
   )
 }
+
+export async function getServerSideProps({req, res, query}) {
+    //
+    // Get search params from url
+    //
+
+
+    if (!hasCookie("sl-token", {req, res})) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            },
+        }
+    }
+
+    return {
+        props: {}
+    }
+}

@@ -9,6 +9,7 @@ import { useLocalStorage } from '@react-hooks-library/core';
 import Load from '../components/util/Loading'
 import { EnvelopeClosedIcon, HomeIcon, CalendarIcon, ReaderIcon, ChevronLeftIcon} from '@radix-ui/react-icons';
 import Profile from './profile';
+import {usePWA} from "./util/usePWA";
 
 
 
@@ -25,16 +26,14 @@ export default function NavBar() {
     }, [router.pathname]);
 
 //
-    const [inPwa, setInPwa] = useState(false);
+    const inPWA = usePWA();
     const [displayControls, setDisplayControls] = useState(false)
     useEffect(() => {
-        if (window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: window-controls-overlay)').matches) {
-            setInPwa(true);
-        }
         if (window.matchMedia('(display-mode: window-controls-overlay)').matches) {
             setDisplayControls(true)
         }
-    }, [])
+
+    }, [inPWA])
 
     useEffect(() => {
         //document.getElementById('navbar').style.setProperty('-webkit-app-region', `drag`);
@@ -97,7 +96,7 @@ export default function NavBar() {
             style={integratedTitlebar ? {"-webkit-app-region": "drag", "app-region": "drag"} : null}
             >
 
-            {(inPwa || integratedTitlebar) ? null : <Navbar.Brand hideIn="xs">
+            {inPWA || integratedTitlebar ? null : <Navbar.Brand hideIn="xs">
                 <Text b color={"foreground"}>
                     <Link href="#" onPress={() => { router.push("/")}} style={{ textDecoration: "none"}} >Looped</Link>
                 </Text>

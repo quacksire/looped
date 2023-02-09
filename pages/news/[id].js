@@ -9,6 +9,7 @@ import {useRouter} from "next/router";
 import Back from "../../components/util/Back";
 import NextLink from 'next/link';
 import {useEffect, useState} from "react";
+import {usePWA} from "../../components/util/usePWA";
 
 
 
@@ -25,12 +26,8 @@ export default function NewsArticle(props) {
         </div>)
     }
 
-    const [inPwa, setInPwa] = useState(false);
-    useEffect(() => {
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            setInPwa(true);
-        }
-    }, [])
+    const isPWA = usePWA()
+
     //{inPwa ? null : ' - Looped'}
 
     if (props.article) {
@@ -38,7 +35,7 @@ export default function NewsArticle(props) {
         content = (
             <div>
                 <Head>
-                    <title>{props.article.title}{inPwa ? null : ' - Looped'}</title>
+                    <title>{props.article.title}{isPWA ? null : ' - Looped'}</title>
                     <meta name="description" content={`Sent by ${props.article.authorName}`} />
                 </Head>
                 <Grid.Container>

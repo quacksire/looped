@@ -7,6 +7,7 @@ import NextLink from 'next/link';
 import {useEffect, useState} from 'react';
 import {useLocalStorage} from "@react-hooks-library/core";
 import { useRouter } from 'next/router';
+import {usePWA} from "../../components/util/usePWA";
 
 
 
@@ -47,13 +48,7 @@ export default function MailMessage(props) {
         </div>)
     }
 
-    const [inPwa, setInPwa] = useState(false);
-    useEffect(() => {
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            setInPwa(true);
-        }
-    }, [])
-    //{inPwa ? null : ' - Looped'}
+    const isPWA = usePWA()    //{inPwa ? null : ' - Looped'}
 
 
     if (props.mail) {
@@ -61,7 +56,7 @@ export default function MailMessage(props) {
         content = (
             <div>
                 <Head>
-                    <title>LoopMail Message {inPwa ? null : ' - Looped'}</title>
+                    <title>LoopMail Message {isPWA ? null : ' - Looped'}</title>
                     <meta name="description" content={`Sent by ${props.mail.authorName}`} />
                 </Head>
                 <Grid.Container>

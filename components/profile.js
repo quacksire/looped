@@ -31,7 +31,7 @@ export default function Profile() {
         } else if (menuItem.currentKey === "settings") {
             router.push("/settings")
         } else if (menuItem.currentKey === "info") {
-            router.push("/info")
+            router.push("/about")
         } else if (menuItem.currentKey === "share") {
                 navigator.share({
                     title: `${document.title}`,

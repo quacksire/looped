@@ -26,15 +26,12 @@ export default function AssignmentCard() {
     if (!hasCookie('sl-token') || !hasCookie('sl-uid')) {
         return null;
     }
-    const [selected, setSelected] = useLocalStorage(
-        `finishedAssignments.${getCookie('sl-uid')}`,
-        []
-    )
+
 
 
 
     const { data, error } = useSWR('/api/_sl/assignments', fetcher)
-
+    let [selected, setSelected] = useLocalStorage(`finishedAssignments.${getCookie('sl-uid')}`, [])
 
 
     let assignments = <Load />
@@ -79,11 +76,11 @@ export default function AssignmentCard() {
                                 <Grid.Container css={{ pl: "$6" }}>
                                     <Grid xs={12}>
                                         <Text css={{ lineHeight: "10px" }}>
-                                            <Text del size="$md" css={{ color: "$accents8" }}>{assignment.courseName} - {assignment.title}</Text>
+                                            <Text del size="$md" css={{ color: "$accents8" }}>{assignment.title}</Text>
                                         </Text>
                                     </Grid>
-                                    <Grid xs={6}>
-                                        <Text del size="$xs" css={{ color: "$accents8" }}>{due}</Text>
+                                    <Grid xs={12}>
+                                        <Text del size="$xs" css={{ color: "$accents8" }}>{due} for {assignment.courseName}</Text>
                                     </Grid>
                                 </Grid.Container>
                             </Checkbox>
@@ -94,7 +91,7 @@ export default function AssignmentCard() {
                                         <Text size="$md">{assignment.title}</Text>
                                     </Text>
                                 </Grid>
-                                <Grid xs={6}>
+                                <Grid xs={12}>
                                     <Text size="$xs">{due} for {assignment.courseName}</Text>
                                 </Grid>
                             </Grid.Container>
