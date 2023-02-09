@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Card, Container, Grid, Text} from "@nextui-org/react";
+import {Card, Container, Grid, Text, Badge} from "@nextui-org/react";
 import {getCookie, hasCookie} from "cookies-next";
 import Back from "../../components/util/Back";
 import {getCourse} from "../api/_sl/course/[id]";
@@ -60,6 +60,9 @@ export default function NewsArticle(props) {
                                             </Grid>
                                             <Grid xs={12}>
                                                 <Text css={{ color: "$accents8" }}>{new Date(grade.assignment.dueDate).toLocaleDateString()}</Text>
+                                                <Badge enableShadow disableOutline color="secondary">
+                                                {grade.assignment.categoryName}
+                                                </Badge>
                                             </Grid>
                                         </Grid.Container>
                                     </Card.Header>
