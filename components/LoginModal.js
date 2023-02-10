@@ -71,7 +71,7 @@ export default function App() {
             }
             //tokenTarget
             response = await response.json()
-            setCookie("sl-token", `${token}`), { expires: new Date(new Date().setHours(720)) });
+            setCookie("sl-token", `${token}`, { expires: new Date(new Date().setHours(720)) });
             setCookie('sl-uid', response.userID, { expires: new Date(new Date().setHours(720)) });
             setUsr(response);
             setToken(`${token}`);
