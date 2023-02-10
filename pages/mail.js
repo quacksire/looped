@@ -9,7 +9,7 @@ import No from "../components/util/no";
 import { useRouter } from 'next/router';
 import { getMail } from './api/_sl/mail_messages';
 import {useLocalStorage} from "@react-hooks-library/core";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useCallback} from "react";
 import {usePWA} from "../components/util/usePWA";
 
 
@@ -23,6 +23,14 @@ export default function Mail(props) {
         'readMails',
         []
     )
+
+    const isLocallyRead = useCallback((id) => {
+       if (localStorage.getItem(`readMail.${getCookie("sl-uid")}.${id}`) === "true") {
+        return true
+       } else {
+        return false
+       }
+    })
 
 
     let {data, error} = useSWR('/api/_sl/mail_messages', fetcher)
@@ -39,7 +47,7 @@ export default function Mail(props) {
                     key={mail.ID}
                 >
                     <Table.Cell>
-                        {read.includes(`${mail.ID}`) || mail.read == 'false' && (
+                        {read.includes(`${mail.ID}`) || mail.read == 'false' || isLocallyRead(`${mail.ID}`) && (
                             <Badge color="primary" variant="dot" />
                         )}
 

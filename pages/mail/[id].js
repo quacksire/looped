@@ -29,17 +29,11 @@ export default function MailMessage(props) {
 
 
 
-    const [read, setRead] = useLocalStorage(
-        'readMails',
-        []
-    )
-
     useEffect(() => {
-        console.log(read)
-        if (!read.includes(`${props.mail?.messageID}` || read < 0)) {
-            setRead([...read, `${props.mail?.messageID}`])
+        if (!localStorage.getItem(`readMail.${getCookie("sl-uid")}.${props.mail?.messageID}`) === "true") {
+            localStorage.setItem(`readMail.${getCookie("sl-uid")}.${props.mail?.messageID}`, "true")
         }
-    }, [read])
+    }, [])
 
     if (props.error) {
         content = (<div>
