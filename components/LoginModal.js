@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Modal, Button, Text, Input, Row, Checkbox, Loading} from "@nextui-org/react";
 import Link from "next/link";
 import {getCookie, hasCookie, setCookie} from "cookies-next";
@@ -8,11 +8,11 @@ import useHotkeys from "@reecelucas/react-use-hotkeys";
 
 
 export default function App() {
-    const [visible, setVisible] = React.useState(false);
-    const [loading, setLoading] = React.useState(false);
-    const [usernameTarget, setUsername] = React.useState("");
-    const [passwordTarget, setPassword] = React.useState("");
-    const [tokenTarget, setTokenVal] = React.useState("");
+    const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [usernameTarget, setUsername] = useState("");
+    const [passwordTarget, setPassword] = useState("");
+    const [tokenTarget, setTokenVal] = useState("");
     const router = useRouter();
 
     const [usr, setUsr] = useLocalStorage(
