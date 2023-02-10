@@ -4,6 +4,7 @@ import Link from "next/link";
 import {getCookie, hasCookie, setCookie} from "cookies-next";
 import {useRouter} from "next/router";
 import {useLocalStorage} from "@react-hooks-library/core";
+import useHotkeys from "@reecelucas/react-use-hotkeys";
 
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
     const [loading, setLoading] = React.useState(false);
     const [usernameTarget, setUsername] = React.useState("");
     const [passwordTarget, setPassword] = React.useState("");
+    const [tokenTarget, setToken] = React.useState("");
     const router = useRouter();
 
     const [usr, setUsr] = useLocalStorage(
@@ -43,35 +45,63 @@ export default function App() {
         console.log("closed");
     };
 
+    const [tokenLogin, setTokenLogin] = useState(false)
+    useHotkeys("Alt+T", () => {
+        setTokenLogin(!tokenLogin)
+    });
+
+
     const signInHandler = async () => {
         console.log("sign in");
         setLoading(true);
-        let username = usernameTarget.target.value;
-        let password = passwordTarget.target.value;
-
-        console.log(username, password);
-
-        console.log(`Basic ${btoa(`${encodeURI(username)}:${encodeURI(password)}`)}`)
-
-        let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI('Looped')}&devOS=${encodeURI(navigator.platform)}&year=${new Date().getFullYear()}`, {
-            headers: {
-                authorization: `Basic ${btoa(`${encodeURI(username)}:${encodeURI(password)}`)}`
+        
+        
+        if (tokenLogin) {
+                let token = tokenTarget.target.value;
+                let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI('Looped')}&devOS=${encodeURI(navigator.platform)}&year=${new Date().getFullYear()}`, {
+                headers: {
+                    authorization: `Basic ${token}`
+                }
+            })
+            if (!response.ok) {
+                setLoading(false);
+                console.log("error");
+                //error
+                return;
             }
-        })
+            //tokenTarget
+            response = await response.json()
+            setCookie("sl-token", `${token}`), { expires: new Date(new Date().setHours(720)) });
+            setCookie('sl-uid', response.userID, { expires: new Date(new Date().setHours(720)) });
+            setUsr(response);
+            setToken(`${token}`);
+        } else {
+        
+            let username = usernameTarget.target.value;
+            let password = passwordTarget.target.value;
+            console.log(username, password);
+            console.log(`Basic ${btoa(`${encodeURI(username)}:${encodeURI(password)}`)}`)
+            let response = await fetch(`https://hmbhs.schoolloop.com/mapi/login?version=3&devToken=${encodeURI('Looped')}&devOS=${encodeURI(navigator.platform)}&year=${new Date().getFullYear()}`, {
+                headers: {
+                    authorization: `Basic ${btoa(`${encodeURI(username)}:${encodeURI(password)}`)}`
+                }
+            })
 
-        if (!response.ok) {
-            setLoading(false);
-            console.log("error");
-            //error
-            return;
+            if (!response.ok) {
+                setLoading(false);
+                console.log("error");
+                //error
+                return;
+            }
+
+            response = await response.json()
+
+            setCookie("sl-token", btoa(`${encodeURI(username)}:${encodeURI(password)}`), { expires: new Date(new Date().setHours(720)) });
+            setCookie('sl-uid', response.userID, { expires: new Date(new Date().setHours(720)) });
+            setUsr(response);
+            setToken(btoa(`${encodeURI(username)}:${encodeURI(password)}`));
+            
         }
-
-        response = await response.json()
-
-        setCookie("sl-token", btoa(`${encodeURI(username)}:${encodeURI(password)}`), { expires: new Date(new Date().setHours(720)) });
-        setCookie('sl-uid', response.userID, { expires: new Date(new Date().setHours(720)) });
-        setUsr(response);
-        setToken(btoa(`${encodeURI(username)}:${encodeURI(password)}`));
         setLoading(false);
         setVisible(false);
 
@@ -94,7 +124,8 @@ export default function App() {
                 </Modal.Header>
                 <Modal.Body>
                     <Text>Login with School Loop</Text>
-                    <Input
+                    {!tokenLogin ? (<>
+                        <Input
                         onChange={setUsername}
                         bordered
                         fullWidth
@@ -113,6 +144,18 @@ export default function App() {
                         type="password"
                         placeholder="Password"
                     />
+                    </>) : (<>
+                        <Input
+                        onChange={tokenTarget}
+                        aria-label="Token"
+                        bordered
+                        fullWidth
+                        color="primary"
+                        size="lg"
+                        type="password"
+                        placeholder="Token"
+                    />
+                    </>)}
                     <Row justify="space-between">
                         <Checkbox>
                             <Text size={14} id="rm">Remember me</Text>
