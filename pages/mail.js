@@ -24,13 +24,13 @@ export default function Mail(props) {
         []
     )
 
-    const isLocallyRead = useCallback((id) => {
+    const isLocallyRead = (id) => {
        if (localStorage.getItem(`readMail.${getCookie("sl-uid")}.${id}`) === "true") {
         return true
        } else {
         return false
        }
-    })
+    }
 
 
     let {data, error} = useSWR('/api/_sl/mail_messages', fetcher)
