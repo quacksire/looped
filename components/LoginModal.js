@@ -12,7 +12,7 @@ export default function App() {
     const [loading, setLoading] = React.useState(false);
     const [usernameTarget, setUsername] = React.useState("");
     const [passwordTarget, setPassword] = React.useState("");
-    const [tokenTarget, setToken] = React.useState("");
+    const [tokenTarget, setTokenVal] = React.useState("");
     const router = useRouter();
 
     const [usr, setUsr] = useLocalStorage(
@@ -146,7 +146,7 @@ export default function App() {
                     />
                     </>) : (<>
                         <Input
-                        onChange={tokenTarget}
+                        onChange={setTokenVal}
                         aria-label="Token"
                         bordered
                         fullWidth
