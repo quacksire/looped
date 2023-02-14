@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Grid, Text, Button, Link} from "@nextui-org/react";
+import {Grid, Text, Button, Link, Spacer} from "@nextui-org/react";
 import { getArticle} from "../api/_sl/news/[id]";
 
 import { RequestCookies } from '@edge-runtime/cookies'
@@ -43,7 +43,7 @@ export default function NewsArticle(props) {
                         <Text h1>{props.article.title}</Text>
                     </Grid>
                 </Grid.Container>
-                <h3>Sent by {props.article.authorName} on {new Date(parseInt(String(props.article.createdDate))).toLocaleDateString()}</h3>
+                <Text h3 color={'textLight'}>Sent by {props.article.authorName} on {new Date(parseInt(String(props.article.createdDate))).toLocaleDateString()}</Text>
                 <p dangerouslySetInnerHTML={{__html: props.article.description}} style={{ color: '$text'}}></p>
                 {props.article.links && props.article.links.length > 0 && (
                     <div>
@@ -63,6 +63,7 @@ export default function NewsArticle(props) {
     return (
         <div>
             {content}
+            <Spacer y={2} />
         </div>
     )
 }

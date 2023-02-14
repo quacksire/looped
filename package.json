@@ -26,6 +26,7 @@
     "react-feather": "^2.0.10",
     "react-hotkeys-hook": "^4.3.2",
     "react-scale-text": "^1.2.2",
+    "recharts": "^2.4.1",
     "swr": "^2.0.0",
     "victory": "^36.6.8"
   }

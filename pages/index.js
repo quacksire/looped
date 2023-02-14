@@ -22,7 +22,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className='dashboardContainer'>
-        <div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', gap: 20, alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'nowrap', gap: 20, alignItems: 'flex-start', justifyContent: 'flex-start', width: "99.5%" }}>
           <GPA />
           <GradesCard />
         </div>

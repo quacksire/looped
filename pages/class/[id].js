@@ -5,6 +5,19 @@ import Back from "../../components/util/Back";
 import {getCourse} from "../api/_sl/course/[id]";
 import {useEffect, useState} from "react";
 import {usePWA} from "../../components/util/usePWA";
+import {
+    Bar,
+    BarChart,
+    CartesianGrid,
+    Cell,
+    LineChart,
+    Pie,
+    PieChart,
+    ResponsiveContainer,
+    XAxis,
+    YAxis,
+} from "recharts";
+import {Line} from "victory";
 export default function NewsArticle(props) {
     let content;
     if (props.error) {
@@ -20,8 +33,29 @@ export default function NewsArticle(props) {
 
     const colors = ["primary", "secondary", "success", "error", "warning", "info", "dark", "light", "neutral"]
 
+    const RADIAN = Math.PI / 180;
+
+
+
+
+
+
     if (props.course) {
         if (props.course.date) props.course.lastUpdated = `${new Date(props.course.date).toDateString()} ${new Date(props.course.date).toLocaleTimeString()}`
+        const renderCustomizedCategoryLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+            const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+            const x = cx + radius * Math.cos(-midAngle * RADIAN);
+            const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+            return (
+                <text x={x} y={y} fill={`var(--nextui-colors-text)`} textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                    {`${percent === 99 ? `Assignemnt` : `${String(props.course.categories[index].name)}`}`}
+                </text>
+            );
+
+        };
+
+        console.log(props.course.grades)
         content = (
             <div>
                 <Head>
@@ -33,11 +67,19 @@ export default function NewsArticle(props) {
 
                     </Grid>
                 </Grid.Container>
+                {/*"trendScores":[{"numberOfZeros":"2","dropped":"false","studentID":"1593846838236","grade":"F","periodID":"1660388478922","standardsBased":"false","score":"0.33","markIDString":"current","tourseID":"1376458793022","teacherID":"1102472042704","dayID":"1673337600000","ID":"1671985805968"},*/}
                 <Text
                     h1>{props.course.course.name} with {String(props.course.teacher.name).split(', ')[1] + ' ' + String(props.course.teacher.name).split(', ')[0]}</Text>
                 <h5>Last Updated on {props.course.lastUpdated}</h5>
+                <Spacer y={1}/>
+                <ResponsiveContainer width="100%" height={200}>
+                    <LineChart  width={`100%`} height={200} data={props.course.trendScores} dataKey={(trend) => { return trend.score * 100}} style={{zIndex: "1000"}}>
+                        <Line type="monotone" cx="50%" cy="50%" data={props.course.trendScores} dataKey={(trend) => { return trend.score * 100}} stroke={`var(--nextui-colors-text)`} strokeWidth={2} />
+                    </LineChart>
+                </ResponsiveContainer>
+                <Spacer y={1}/>
 
-                <Grid.Container gap={2}>
+                <Grid.Container gap={4}>
                     <Grid>
                 <Card css={{ maxWidth: "700px", minHeight: "200px"}}>
                     <Card.Header>
@@ -49,9 +91,9 @@ export default function NewsArticle(props) {
                             let colorBadge = colors[props.course?.categories?.findIndex((category) => category.name === grade.assignment.categoryName)]
 
                             return (
-                                <Card variant="flat" css={{p: "5px"}} key={grade.systemID}>
+                                <Card variant="flat" css={{p: "5px"}} key={grade.systemID} style={{backgroundColor: "var(--nextui-colors-backgroundContrast)"}}>
                                     <Card.Header>
-                                        <Text b css={{display: "flex"}}>{grade.percentScore}</Text>
+                                        <Text b css={{display: "flex"}}>{grade.score === '0.00' ? (<Badge color={'error'}>Zero!</Badge>) : grade.percentScore}</Text>
                                         <Grid.Container css={{pl: "$6"}}>
                                             <Grid xs={12}  css={{minWidth: "60px"}}>
                                                 <Text css={{lineHeight: "$xs"}}>
@@ -78,13 +120,39 @@ export default function NewsArticle(props) {
                 </Card>
                     </Grid>
                     <Grid>
-                <Card css={{ maxWidth: "300px", minHeight: "200px"}}>
+                <Card css={{ maxWidth: "500px", minHeight: "200px"}}>
                     <Card.Header>
-                        <Text h3>Categories</Text>
+                        <Text h3>Category Percentages</Text>
                     </Card.Header>
                     <Card.Divider/>
                     <Container>
-                        {props.course?.categories?.length > 0 ? props.course.categories?.map((category, index) => {
+                        {props.course?.categories?.length > 0 && (
+                                <ResponsiveContainer width={500} height={450} style={{zIndex: "1000"}}>
+                                    <PieChart width={350} height={250}>
+                                        <Pie data={props.course.categories} dataKey={(category) => { return category.weight * 100}} nameKey={"name"} cx="50%" cy="50%" outerRadius={100} label={renderCustomizedCategoryLabel} labelLine={false}>
+                                            {
+                                                props.course.categories.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={`var(--nextui-colors-${colors[index]})`} strokeWidth={0.5} stroke={"var(--nextui-colors-backgroundContrast)"}/>
+                                                ))
+                                            }
+                                        </Pie>
+                                    </PieChart>
+                                </ResponsiveContainer>
+                            )}
+
+                        {(props.course.hasOwnProperty('categories') || props.course?.categories?.length === 0) && (
+                            <ResponsiveContainer width={500} height={450} style={{zIndex: "1000"}}>
+                                <PieChart width={350} height={250}>
+                                    <Pie data={{name: `Assignment`, weight: 99}} dataKey={"weight"} nameKey={"name"} cx="50%" cy="50%" outerRadius={100} label={renderCustomizedCategoryLabel} labelLine={false}>
+                                                <Cell key={`cell-${0}`} fill={`var(--nextui-colors-${colors[0]})`}/>
+                                    </Pie>
+                                </PieChart>
+                            </ResponsiveContainer>
+                        )}
+
+
+
+                        {/*props.course?.categories?.length > 0 ? props.course.categories?.map((category, index) => {
                             return (
                                 <Card variant="flat" css={{p: "5px"}} key={category.name}>
                                     <Card.Header>
@@ -104,7 +172,7 @@ export default function NewsArticle(props) {
                                     </Card.Header>
                                 </Card>
                             )
-                        }) : <Text>No Grading Scale</Text>}
+                        }) : <Text>No Grading Scale</Text> */}
                     </Container>
                 </Card>
                         <Spacer y={1}/>
@@ -114,7 +182,16 @@ export default function NewsArticle(props) {
                             </Card.Header>
                             <Card.Divider/>
                             <Container>
-                                {props.course?.GradingScale?.Cutoffs.length > 0 ? props.course.GradingScale?.Cutoffs.map((cutoff, index) => {
+                                {props.course?.GradingScale?.Cutoffs.length > 0 && (
+                                <ResponsiveContainer width={700} height={1000} style={{zIndex: "1000"}}>
+                                    <BarChart data={props.course?.GradingScale?.Cutoffs}>
+                                        <Bar type="monotone" dataKey="Start" stroke="#8884d8" stackId="a" />
+                                        <CartesianGrid stroke="#ccc" />
+                                        <XAxis dataKey="Name" />
+                                        <YAxis />
+                                    </BarChart>
+                                </ResponsiveContainer>)}
+                                {/*props.course?.GradingScale?.Cutoffs.length > 0 ? props.course.GradingScale?.Cutoffs.map((cutoff, index) => {
                                     let equalNameSpacing = 10 - cutoff.Name.length
 
 
@@ -139,7 +216,7 @@ export default function NewsArticle(props) {
                                             </Card.Header>
                                         </Card>
                                     )
-                                }) : <Text>No Grading Scale</Text>}
+                                }) : <Text>No Grading Scale</Text> */}
                             </Container>
                         </Card>
                     </Grid>

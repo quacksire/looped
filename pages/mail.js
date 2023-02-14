@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {hasCookie} from "cookies-next";
+import {getCookie, hasCookie} from "cookies-next";
 import useSWR from "swr";
 import {fetcher} from "../libs/sl";
 import Load from "../components/util/Loading";

@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Grid, Text, Button, Link} from "@nextui-org/react";
+import {Grid, Text, Button, Link, Spacer, Tooltip} from "@nextui-org/react";
 import {getCookie, hasCookie} from "cookies-next";
 import Back from "../../components/util/Back";
 import {getMailMessage} from "../api/_sl/mail_message/[id]";
@@ -30,7 +30,7 @@ export default function MailMessage(props) {
 
 
     useEffect(() => {
-        if (!localStorage.getItem(`readMail.${getCookie("sl-uid")}.${props.mail?.messageID}`) === "true") {
+        if (!localStorage.getItem(`readMail.${getCookie("sl-uid")}.${props.mail?.messageID}`)) {
             localStorage.setItem(`readMail.${getCookie("sl-uid")}.${props.mail?.messageID}`, "true")
         }
     }, [])
@@ -47,6 +47,27 @@ export default function MailMessage(props) {
 
     if (props.mail) {
         //console.log(props.mail)
+
+        let recipient = ''
+        let listOfOthers = ''
+
+        if (props?.mail?.recipientList) {
+            if (props?.mail?.recipientList?.length > 1) {
+                props.mail.recipientList.forEach((recipient, index) => {
+                    if (index === 0) return
+                    if (index === props.mail.recipientList.length - 1) {
+                        listOfOthers += 'and '
+                    }
+                    listOfOthers += String(recipient.name).split(', ')[1] + ' ' + String(recipient.name).split(', ')[0] + (index === props.mail.recipientList.length - 1 ? '' : ', ')
+                })
+                recipient = recipient = String(props.mail.recipientList[0].name).split(', ')[1] + ' ' + String(props.mail.recipientList[0].name).split(', ')[0]
+            } else {
+                recipient = String(props.mail.recipientList[0].name).split(', ')[1] + ' ' + String(props.mail.recipientList[0].name).split(', ')[0]
+            }
+        } else {
+            recipient = `Me`
+        }
+
         content = (
             <div>
                 <Head>
@@ -58,10 +79,11 @@ export default function MailMessage(props) {
                         <Text h1>{props.mail.subject}</Text>
                     </Grid>
                 </Grid.Container>
-                    <h3>Sent by {String(props.mail.sender.name).split(', ')[1] + ' ' + String(props.mail.sender.name).split(', ')[0]} on {new Date(parseInt(String(props.mail.date))).toLocaleDateString()} at {new Date(parseInt(String(props.mail.date))).toLocaleTimeString()}</h3>
+                    <h3>Sent by {String(props.mail.sender.name).split(', ')[1] + ' ' + String(props.mail.sender.name).split(', ')[0]} on {new Date(parseInt(String(props.mail.date))).toLocaleDateString()} at {new Date(parseInt(String(props.mail.date))).toLocaleTimeString()} to {recipient} {listOfOthers.length > 1 && (<>and <Tooltip content={listOfOthers} placement={"right"}> {props.mail.recipientList.length - 1} others </Tooltip></>)}</h3>
                 <p dangerouslySetInnerHTML={{__html: props.mail.message}}></p>
                 {props.mail.links && props.mail.links.length > 0 && (
                     <div>
+                        <Spacer y={1}/>
                             {props.mail.links.map((link) => (
                                 <NextLink href={link.URL} passHref target={'_blank'} referrerPolicy={"no-referrer"}>
                                 <Link isExternal color={"primary"}>
@@ -78,6 +100,7 @@ export default function MailMessage(props) {
     return (
         <div>
             {content}
+            <Spacer y={2}/>
         </div>
     )
 }

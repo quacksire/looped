@@ -22,10 +22,9 @@ export default function NewsCard() {
             newsElement = data.map((news, index) => {
                 if (index >= 5) return null;
                 return (
-                    <Link href={`/news/${news.iD}`}>
+                    <Link href={`/news/${news.iD}`} key={`news-${news.iD}`}>
                         <Card
                             isPressable
-                            key={news.iD}
                             variant="flat"
                         >
                             <Card.Body>

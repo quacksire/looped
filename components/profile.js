@@ -9,6 +9,7 @@ import useHotkeys from "@reecelucas/react-use-hotkeys"
 
 
 export default function Profile() {
+    const [seed, setSeed] = useLocalStorage(`seed.${getCookie("sl-uid")}`, null)
     const [user] = useLocalStorage('sl-user', {loading: true})
     let [name] = useLocalStorage(`name.${getCookie("sl-uid")}`, null)
 
@@ -54,6 +55,15 @@ export default function Profile() {
         }
     }, []);
 
+    const [pfp, setPfp] = useState("");
+    useEffect(() => {
+        if (seed) {
+            setPfp(seed)
+        } else {
+            setPfp(user.email)
+        }
+    }, [seed])
+
 
     /*name=
     description={`${user.email}`}*/
@@ -62,7 +72,7 @@ export default function Profile() {
                 <Navbar.Link onPress={logout} css={{"left": 'env(titlebar-area-x, 0)'}}>
                     <Dropdown placement="bottom-left">
                     {user.loading ? (<Load />) : (<Dropdown.Trigger id={'profile'}><User
-                        src={`https://api.dicebear.com/5.x/bottts/svg?seed=${user.email}`}
+                        src={`https://api.dicebear.com/5.x/bottts/svg?seed=${pfp}`}
                         size="xs"
                         pointer
                         color="primary"
@@ -72,7 +82,7 @@ export default function Profile() {
                     }} disabledKeys={["profile"]}>
                         <Dropdown.Item key="profile">
                             <User
-                            src={`https://api.dicebear.com/5.x/bottts/svg?seed=${user.email}`}
+                            src={`https://api.dicebear.com/5.x/bottts/svg?seed=${pfp}`}
                             size="xs"
                             pointer
                             color="primary"
@@ -80,9 +90,9 @@ export default function Profile() {
                             description={`${user.email}`}
                             />
                         </Dropdown.Item>
-                        <Dropdown.Item key="share" icon={<Share2Icon />} withDivider={canShare}>
+                        {canShare && <Dropdown.Item key="share" icon={<Share2Icon />} withDivider={canShare}>
                             Share
-                        </Dropdown.Item>
+                        </Dropdown.Item>}
                         <Dropdown.Item key="settings" icon={<GearIcon />} withDivider={!canShare}>
                         Settings
                         </Dropdown.Item>

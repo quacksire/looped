@@ -44,7 +44,7 @@ export default function GradesCard() {
                 }
 
                 return (
-                    <Link href={`/class/${course.periodID}`}>
+                    <Link href={`/class/${course.periodID}`} key={`class-${course.periodID}`}>
                         <Card isPressable variant="flat" css={{ p: "5px" }}>
                             <Card.Header>
                                 <Text h3 css={{ display: "flex" }}>{g}</Text>

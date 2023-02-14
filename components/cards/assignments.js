@@ -72,7 +72,7 @@ export default function AssignmentCard() {
                 return (
                     <>
                         {selected.includes(assignment.iD) ? (
-                            <Checkbox isRounded value={assignment.iD} aria-label={`${assignment.courseName} - ${assignment.title}`}>
+                            <Checkbox isRounded={true} value={assignment.iD} aria-label={`${assignment.courseName} - ${assignment.title}`} key={`as-${assignment.iD}`}>
                                 <Grid.Container css={{ pl: "$6" }}>
                                     <Grid xs={12}>
                                         <Text css={{ lineHeight: "10px" }}>
@@ -84,7 +84,7 @@ export default function AssignmentCard() {
                                     </Grid>
                                 </Grid.Container>
                             </Checkbox>
-                        ) : (<Checkbox isRounded lineThrough value={assignment.iD}>
+                        ) : (<Checkbox isRounded={true} lineThrough={true} value={assignment.iD} key={`as-${assignment.iD}`}>
                             <Grid.Container css={{ pl: "$6" }}>
                                 <Grid xs={12}>
                                     <Text css={{ lineHeight: "10px" }}>

@@ -92,8 +92,8 @@ export default function NavBar() {
             height={titlebarHeight ? titlebarHeight : 50}
             maxWidth={"fluid"}
             id={'navbar'}
-            css={integratedTitlebar ? { backgroundColor: "black", webkitAppRegion: "drag"} : null}
-            style={integratedTitlebar ? {"-webkit-app-region": "drag", "app-region": "drag"} : null}
+            css={integratedTitlebar ? { backgroundColor: "black", webkitAppRegion: "drag", zIndex: "10000"} : {zIndex: "10000"}}
+            style={integratedTitlebar ? {"-webkit-app-region": "drag", "app-region": "drag"} : {zIndex: "10000"}}
             >
 
             {inPWA || integratedTitlebar ? null : <Navbar.Brand hideIn="xs">
