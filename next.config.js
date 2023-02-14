@@ -7,4 +7,8 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-module.exports = withPWA(nextConfig)
+if (process.env.VERCEL) {
+  module.exports = withPWA(nextConfig)
+} else {
+  module.exports = nextConfig
+}

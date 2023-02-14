@@ -55,7 +55,7 @@ export default function NewsArticle(props) {
 
         };
 
-        console.log(props.course.grades)
+        //console.log(props.course.grades)
         content = (
             <div>
                 <Head>
@@ -71,17 +71,11 @@ export default function NewsArticle(props) {
                 <Text
                     h1>{props.course.course.name} with {String(props.course.teacher.name).split(', ')[1] + ' ' + String(props.course.teacher.name).split(', ')[0]}</Text>
                 <h5>Last Updated on {props.course.lastUpdated}</h5>
-                <Spacer y={1}/>
-                <ResponsiveContainer width="100%" height={200}>
-                    <LineChart  width={`100%`} height={200} data={props.course.trendScores} dataKey={(trend) => { return trend.score * 100}} style={{zIndex: "1000"}}>
-                        <Line type="monotone" cx="50%" cy="50%" data={props.course.trendScores} dataKey={(trend) => { return trend.score * 100}} stroke={`var(--nextui-colors-text)`} strokeWidth={2} />
-                    </LineChart>
-                </ResponsiveContainer>
-                <Spacer y={1}/>
+                <Spacer y={0.5}/>
 
                 <Grid.Container gap={4}>
                     <Grid>
-                <Card css={{ maxWidth: "700px", minHeight: "200px"}}>
+                <Card css={{ width: "500px", minHeight: "140px"}}>
                     <Card.Header>
                         <Text h3>Past Assignments</Text>
                     </Card.Header>
@@ -93,7 +87,7 @@ export default function NewsArticle(props) {
                             return (
                                 <Card variant="flat" css={{p: "5px"}} key={grade.systemID} style={{backgroundColor: "var(--nextui-colors-backgroundContrast)"}}>
                                     <Card.Header>
-                                        <Text b css={{display: "flex"}}>{grade.score === '0.00' ? (<Badge color={'error'}>Zero!</Badge>) : grade.percentScore}</Text>
+                                        <Text b css={{display: "flex", width: "50px"}}>{grade.score === '0.00' ? (<Badge isSquared enableShadow disableOutline color={'error'}>Zero</Badge>) : `${parseInt(grade.percentScore).toFixed(0)}%`}</Text>
                                         <Grid.Container css={{pl: "$6"}}>
                                             <Grid xs={12}  css={{minWidth: "60px"}}>
                                                 <Text css={{lineHeight: "$xs"}}>
@@ -120,15 +114,16 @@ export default function NewsArticle(props) {
                 </Card>
                     </Grid>
                     <Grid>
-                <Card css={{ maxWidth: "500px", minHeight: "200px"}}>
+                <Card css={{ maxWidth: "500px", maxHeight: "300px"}}>
                     <Card.Header>
                         <Text h3>Category Percentages</Text>
                     </Card.Header>
                     <Card.Divider/>
+                    <Spacer y={-2} />
                     <Container>
                         {props.course?.categories?.length > 0 && (
-                                <ResponsiveContainer width={500} height={450} style={{zIndex: "1000"}}>
-                                    <PieChart width={350} height={250}>
+                                <ResponsiveContainer width='100%' height={300} style={{zIndex: "1000"}}>
+                                    <PieChart width={'50%'} height={'50%'}>
                                         <Pie data={props.course.categories} dataKey={(category) => { return category.weight * 100}} nameKey={"name"} cx="50%" cy="50%" outerRadius={100} label={renderCustomizedCategoryLabel} labelLine={false}>
                                             {
                                                 props.course.categories.map((entry, index) => (
