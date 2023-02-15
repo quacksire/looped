@@ -269,9 +269,11 @@ export default function NewsArticle(props) {
 
 
     return (
-        <div>
-            {content}
-        </div>
+        <Container>
+            <Grid>
+                {content}
+            </Grid>
+        </Container>
     )
 }
 
