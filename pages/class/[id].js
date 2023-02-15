@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import {Card, Container, Grid, Text, Badge, Spacer} from "@nextui-org/react";
+import {Card, Container, Grid, Text, Badge, Spacer, User} from "@nextui-org/react";
 import {getCookie, hasCookie} from "cookies-next";
 import Back from "../../components/util/Back";
 import {getCourse} from "../api/_sl/course/[id]";
@@ -187,7 +187,7 @@ export default function NewsArticle(props) {
                                 <Card variant="flat" css={{p: "5px"}} key={grade.systemID} style={{backgroundColor: "var(--nextui-colors-backgroundContrast)"}}>
                                     <Card.Header>
                                         <Text b css={{display: "flex", width: "50px"}}>{grade.score === '0.00' ? (<Badge isSquared enableShadow disableOutline color={'error'}>Zero</Badge>) : `${parseInt(grade.percentScore).toFixed(0)}%`}</Text>
-                                        <Grid.Container css={{pl: "$6"}}>
+                                        <Grid.Container css={{pl: "$6", width: "300px"}}>
                                             <Grid xs={12}  css={{minWidth: "60px"}}>
                                                 <Text css={{lineHeight: "$xs"}}>
                                                     {grade.assignment.title}
@@ -202,64 +202,28 @@ export default function NewsArticle(props) {
                                                 <Spacer x={0.5}/>
                                                 <Text
                                                     css={{color: "$accents8"}}>{new Date(grade.assignment.dueDate).toLocaleDateString()}</Text>
-
                                             </Grid>
                                         </Grid.Container>
+
                                     </Card.Header>
                                 </Card>
                             )
                         }) : <Text>No grades</Text>}
-                    </Container>
-                </Card>
-                    </Grid>
-                    {/*
-                    <Grid>
-                        <Spacer y={1}/>
-                        <Card css={{ maxWidth: "300px", minHeight: "200px"}}>
-                            <Card.Header>
-                                <Text h3>Scale</Text>
-                            </Card.Header>
-                            <Card.Divider/>
-                            <Container>
-                                {props.course?.GradingScale?.Cutoffs.length > 0 && (
-                                <ResponsiveContainer width={700} height={1000} style={{zIndex: "1000"}}>
-                                    <BarChart data={props.course?.GradingScale?.Cutoffs}>
-                                        <Bar type="monotone" dataKey="Start" stroke="#8884d8" stackId="a" />
-                                        <CartesianGrid stroke="#ccc" />
-                                        <XAxis dataKey="Name" />
-                                        <YAxis />
-                                    </BarChart>
-                                </ResponsiveContainer>)}
-                                {/*props.course?.GradingScale?.Cutoffs.length > 0 ? props.course.GradingScale?.Cutoffs.map((cutoff, index) => {
-                                    let equalNameSpacing = 10 - cutoff.Name.length
-
-
-
-                                    return (
-                                        <Card variant="flat" css={{p: "5px"}} key={cutoff.Name}>
-                                            <Card.Header>
-                                                <Text b css={{maxWidth: "10px"}}>{cutoff.Name + ' '.repeat(equalNameSpacing)}</Text>
-                                                <Spacer x={0.5}/>
-                                                <Grid.Container css={{pl: "$6"}}>
-                                                    <Grid xs={12}>
-                                                        <Text css={{lineHeight: "$xs"}}>
-                                                            {parseFloat(cutoff.Start).toFixed(0)}%
-                                                        </Text>
-                                                    </Grid>
-                                                    {cutoff.description != 'null' && <Grid xs={12}>
-                                                        <Text css={{lineHeight: "$xs"}}>
-                                                            {cutoff.description}
-                                                        </Text>
-                                                    </Grid>}
-                                                </Grid.Container>
-                                            </Card.Header>
-                                        </Card>
-                                    )
-                                }) : <Text>No Grading Scale</Text>
                             </Container>
                         </Card>
                     </Grid>
-                */}
+
+                    <Card css={{ minHeight: "140px", minWidth: "min-content", maxWidth: "max-content"}}>
+                        <Container>
+                            <User
+                                size="xl"
+                                name={String(props.course.teacher.name).split(', ')[1] + ' ' + String(props.course.teacher.name).split(', ')[0]}
+                            >
+                                <User.Link href="https://nextui.org/">@watsonari</User.Link>
+                            </User>
+                        </Container>
+                    </Card>
+
 
                 </Grid.Container>
                 {/*JSON.stringify(props.course)*/}
