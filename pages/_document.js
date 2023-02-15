@@ -16,7 +16,10 @@ class MyDocument extends Document {
     render() {
         return (
             <Html lang="en">
-                <Head>{CssBaseline.flush()}</Head>
+                <Head>
+                    {CssBaseline.flush()}
+                    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "03542113be9e422eb38194164afe8077"}'></script>
+                </Head>
                 <body>
                 <Main />
                 <NextScript />
