@@ -26,6 +26,7 @@ export default function NewsCard() {
                         <Card
                             isPressable
                             variant="flat"
+                            style={{backgroundColor: "var(--nextui-colors-background)"}}
                         >
                             <Card.Body>
                                 <Text>{news.title}</Text>
@@ -40,7 +41,7 @@ export default function NewsCard() {
 
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "min-content", maxWidth: "100%" }}>
+    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", height: "min-content", maxWidth: "100%", backgroundColor: "var(--nextui-colors-background)" }}>
         <Card.Header css={{ marginBottom: "-50px", position: "relative" }}>
             <Text b>News</Text>
         </Card.Header>

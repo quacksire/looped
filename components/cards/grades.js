@@ -45,7 +45,7 @@ export default function GradesCard() {
 
                 return (
                     <Link href={`/class/${course.periodID}`} key={`class-${course.periodID}`}>
-                        <Card isPressable variant="flat" css={{ p: "5px" }}>
+                        <Card isPressable variant="flat" css={{ p: "5px" }} style={{backgroundColor: "var(--nextui-colors-background)"}}>
                             <Card.Header>
                                 <Text h3 css={{ display: "flex" }}>{g}</Text>
                                 <Grid.Container css={{ pl: "$6" }}>
@@ -81,7 +81,7 @@ export default function GradesCard() {
 
     }
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", maxHeight: "auto", maxWidth: "100%", height: 'min-content' }} >
+    return (<Card isHoverable variant="flat" css={{ minWidth: "250px", maxHeight: "auto", maxWidth: "100%", height: 'min-content', backgroundColor: "var(--nextui-colors-background)" }} >
         <Card.Header css={{ marginBottom: "-20px", position: "relative" }}>
             <Text b css={{ userSelectable: "none" }}>Current Grades</Text>
         </Card.Header>

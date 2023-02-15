@@ -39,6 +39,7 @@ export default function NewsArticle(props) {
 
 
 
+    //https://hmbhs.schoolloop.com/loopmail/student_loop?&student_id=1593846838236&tourse_id=1660027318403
 
 
     if (props.course) {
@@ -66,7 +67,7 @@ export default function NewsArticle(props) {
                 </Head>
                 <Grid.Container>
                     <Grid xs={12} css={{topMargin: "10px"}}>
-                        <Text h1>{props.course.course.name} with {String(props.course.teacher.name).split(', ')[1] + ' ' + String(props.course.teacher.name).split(', ')[0]}</Text>
+                        <Text h1>{props.course.course.name} {/**/}</Text>
                     </Grid>
                     <Grid>
                         <Text h5 color={"gray100"}><ClockIcon style={{topMargin: "10px"}}/> {props.course.lastUpdated}</Text>
@@ -79,11 +80,10 @@ export default function NewsArticle(props) {
 
                 <Grid.Container gap={4}>
                     <Grid>
-                        <Card css={{minWidth: "350px", maxWidth: "min-content", height: "min-content"}}>
+                        <Card variant={'flat'} css={{minWidth: "350px", maxWidth: "min-content", height: "min-content", backgroundColor: "var(--nextui-colors-background)"}}>
                             <Card.Header>
                                 <Text h3>Grade</Text>
                             </Card.Header>
-                            <Card.Divider/>
                             <Grid.Container gap={0.1} alignItems={"center"}>
                                 <Grid><Spacer x={7.25}></Spacer> </Grid>
                                 <Grid>
@@ -97,7 +97,7 @@ export default function NewsArticle(props) {
                             <Spacer y={-2} />
                             <Container>
                                 {props.course?.categories?.length > 0 && (
-                                    <ResponsiveContainer width='100%' height={300} style={{zIndex: "1000"}}>
+                                    <ResponsiveContainer width='100%' height={300} style={{zIndex: "1000" }}>
                                         <PieChart width={'50%'} height={'50%'}>
                                             <Pie data={props.course.categories} dataKey={(category) => { return (category.weight !== "0.0") ? category.weight * 100 : 100}} nameKey={"name"} cx="50%" cy="50%" outerRadius={100} label={renderCustomizedCategoryLabel} labelLine={false}>
                                                 {
@@ -174,19 +174,20 @@ export default function NewsArticle(props) {
 
 
                     <Grid>
-                <Card css={{ minHeight: "140px", minWidth: "min-content", maxWidth: "max-content"}}>
+                <Card variant={'flat'} css={{ minHeight: "140px", minWidth: "min-content", maxWidth: "max-content", backgroundColor: "var(--nextui-colors-background)"}}>
                     <Card.Header>
                         <Text h3>Past Assignments</Text>
                     </Card.Header>
-                    <Card.Divider/>
                     <Container>
                         {props.course?.grades?.length > 0 ? props.course.grades.map((grade, index) => {
                             let colorBadge = colors[props.course?.categories?.findIndex((category) => category.name === grade.assignment.categoryName)]
 
                             return (
-                                <Card variant="flat" css={{p: "5px"}} key={grade.systemID} style={{backgroundColor: "var(--nextui-colors-backgroundContrast)"}}>
+                                <Card variant="flat" css={{p: "5px"}} key={grade.systemID} style={{backgroundColor: "var(--nextui-colors-background)"}}>
                                     <Card.Header>
-                                        <Text b css={{display: "flex", width: "50px"}}>{grade.score === '0.00' ? (<Badge isSquared enableShadow disableOutline color={'error'}>Zero</Badge>) : `${parseInt(grade.percentScore).toFixed(0)}%`}</Text>
+                                        <Text b css={{display: "flex", width: "50px"}}>{grade.score === '0.00' ? (
+                                        <Badge enableShadow disableOutline color={'error'}>0%</Badge>
+                                        ) : `${parseInt(grade.percentScore).toFixed(0) != 'NaN' ? `${parseInt(grade.percentScore).toFixed(0)}%` : "-"}`}</Text>
                                         <Grid.Container css={{pl: "$6", width: "300px"}}>
                                             <Grid xs={12}  css={{minWidth: "60px"}}>
                                                 <Text css={{lineHeight: "$xs"}}>
@@ -213,13 +214,16 @@ export default function NewsArticle(props) {
                         </Card>
                     </Grid>
 
-                    <Card css={{ minHeight: "140px", minWidth: "min-content", maxWidth: "max-content"}}>
+                    <Card variant="flat" css={{ height: "max-content", minWidth: "min-content", maxWidth: "min-content", backgroundColor: "var(--nextui-colors-background)"}}>
+                        <Spacer y={1.125} />
                         <Container>
+                            <Spacer y={0.5} />
                             <User
-                                size="xl"
+                                size="lg"
+                                src={`https://api.dicebear.com/5.x/bottts/svg?seed=${props.course.teacher.systemID}`}
                                 name={String(props.course.teacher.name).split(', ')[1] + ' ' + String(props.course.teacher.name).split(', ')[0]}
                             >
-                                <User.Link href="https://nextui.org/">@watsonari</User.Link>
+                                <User.Link href="https://nextui.org/">Send A Loopmail</User.Link>
                             </User>
                         </Container>
                     </Card>

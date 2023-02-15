@@ -74,7 +74,7 @@ export default function GPACard() {
     }
 
 
-    return (<Card isHoverable variant="flat" css={{ minWidth: "25px", maxWidth: "100%", height: "min-content" }}>
+    return (<Card isHoverable variant="flat" css={{ minWidth: "25px", maxWidth: "100%", height: "min-content", backgroundColor: "var(--nextui-colors-background)" }}>
         <Card.Header>
             <Text b>GPA</Text>
         </Card.Header>
