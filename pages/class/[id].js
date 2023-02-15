@@ -18,6 +18,7 @@ import {
     YAxis,
 } from "recharts";
 import {Line} from "victory";
+import {ClockIcon} from "@radix-ui/react-icons";
 export default function NewsArticle(props) {
     let content;
     if (props.error) {
@@ -55,7 +56,8 @@ export default function NewsArticle(props) {
 
         };
 
-        //console.log(props.course.grades)
+        console.log(props.course.categories)
+        console.log(props.course)
         content = (
             <div>
                 <Head>
@@ -64,18 +66,115 @@ export default function NewsArticle(props) {
                 </Head>
                 <Grid.Container>
                     <Grid xs={12} css={{topMargin: "10px"}}>
-
+                        <Text h1>{props.course.course.name} with {String(props.course.teacher.name).split(', ')[1] + ' ' + String(props.course.teacher.name).split(', ')[0]}</Text>
+                    </Grid>
+                    <Grid>
+                        <Text h5 color={"gray100"}><ClockIcon style={{topMargin: "10px"}}/> {props.course.lastUpdated}</Text>
                     </Grid>
                 </Grid.Container>
                 {/*"trendScores":[{"numberOfZeros":"2","dropped":"false","studentID":"1593846838236","grade":"F","periodID":"1660388478922","standardsBased":"false","score":"0.33","markIDString":"current","tourseID":"1376458793022","teacherID":"1102472042704","dayID":"1673337600000","ID":"1671985805968"},*/}
-                <Text
-                    h1>{props.course.course.name} with {String(props.course.teacher.name).split(', ')[1] + ' ' + String(props.course.teacher.name).split(', ')[0]}</Text>
-                <h5>Last Updated on {props.course.lastUpdated}</h5>
+
+
                 <Spacer y={0.5}/>
 
                 <Grid.Container gap={4}>
                     <Grid>
-                <Card css={{ width: "500px", minHeight: "140px"}}>
+                        <Card css={{minWidth: "350px", maxWidth: "min-content", height: "min-content"}}>
+                            <Card.Header>
+                                <Text h3>Grade</Text>
+                            </Card.Header>
+                            <Card.Divider/>
+                            <Grid.Container gap={0.1} alignItems={"center"}>
+                                <Grid><Spacer x={7.25}></Spacer> </Grid>
+                                <Grid>
+                                    <Text h1 css={{
+                                        textGradient: "45deg, $blue600 -20%, $pink600 50%",
+                                    }}
+                                          weight="bold">{props.course.grade}</Text>
+                                </Grid>
+                            </Grid.Container>
+                            <Card.Divider/>
+                            <Spacer y={-2} />
+                            <Container>
+                                {props.course?.categories?.length > 0 && (
+                                    <ResponsiveContainer width='100%' height={300} style={{zIndex: "1000"}}>
+                                        <PieChart width={'50%'} height={'50%'}>
+                                            <Pie data={props.course.categories} dataKey={(category) => { return (category.weight !== "0.0") ? category.weight * 100 : 100}} nameKey={"name"} cx="50%" cy="50%" outerRadius={100} label={renderCustomizedCategoryLabel} labelLine={false}>
+                                                {
+                                                    props.course.categories.map((entry, index) => (
+                                                        <Cell key={`cell-${index}`} fill={`var(--nextui-colors-${colors[index]})`} strokeWidth={0.5} stroke={"var(--nextui-colors-backgroundContrast)"}/>
+                                                    ))
+                                                }
+                                            </Pie>
+                                        </PieChart>
+                                    </ResponsiveContainer>
+                                )}
+                                <Spacer y={-2} />
+                                {props.course?.categories?.length > 0 && (
+                                    <Grid.Container gap={2}>
+                                        {props.course.categories.map((category, index) => {
+                                            return (
+                                                <Grid xs={12} key={category.name}>
+                                                    <Badge color={colors[index]} disableOutline variant="flat" css={{display: "flex"}}>{parseFloat((category.weight != "0.0") ? category.weight : "1.00").toFixed(2) * 100}%</Badge>
+                                                    <Grid.Container css={{pl: "$6"}}>
+                                                        <Grid xs={12}>
+                                                            <Text>
+                                                                {category.name}
+                                                            </Text>
+                                                        </Grid>
+                                                    </Grid.Container>
+                                                    <Text>
+                                                        {parseFloat(category.score).toFixed(2) * 100}%
+                                                    </Text>
+                                                </Grid>
+                                            )
+                                        })}
+                                    </Grid.Container>
+                                )}
+                                <Card.Divider/>
+                                <Grid.Container gap={2}>
+                                    <Grid xs={12}>
+                                        <Grid.Container css={{pl: "$6"}}>
+                                            <Grid xs={12}>
+                                                Grade:
+                                            </Grid>
+                                        </Grid.Container>
+                                        <Text>
+                                            {parseFloat(props.course.score).toFixed(2) * 100}%
+                                        </Text>
+                                    </Grid>
+                                </Grid.Container>
+
+
+
+                                {/*props.course?.categories?.length > 0 ? props.course.categories?.map((category, index) => {
+                            return (
+                                <Card variant="flat" css={{p: "5px"}} key={category.name}>
+                                    <Card.Header>
+                                        <Badge color={colors[index]} disableOutline variant="flat" css={{display: "flex"}}>{parseFloat(category.weight).toFixed(2) * 100}%</Badge>
+                                        <Grid.Container css={{pl: "$6"}}>
+                                            <Grid xs={12}>
+                                                <Text css={{lineHeight: "$xs"}}>
+                                                    {category.name}
+                                                </Text>
+                                            </Grid>
+                                            <Grid xs={12}>
+                                                <Text css={{lineHeight: "$xs"}}>
+                                                    Current: {parseFloat(category.score).toFixed(2) * 100}%
+                                                </Text>
+                                            </Grid>
+                                        </Grid.Container>
+                                    </Card.Header>
+                                </Card>
+                            )
+                        }) : <Text>No Grading Scale</Text> */}
+                            </Container>
+                        </Card>
+                    </Grid>
+
+
+                    <Grid>
+                <Card css={{ minHeight: "140px", minWidth: "min-content", maxWidth: "max-content"}}>
                     <Card.Header>
                         <Text h3>Past Assignments</Text>
                     </Card.Header>
@@ -113,63 +212,8 @@ export default function NewsArticle(props) {
                     </Container>
                 </Card>
                     </Grid>
+                    {/*
                     <Grid>
-                <Card css={{ maxWidth: "500px", maxHeight: "300px"}}>
-                    <Card.Header>
-                        <Text h3>Category Percentages</Text>
-                    </Card.Header>
-                    <Card.Divider/>
-                    <Spacer y={-2} />
-                    <Container>
-                        {props.course?.categories?.length > 0 && (
-                                <ResponsiveContainer width='100%' height={300} style={{zIndex: "1000"}}>
-                                    <PieChart width={'50%'} height={'50%'}>
-                                        <Pie data={props.course.categories} dataKey={(category) => { return category.weight * 100}} nameKey={"name"} cx="50%" cy="50%" outerRadius={100} label={renderCustomizedCategoryLabel} labelLine={false}>
-                                            {
-                                                props.course.categories.map((entry, index) => (
-                                                    <Cell key={`cell-${index}`} fill={`var(--nextui-colors-${colors[index]})`} strokeWidth={0.5} stroke={"var(--nextui-colors-backgroundContrast)"}/>
-                                                ))
-                                            }
-                                        </Pie>
-                                    </PieChart>
-                                </ResponsiveContainer>
-                            )}
-
-                        {(props.course.hasOwnProperty('categories') || props.course?.categories?.length === 0) && (
-                            <ResponsiveContainer width={500} height={450} style={{zIndex: "1000"}}>
-                                <PieChart width={350} height={250}>
-                                    <Pie data={{name: `Assignment`, weight: 99}} dataKey={"weight"} nameKey={"name"} cx="50%" cy="50%" outerRadius={100} label={renderCustomizedCategoryLabel} labelLine={false}>
-                                                <Cell key={`cell-${0}`} fill={`var(--nextui-colors-${colors[0]})`}/>
-                                    </Pie>
-                                </PieChart>
-                            </ResponsiveContainer>
-                        )}
-
-
-
-                        {/*props.course?.categories?.length > 0 ? props.course.categories?.map((category, index) => {
-                            return (
-                                <Card variant="flat" css={{p: "5px"}} key={category.name}>
-                                    <Card.Header>
-                                        <Badge color={colors[index]} disableOutline variant="flat" css={{display: "flex"}}>{parseFloat(category.weight).toFixed(2) * 100}%</Badge>
-                                        <Grid.Container css={{pl: "$6"}}>
-                                            <Grid xs={12}>
-                                                <Text css={{lineHeight: "$xs"}}>
-                                                    {category.name}
-                                                </Text>
-                                            </Grid>
-                                            <Grid xs={12}>
-                                                <Text css={{lineHeight: "$xs"}}>
-                                                    Current: {parseFloat(category.score).toFixed(2) * 100}%
-                                                </Text>
-                                            </Grid>
-                                        </Grid.Container>
-                                    </Card.Header>
-                                </Card>
-                            )
-                        }) : <Text>No Grading Scale</Text> */}
-                    </Container>
-                </Card>
                         <Spacer y={1}/>
                         <Card css={{ maxWidth: "300px", minHeight: "200px"}}>
                             <Card.Header>
@@ -211,13 +255,14 @@ export default function NewsArticle(props) {
                                             </Card.Header>
                                         </Card>
                                     )
-                                }) : <Text>No Grading Scale</Text> */}
+                                }) : <Text>No Grading Scale</Text>
                             </Container>
                         </Card>
                     </Grid>
+                */}
 
                 </Grid.Container>
-                {JSON.stringify(props.course)}
+                {/*JSON.stringify(props.course)*/}
             </div>
         )
     }
