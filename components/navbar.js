@@ -89,7 +89,7 @@ export default function NavBar() {
         <Navbar
             variant="sticky"
             isCompact
-            height={titlebarHeight ? `${titlebarHeight} + env(safe-area-inset-top)` : "env(safe-area-inset-top) + 50"}
+            height={titlebarHeight ? `${titlebarHeight}` : 50}
             maxWidth={"fluid"}
             id={'navbar'}
             css={integratedTitlebar ? { backgroundColor: "black", webkitAppRegion: "drag", zIndex: "10000", position: "fixed"} : {zIndex: "10000", position: "fixed"}}
