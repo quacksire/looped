@@ -111,10 +111,16 @@ export default function NavBar() {
             >
                 {String(active) === '/' ? <Navbar.Link isActive><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} ><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link>}
 
-                <ClassesDropdown />
-                {!String(active).includes('news') ? null : <Navbar.Link onPress={() => { router.push("/news")}} isActive><ReaderIcon style={{paddingRight: "10px"}} />   News</Navbar.Link>}
-                {!String(active).includes('mail') ? <Navbar.Link onPress={() => { router.push("/mail")}}><EnvelopeClosedIcon style={{paddingRight: "10px"}}/>LoopMail</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/mail")}}><EnvelopeClosedIcon style={{paddingRight: "10px"}}/>LoopMail</Navbar.Link>}
-                {!String(active).includes('calender') ? <Navbar.Link onPress={() => { router.push("/calender")}} hideIn={'sm'}><CalendarIcon style={{paddingRight: "10px"}} /> Calender</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/calender")}} hideIn={'sm'}><CalendarIcon style={{paddingRight: "10px"}}/> Calender</Navbar.Link>}
+                {String(active).includes("login") ? null : (
+                    <>
+                        <ClassesDropdown />
+                        {!String(active).includes('news') ? null : <Navbar.Link onPress={() => { router.push("/news")}} isActive><ReaderIcon style={{paddingRight: "10px"}} />   News</Navbar.Link>}
+                        {!String(active).includes('mail') ? <Navbar.Link onPress={() => { router.push("/mail")}}><EnvelopeClosedIcon style={{paddingRight: "10px"}}/>LoopMail</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/mail")}}><EnvelopeClosedIcon style={{paddingRight: "10px"}}/>LoopMail</Navbar.Link>}
+                        {!String(active).includes('calender') ? <Navbar.Link onPress={() => { router.push("/calender")}} hideIn={'sm'}><CalendarIcon style={{paddingRight: "10px"}} /> Calender</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/calender")}} hideIn={'sm'}><CalendarIcon style={{paddingRight: "10px"}}/> Calender</Navbar.Link>
+                    </>
+                )
+                }}
+                
             </Navbar.Content>
 
             <Navbar.Content
@@ -124,11 +130,16 @@ export default function NavBar() {
                 style={integratedTitlebar ? {"-webkit-app-region": "no-drag", "app-region": "no-drag"} : null}
             >
                 {String(active) === '/' ? <Navbar.Link isActive><HomeIcon style={{paddingRight: "10px"}}/>Home</Navbar.Link> : <Navbar.Link onPress={() => { router.push("/")}} ><HomeIcon style={{paddingRight: "10px"}}/></Navbar.Link>}
-                {String(active) != '/' ? <Navbar.Link onPress={() => { router.back() }} ><ChevronLeftIcon style={{paddingRight: "10px"}}/></Navbar.Link> : null}
+                
+                {String(active).includes("login") ? null : (
+                    <>
+                    {String(active) != '/' ? <Navbar.Link onPress={() => { router.back() }} ><ChevronLeftIcon style={{paddingRight: "10px"}}/></Navbar.Link> : null}
 
-                {String(active) != '/' ? <Navbar.Item isDisabled={true}>
-                    {String(pageTitle).split(' - Looped')[0]}
-                </Navbar.Item> : null}
+                    {String(active) != '/' ? <Navbar.Item isDisabled={true}>
+                        {String(pageTitle).split(' - Looped')[0]}
+                    </Navbar.Item> : null}
+                    </>
+                )}
             </Navbar.Content>
 
             <Spacer x={2.3}/>
