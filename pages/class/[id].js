@@ -64,7 +64,6 @@ export default function ClassPage(props) {
                 <Head>
                     <title>{props.course.course.name || 'My Class'}</title>
                     <meta name="description" content={`My ${props.course.course.name} class`}/>
-                    <meta name="viewport" content="max-width=device-width, initial-scale=1" />
                 </Head>
                 <Grid.Container>
                     <Grid xs={12} css={{topMargin: "10px"}}>
