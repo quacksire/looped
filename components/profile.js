@@ -70,7 +70,7 @@ export default function Profile() {
 
     return (
                 <Navbar.Link onPress={logout} css={{"left": 'env(titlebar-area-x, 0)'}}>
-                    <Dropdown placement="bottom-left">
+                    <Dropdown placement="bottom-left" style={{position: "fixed"}}>
                     {user.loading ? (<Load />) : (<Dropdown.Trigger id={'profile'}><User
                         src={`https://api.dicebear.com/5.x/bottts/svg?seed=${pfp}`}
                         size="xs"
