@@ -89,11 +89,11 @@ export default function NavBar() {
         <Navbar
             variant="sticky"
             isCompact
-            height={titlebarHeight ? titlebarHeight : 50}
+            height={titlebarHeight ? `${titlebarHeight} + env(safe-area-inset-top)` : "env(safe-area-inset-top) + 50"}
             maxWidth={"fluid"}
             id={'navbar'}
             css={integratedTitlebar ? { backgroundColor: "black", webkitAppRegion: "drag", zIndex: "10000"} : {zIndex: "10000"}}
-            style={integratedTitlebar ? {"-webkit-app-region": "drag", "app-region": "drag"} : {zIndex: "10000"}}
+            style={integratedTitlebar ? {"-webkit-app-region": "drag", "app-region": "drag"} : {zIndex: "10000", paddingTop: "env(safe-area-inset-top)"}}
             >
 
             {inPWA || integratedTitlebar ? null : <Navbar.Brand hideIn="xs">

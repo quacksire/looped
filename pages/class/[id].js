@@ -19,7 +19,7 @@ import {
 } from "recharts";
 import {Line} from "victory";
 import {ClockIcon} from "@radix-ui/react-icons";
-export default function NewsArticle(props) {
+export default function ClassPage(props) {
     let content;
     if (props.error) {
         content = (<div>
@@ -57,13 +57,14 @@ export default function NewsArticle(props) {
 
         };
 
-        console.log(props.course.categories)
-        console.log(props.course)
+        //console.log(props.course.categories)
+        //console.log(props.course)
         content = (
             <div>
                 <Head>
                     <title>{props.course.course.name || 'My Class'}</title>
                     <meta name="description" content={`My ${props.course.course.name} class`}/>
+                    <meta name="viewport" content="max-width=device-width, initial-scale=1" />
                 </Head>
                 <Grid.Container>
                     <Grid xs={12} css={{topMargin: "10px"}}>
@@ -78,7 +79,7 @@ export default function NewsArticle(props) {
 
                 <Spacer y={0.5}/>
 
-                <Grid.Container gap={4}>
+                <Grid.Container gap={1} style={{maxWidth: "100%", marginLeft: "-40px"}}>
                     <Grid>
                         <Card variant={'flat'} css={{minWidth: "350px", maxWidth: "min-content", height: "min-content", backgroundColor: "var(--nextui-colors-background)"}}>
                             <Card.Header>
@@ -183,7 +184,7 @@ export default function NewsArticle(props) {
                             let colorBadge = colors[props.course?.categories?.findIndex((category) => category.name === grade.assignment.categoryName)]
 
                             return (
-                                <Card variant="flat" css={{p: "5px"}} key={grade.systemID} style={{backgroundColor: "var(--nextui-colors-background)"}}>
+                                <Card variant="flat" css={{p: "5px"}} key={grade.systemID} style={{backgroundColor: "var(--nextui-colors-background)", marginLeft: "-10px"}}>
                                     <Card.Header>
                                         <Text b css={{display: "flex", width: "50px"}}>{grade.score === '0.00' ? (
                                         <Badge enableShadow disableOutline color={'error'}>0%</Badge>
@@ -227,9 +228,8 @@ export default function NewsArticle(props) {
                             </User>
                         </Container>
                     </Card>
-
-
                 </Grid.Container>
+                <Spacer y={2} />
                 {/*JSON.stringify(props.course)*/}
             </div>
         )
