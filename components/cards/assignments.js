@@ -64,7 +64,7 @@ export default function AssignmentCard() {
                         due = 'Due in six days'
                         break
                     default:
-                        return null
+                        due = `Due on ${new Date(parseInt(String(assignment.dueDate))).toLocaleDateString()}`
                 }
 
 

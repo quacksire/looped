@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
             >
                 <NextUIProvider>
                     <NavBar />
-                    <Spacer y={1}/>
+                    <Spacer y={2}/>
                     <Layout >
                         <Component {...pageProps} />
                     </Layout>
