@@ -37,8 +37,8 @@ export default function GPACard() {
         })
 
         gpaText = gpa / trueCourseCount
-        simplified = ((((gpa / trueCourseCount) - 50) / 10).toFixed(1) - 0.3)
-        //simplified = simplified.toFixed(1);
+        simplified = ((((gpa / trueCourseCount) - 50) / 10).toFixed(1) - 0.5)
+        simplified = simplified.toFixed(1);
         //console.log(simplified, gpaText, gpa, trueCourseCount)
         if (simplified >= 3.0 && simplified <= 4.5) {
             color = 'success'
@@ -50,27 +50,11 @@ export default function GPACard() {
             color = 'error'
         }
         let chart = [{name: "GPA", value: gpaText}, {name: "GPA", value: 150 - gpaText}]
-        gpaElement = (<ResponsiveContainer width='100%' height={125} style={{zIndex: 1000}}>
-            <PieChart>
-                <Pie
-                    data={chart}
-                    cx='50%'
-                    cy={100}
-                    startAngle={180}
-                    endAngle={0}
-                    innerRadius={60}
-                    outerRadius={80}
-                    paddingAngle={5}
-                    dataKey="value"
-                    style={{zIndex: 100}}
-                >
-                    {chart.map((entry, index) => <Cell key={`cell-${index}`} strokeWidth={0}
-                                                       fill={index === 0 ? `var(--nextui-colors-${color})` : 'rgba(255,255,255,0)'}/>)}
-                </Pie>
-                <LabelList dataKey="value" position="center" style={{zIndex: 1000}}/>
-                <Label value={simplified} position="center" color={'white'} x={200} y={75} style={{zIndex: 1000}}/>
-            </PieChart>
-        </ResponsiveContainer>)
+        gpaElement = (
+            <Text h1 color={color}>
+                {simplified}
+            </Text>
+        )
     }
 
 
