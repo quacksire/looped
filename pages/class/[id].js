@@ -16,6 +16,11 @@ import {
     ResponsiveContainer,
     XAxis,
     YAxis,
+    AreaChart,
+    defs,
+    linearGradient,
+    Tooltip,
+    Area
 } from "recharts";
 import {Line} from "victory";
 import {ClockIcon} from "@radix-ui/react-icons";
@@ -58,7 +63,7 @@ export default function ClassPage(props) {
         };
 
         //console.log(props.course.categories)
-        //console.log(props.course)
+        console.log(props.course.trendScores)
         content = (
             <div>
                 <Head>
@@ -78,7 +83,7 @@ export default function ClassPage(props) {
 
                 <Spacer y={0.5}/>
 
-                <Grid.Container gap={1} style={{maxWidth: "100%", marginLeft: "-40px"}}>
+                <Grid.Container gap={1} style={{maxWidth: "100%", marginLeft: "-40px", alignContent: "center"}}>
                     <Grid>
                         <Card variant={'flat'} css={{minWidth: "350px", maxWidth: "min-content", height: "min-content", backgroundColor: "var(--nextui-colors-background)"}}>
                             <Card.Header>
@@ -172,6 +177,26 @@ export default function ClassPage(props) {
                         </Card>
                     </Grid>
 
+                    <Grid>
+                    <Card variant="flat" css={{ height: "max-content", minWidth: "min-content", maxWidth: "min-content", backgroundColor: "var(--nextui-colors-background)"}}>
+                        <AreaChart width={730} height={250} data={props.course.trendScores}
+                        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                        <defs>
+                            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+                            <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                            </linearGradient>
+                        </defs>
+                        <XAxis dataKey="dayID" />
+                        <YAxis />
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <Tooltip />
+                        <Area type="monotone" dataKey="score" dot={false} stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+                        </AreaChart>
+                    </Card>
+                    </Grid>
+
+
 
                     <Grid>
                 <Card variant={'flat'} css={{ minHeight: "140px", minWidth: "min-content", maxWidth: "max-content", backgroundColor: "var(--nextui-colors-background)"}}>
@@ -214,6 +239,7 @@ export default function ClassPage(props) {
                         </Card>
                     </Grid>
 
+                    <Grid>
                     <Card variant="flat" css={{ height: "max-content", minWidth: "min-content", maxWidth: "min-content", backgroundColor: "var(--nextui-colors-background)"}}>
                         <Spacer y={1.125} />
                         <Container>
@@ -227,6 +253,7 @@ export default function ClassPage(props) {
                             </User>
                         </Container>
                     </Card>
+                    </Grid>
                 </Grid.Container>
                 <Spacer y={2} />
                 {/*JSON.stringify(props.course)*/}
@@ -237,9 +264,7 @@ export default function ClassPage(props) {
 
     return (
         <Container>
-            <Grid>
                 {content}
-            </Grid>
         </Container>
     )
 }

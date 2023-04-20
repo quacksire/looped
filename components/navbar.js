@@ -116,7 +116,7 @@ export default function NavBar() {
                         <ClassesDropdown />
                         {!String(active).includes('news') ? null : <Navbar.Link onPress={() => { router.push("/news")}} isActive><ReaderIcon style={{paddingRight: "10px"}} />   News</Navbar.Link>}
                         {!String(active).includes('mail') ? <Navbar.Link onPress={() => { router.push("/mail")}}><EnvelopeClosedIcon style={{paddingRight: "10px"}}/>LoopMail</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/mail")}}><EnvelopeClosedIcon style={{paddingRight: "10px"}}/>LoopMail</Navbar.Link>}
-                        {!String(active).includes('calender') ? <Navbar.Link onPress={() => { router.push("/calender")}} hideIn={'sm'}><CalendarIcon style={{paddingRight: "10px"}} /> Calender</Navbar.Link> : <Navbar.Link isActive onPress={() => { router.push("/calender")}} hideIn={'sm'}><CalendarIcon style={{paddingRight: "10px"}}/> Calender</Navbar.Link>}
+                        {/*!String(active).includes('calender') ? <Navbar.Link isDisabled onPress={() => { router.push("/calender")}} hideIn={'sm'}><CalendarIcon style={{paddingRight: "10px"}} /> Calender</Navbar.Link> : <Navbar.Link isDisabled onPress={() => { router.push("/calender")}} hideIn={'sm'}><CalendarIcon style={{paddingRight: "10px"}}/> Calender</Navbar.Link>*/}
                     </>
                 )}
 

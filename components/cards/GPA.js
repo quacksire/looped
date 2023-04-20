@@ -49,7 +49,6 @@ export default function GPACard() {
         } else {
             color = 'error'
         }
-        let chart = [{name: "GPA", value: gpaText}, {name: "GPA", value: 150 - gpaText}]
         gpaElement = (
             <Text h1 color={color}>
                 {simplified}
